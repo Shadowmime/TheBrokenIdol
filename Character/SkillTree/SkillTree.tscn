@@ -3,15 +3,10 @@
 [ext_resource type="Script" uid="uid://dg0spun41i0j5" path="res://Character/SkillTree/skill_tree.gd" id="1_8fi17"]
 [ext_resource type="Texture2D" uid="uid://dqgu73p0lb6s0" path="res://Character/SkillTree/Button3.png" id="1_fl80d"]
 [ext_resource type="PackedScene" uid="uid://cg0ioact5bp7i" path="res://Character/SkillTree/SkillButton.tscn" id="1_u2lak"]
+[ext_resource type="Texture2D" uid="uid://chluh8tof5cbh" path="res://Character/Projectiles/Double_Note.png" id="4_6mokx"]
+[ext_resource type="Texture2D" uid="uid://03ho5i5g13uo" path="res://Character/Blume.png" id="5_5usc3"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_6mokx"]
-radius = 20.0
-height = 20.0
-
-[sub_resource type="MeshTexture" id="MeshTexture_5usc3"]
-mesh = SubResource("SphereMesh_6mokx")
-
-[node name="SkillTree" type="Control" node_paths=PackedStringArray("pages_buttons", "skill_info", "skill_name", "skill_desc", "delete")]
+[node name="SkillTree" type="Control" node_paths=PackedStringArray("continue_level", "pages_buttons", "skill_info", "skill_name", "skill_desc", "skill_cost", "total_points", "delete")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,10 +15,13 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_8fi17")
+continue_level = NodePath("Continue")
 pages_buttons = NodePath("Pages")
 skill_info = NodePath("SkillInfo")
-skill_name = NodePath("SkillInfo/SkillTitle/SkillName")
+skill_name = NodePath("SkillInfo/SkillName")
 skill_desc = NodePath("SkillInfo/SkillDesc")
+skill_cost = NodePath("SkillInfo/Cost")
+total_points = NodePath("CurrentPoints")
 delete = NodePath("SkillInfo/Delete")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -47,6 +45,7 @@ grow_vertical = 2
 flat = true
 
 [node name="Next" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 1077.0
 offset_top = 937.0
@@ -70,6 +69,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Prev" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 20.0
 offset_top = 941.0
@@ -122,10 +122,13 @@ offset_right = 271.0
 offset_bottom = 878.0
 grow_horizontal = 1
 grow_vertical = 1
-skill_name = "Shield"
-skill_desc = "Aria can shield with right click"
+skill_name = "Star Barrier : Basic Guard"
+skill_cost = 5
+skill_desc = "Aria gains a shield that reduces any damage taken by half, permanently!"
+skill_reference = "shield1"
 
-[node name="SkillButton" parent="Pages/SkillPage/Shield" instance=ExtResource("1_u2lak")]
+[node name="InvinciShield" parent="Pages/SkillPage/Shield" instance=ExtResource("1_u2lak")]
+z_index = 1
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -138,9 +141,9 @@ offset_right = 128.0
 offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
-skill_name = "Invincible Shield"
-skill_sprite = SubResource("MeshTexture_5usc3")
-skill_desc = "Makes you invincible"
+skill_name = "Star Barrier : Celestial Guard"
+skill_desc = "Aria cannot take any damage!"
+skill_reference = "shield2"
 
 [node name="BasicAtt" parent="Pages/SkillPage" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -155,6 +158,11 @@ offset_right = 496.0
 offset_bottom = 878.0
 grow_horizontal = 1
 grow_vertical = 1
+skill_name = "Melody Shot"
+skill_cost = 3
+skill_sprite = ExtResource("4_6mokx")
+skill_desc = "Aria gains the ability to left click to shoot notes at enemies. (10 Base Damage, doubled on third hit)"
+skill_reference = "attack1"
 
 [node name="SkillButton" parent="Pages/SkillPage/BasicAtt" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -169,6 +177,11 @@ offset_right = 128.0
 offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
+skill_name = "Melody Shot: Crescendo"
+skill_cost = 2
+skill_sprite = ExtResource("4_6mokx")
+skill_desc = "The note projectiles increase in size by 100%"
+skill_reference = "attack2"
 
 [node name="SkillButton" parent="Pages/SkillPage/BasicAtt/SkillButton" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -183,6 +196,30 @@ offset_right = 128.0
 offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
+skill_name = "Melody Shot: Accelerando"
+skill_cost = 2
+skill_sprite = ExtResource("4_6mokx")
+skill_desc = "Aria's notes will fly 50% faster"
+skill_reference = "attack3"
+
+[node name="SkillButton" parent="Pages/SkillPage/BasicAtt/SkillButton/SkillButton" instance=ExtResource("1_u2lak")]
+layout_mode = 1
+anchors_preset = 2
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = -328.0
+offset_right = 128.0
+offset_bottom = -200.0
+grow_horizontal = 1
+grow_vertical = 0
+skill_name = "Melody Shot: Seeker Tune"
+skill_cost = 7
+skill_sprite = ExtResource("4_6mokx")
+skill_desc = "Aria's notes will now curve towards enemies"
+skill_reference = "attack4"
 
 [node name="FastAtt" parent="Pages/SkillPage" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -198,7 +235,8 @@ offset_bottom = 878.0
 grow_horizontal = 1
 grow_vertical = 1
 skill_name = "Lightstick Chakram"
-skill_desc = "Unlocks Aria's E, which launches a high speed lightstick chakram at enemies"
+skill_cost = 4
+skill_desc = "Unlocks Aria's E skill, which launches a high speed lightstick chakram at enemies.  (30 Base Damage)"
 
 [node name="SkillButton" parent="Pages/SkillPage/FastAtt" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -231,6 +269,11 @@ grow_vertical = 1
 skill_name = "Lightstick Chakram : Pierce"
 skill_desc = "Allows the lightstick chakram to pierce through numerous enemies"
 
+[node name="SkillButton" parent="Pages/SkillPage/FastAtt/SkillButton/SkillButton" instance=ExtResource("1_u2lak")]
+layout_mode = 1
+offset_top = -264.0
+offset_bottom = -136.0
+
 [node name="AOEAtt" parent="Pages/SkillPage" instance=ExtResource("1_u2lak")]
 layout_mode = 0
 anchors_preset = 0
@@ -244,6 +287,8 @@ offset_right = 946.0
 offset_bottom = 878.0
 grow_horizontal = 1
 grow_vertical = 1
+skill_name = "Centre of Attention : Gravity Bloom"
+skill_sprite = ExtResource("5_5usc3")
 
 [node name="SkillButton" parent="Pages/SkillPage/AOEAtt" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -258,6 +303,7 @@ offset_right = 128.0
 offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
+skill_sprite = ExtResource("5_5usc3")
 
 [node name="SkillButton" parent="Pages/SkillPage/AOEAtt/SkillButton" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -272,6 +318,12 @@ offset_right = 128.0
 offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
+skill_sprite = ExtResource("5_5usc3")
+
+[node name="SkillButton" parent="Pages/SkillPage/AOEAtt/SkillButton/SkillButton" instance=ExtResource("1_u2lak")]
+layout_mode = 1
+offset_top = -264.0
+offset_bottom = -136.0
 
 [node name="Dash" parent="Pages/SkillPage" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -315,6 +367,174 @@ offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
 
+[node name="SkillButton" parent="Pages/SkillPage/Dash/SkillButton/SkillButton" instance=ExtResource("1_u2lak")]
+layout_mode = 1
+offset_top = -264.0
+offset_bottom = -136.0
+
+[node name="Troll1" type="Control" parent="Pages/SkillPage"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="Pages/SkillPage/Troll1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1777.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel2" type="Panel" parent="Pages/SkillPage/Troll1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 143.0
+offset_top = 678.0
+offset_right = -1649.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel3" type="Panel" parent="Pages/SkillPage/Troll1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 143.0
+offset_right = -1649.0
+offset_bottom = -530.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel4" type="Panel" parent="Pages/SkillPage/Troll1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 271.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Troll2" type="Control" parent="Pages/SkillPage"]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="Pages/SkillPage/Troll2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -521.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel2" type="Panel" parent="Pages/SkillPage/Troll2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1399.0
+offset_top = 729.0
+offset_right = -61.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel3" type="Panel" parent="Pages/SkillPage/Troll2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1399.0
+offset_right = -61.0
+offset_bottom = -551.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel4" type="Panel" parent="Pages/SkillPage/Troll2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1859.0
+offset_right = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Troll3" type="Control" parent="Pages/SkillPage"]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="Pages/SkillPage/Troll3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -521.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel2" type="Panel" parent="Pages/SkillPage/Troll3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1399.0
+offset_top = 1066.0
+offset_right = -61.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel3" type="Panel" parent="Pages/SkillPage/Troll3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1399.0
+offset_right = -61.0
+offset_bottom = -208.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel4" type="Panel" parent="Pages/SkillPage/Troll3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1859.0
+offset_right = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Pages/SkillPage"]
+layout_mode = 0
+offset_left = 517.0
+offset_top = 969.0
+offset_right = 799.0
+offset_bottom = 1038.0
+theme_override_font_sizes/font_size = 50
+text = "Active Skills"
+
 [node name="StatsPage" type="Control" parent="Pages"]
 visible = false
 anchors_preset = 0
@@ -328,32 +548,20 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 194.0
-offset_top = 867.0
-offset_right = 322.0
-offset_bottom = 995.0
+offset_left = 254.0
+offset_top = 753.0
+offset_right = 382.0
+offset_bottom = 881.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="PassivePage" type="Control" parent="Pages"]
-visible = false
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="SkillButton4" parent="Pages/PassivePage" instance=ExtResource("1_u2lak")]
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 194.0
-offset_top = 867.0
-offset_right = 322.0
-offset_bottom = 995.0
-grow_horizontal = 1
-grow_vertical = 1
+[node name="Label" type="Label" parent="Pages/StatsPage"]
+offset_left = 457.0
+offset_top = 969.0
+offset_right = 849.0
+offset_bottom = 1038.0
+theme_override_font_sizes/font_size = 50
+text = "Stats Multipliers"
 
 [node name="ControlsPage" type="Control" parent="Pages"]
 visible = false
@@ -375,7 +583,16 @@ offset_bottom = 995.0
 grow_horizontal = 1
 grow_vertical = 1
 
+[node name="Label" type="Label" parent="Pages/ControlsPage"]
+offset_left = 457.0
+offset_top = 969.0
+offset_right = 849.0
+offset_bottom = 1038.0
+theme_override_font_sizes/font_size = 50
+text = "Controls"
+
 [node name="Label" type="Label" parent="."]
+z_index = 1
 layout_mode = 0
 offset_left = 117.0
 offset_top = 46.0
@@ -391,15 +608,19 @@ offset_left = 1346.0
 offset_top = 185.0
 offset_right = 1915.0
 offset_bottom = 746.0
+mouse_filter = 2
 
-[node name="SkillTitle" type="HBoxContainer" parent="SkillInfo"]
-layout_mode = 2
-alignment = 1
-
-[node name="SkillName" type="Label" parent="SkillInfo/SkillTitle"]
+[node name="SkillName" type="Label" parent="SkillInfo"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Skill Name"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Cost" type="Label" parent="SkillInfo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Cost : Infinity"
 
 [node name="SkillDesc" type="Label" parent="SkillInfo"]
 layout_mode = 2
@@ -428,6 +649,16 @@ text = "Delete"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="CurrentPoints" type="Label" parent="."]
+layout_mode = 2
+offset_left = 1380.0
+offset_top = 739.0
+offset_right = 1898.0
+offset_bottom = 827.0
+theme_override_font_sizes/font_size = 50
+text = "/ Infinity"
+horizontal_alignment = 1
+
 [node name="Continue" type="Button" parent="."]
 layout_mode = 2
 offset_left = 1387.0
@@ -435,6 +666,7 @@ offset_top = 859.0
 offset_right = 1874.0
 offset_bottom = 1085.0
 theme_override_font_sizes/font_size = 100
+disabled = true
 text = "Continue"
 icon = ExtResource("1_fl80d")
 flat = true
@@ -443,4 +675,5 @@ icon_alignment = 1
 [connection signal="pressed" from="Clickoff" to="." method="_on_clickoff_pressed"]
 [connection signal="pressed" from="Next" to="." method="_on_next_pressed"]
 [connection signal="pressed" from="Prev" to="." method="_on_prev_pressed"]
+[connection signal="pressed" from="SkillInfo/Delete" to="." method="_on_delete_pressed"]
 [connection signal="pressed" from="Continue" to="." method="_on_continue_pressed"]

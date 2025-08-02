@@ -1,5 +1,6 @@
 extends Node
 
+var first_tree = true
 var loop = -1
 var nerfs = []
 
@@ -15,3 +16,7 @@ func has_nerf(nerf):
 func get_loop():
 	loop += 1
 	return loop
+
+var points_needed = [0, 5]
+func get_points_needed():
+	return points_needed[loop]

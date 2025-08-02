@@ -1,7 +1,57 @@
 extends Control
 
-var pages = ["skill", "stats", "passive", "controls"]
+var pages = ["skill", "stats", "controls"]
 var page_index = 0
+var first = false
+
+@export var continue_level: Button
+var points_needed = 0
+
+func _ready() -> void:
+	for page in pages_buttons.get_children():
+		for skill in page.get_children():
+			if skill is SkillNode:
+				skill.connect_signal(self)
+	if CharacterNerfs.first_tree:
+		CharacterNerfs.first_tree = false
+		_first()
+	else:
+		points_needed = CharacterNerfs.get_points_needed()
+		total_points.text = "0 / " + str(points_needed)
+		$Next.show()
+		$Prev.show()
+		$Pages/SkillPage/Troll1.hide()
+		$Pages/SkillPage/Troll2.hide()
+
+###################################3
+# When its your first time, it forces you to delete invinci shield
+func _first():
+	first = true
+	$Pages/SkillPage/Shield/InvinciShield.pressed.connect(_on_invinci_pressed)
+
+func _on_invinci_pressed():
+	$Pages/SkillPage/Troll1.hide()
+	$Pages/SkillPage/Troll2.show()
+	skill_cost.text = "Cost: Infinity"
+
+func _on_delete_pressed() -> void:
+	if first:
+		$Pages/SkillPage/Troll2.hide()
+		$Pages/SkillPage/Troll3.show()
+		continue_level.disabled = false
+		skill_info.hide()
+		total_points.text = "Infinity / Infinity"
+	else:
+		skill_info.hide()
+		current_points += skill_cost_num
+		total_points.text = str(current_points) + " / " + str(points_needed)
+		if current_points >= points_needed:
+			continue_level.disabled = false
+		
+
+####################################3
+
+
 
 func _on_prev_pressed() -> void:
 	page_index -= 1
@@ -10,7 +60,7 @@ func _on_prev_pressed() -> void:
 
 func _on_next_pressed() -> void:
 	page_index += 1
-	page_index = page_index % 4
+	page_index = page_index % 3
 	show_page()
 
 func show_page():
@@ -28,22 +78,29 @@ func show_page():
 
 @export var pages_buttons : Control
 
-func _ready() -> void:
-	for page in pages_buttons.get_children():
-		for skill in page.get_children():
-			skill.connect_signal(self)
-
 @export var skill_info : VBoxContainer
 @export var skill_name : Label
 @export var skill_desc : Label
+@export var skill_cost : Label
+@export var total_points : Label
+var skill_cost_num : int
+var current_points = 0
+
+var clicked_skill : SkillNode
 
 @export var delete : Button
 func skill_pressed(skill):
+	if clicked_skill:
+		clicked_skill.clicked_off()
+	clicked_skill = skill
 	for conn in delete.get_signal_connection_list("pressed"):
 		delete.disconnect("pressed", conn.callable)
+	delete.pressed.connect(_on_delete_pressed)
 	skill_info.show()
 	skill_name.text = skill.skill_name
 	skill_desc.text = skill.skill_desc
+	skill_cost_num = skill.skill_cost
+	skill_cost.text = "Cost: " + str(skill_cost_num)
 	if skill.is_highest_node():
 		delete.disabled = false
 		delete.pressed.connect(skill.remove)
@@ -54,6 +111,8 @@ func _on_clickoff_pressed() -> void:
 	skill_info.hide()
 	for conn in delete.get_signal_connection_list("pressed"):
 		delete.disconnect("pressed", conn.callable)
+	if clicked_skill:
+		clicked_skill.clicked_off()
 
 func _on_continue_pressed() -> void:
 	get_tree().change_scene_to_file("res://Stages/Level.tscn")

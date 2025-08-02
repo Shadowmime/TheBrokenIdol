@@ -6,6 +6,7 @@ var damage : float = 10
 var speed = 1000.0
 var max_distance = 3000
 var distance = 0
+var speed_mod = 1
 
 # Sin wave motion
 var wave_enabled = false
@@ -16,6 +17,12 @@ var perpendicular : Vector2 = Vector2.ZERO
 var origin_position : Vector2
 var spin_enabled = false
 
+@export var homing_enabled = false
+@export var homing_strength = 5.0
+@export var homing_radius = 1000.0
+
+var enemies
+
 func _ready():
 	origin_position = position
 
@@ -23,7 +30,13 @@ func _process(delta: float) -> void:
 	if direction == Vector2.ZERO:
 		return
 	
-	var movement = direction.normalized() * speed * delta
+	if homing_enabled:
+		var target = get_nearest_target()
+		if target:
+			var to_target = (target.global_position - position).normalized()
+			direction = direction.lerp(to_target, homing_strength * delta).normalized()
+	
+	var movement = direction.normalized() * speed * speed_mod * delta
 	origin_position += movement
 	distance += movement.length()
 	
@@ -39,6 +52,16 @@ func _process(delta: float) -> void:
 
 	if distance > max_distance:
 		queue_free()
+
+func get_nearest_target() -> Node2D:
+	var closest_target = null
+	var closest_dist = homing_radius
+	for body in enemies.get_children():
+		var dist = position.distance_to(body.global_position)
+		if dist < closest_dist:
+			closest_dist = dist
+			closest_target = body
+	return closest_target
 
 func _on_body_entered(body: Node2D) -> void:
 	if enemy && !body.is_in_group("player"):
@@ -81,3 +104,10 @@ func is_lightstick():
 var enemy = false
 func is_enemy():
 	enemy = true
+
+func set_speed_mod(_speed_mod):
+	speed_mod = _speed_mod
+
+func set_homing(strength):
+	homing_enabled = true
+	homing_strength = strength

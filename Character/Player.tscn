@@ -126,14 +126,10 @@ metadata/_custom_type_script = "uid://bi4u0nch7ohag"
 script = ExtResource("7_7llnk")
 metadata/_custom_type_script = "uid://bi4u0nch7ohag"
 
-[node name="Shield" type="Node" parent="StateMachine"]
-script = ExtResource("7_7llnk")
-metadata/_custom_type_script = "uid://bi4u0nch7ohag"
-
 [node name="PointSpawn" type="Marker2D" parent="."]
 
 [node name="Shield" type="MeshInstance2D" parent="."]
-modulate = Color(0, 1, 1, 0.14902)
+modulate = Color(0, 1, 1, 0.294118)
 mesh = SubResource("SphereMesh_o1y46")
 
 [connection signal="spawn_note" from="StateMachine/Attack" to="." method="spawn_note"]

@@ -9,7 +9,7 @@ func Exit():
 	pass
 
 func Update(_delta: float):
-	if Input.is_action_just_pressed("attack"):
+	if Input.is_action_just_pressed("attack") && !CharacterNerfs.has_nerf("attack1"):
 		state_transition.emit(self, "attack")
 	#elif Input.is_action_just_pressed("shield"):
 		#state_transition.emit(self, "shield")

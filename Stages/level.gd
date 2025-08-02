@@ -6,6 +6,7 @@ extends Node2D
 @export var anim_player : AnimationPlayer
 
 func _on_player_projectile_spawn(note: Projectile) -> void:
+	note.enemies = enemy_node
 	projectiles.add_child(note)
 
 func _ready() -> void:
@@ -60,6 +61,7 @@ func spawn_enemy_near_player():
 		enemy.spawn_note.connect(_on_watcher_spawn_note)
 	enemy.global_position = spawn_pos
 	enemy.target = player
+	enemy.add_to_group("enemy")
 	enemy_node.add_child(enemy)
 
 var spawn_timer := 0.0

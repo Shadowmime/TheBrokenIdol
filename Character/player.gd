@@ -22,11 +22,14 @@ var hud_open := false
 var stage_rect = Rect2(Vector2.ZERO, Vector2(5760, 3240))
 
 func _skill_update():
-	if CharacterNerfs.has_nerf("Invincible Shield"):
+	if CharacterNerfs.has_nerf("shield2"):
+		shield.modulate.a = 0.05
+		shield_scale = 0.5
+	if CharacterNerfs.has_nerf("shield1"):
 		shield.hide()
-		invinci_shield = false
+		shield_scale = 1
 
-var invinci_shield = true
+var shield_scale = 0
 
 func _ready():
 	_current_speed = NORMAL_SPEED * speed_multiplier
@@ -122,7 +125,5 @@ func on_death():
 	get_tree().change_scene_to_file("res://Menus/game_over.tscn")
 
 func take_damage(damage, _damage_type = null):
-	if invinci_shield:
-		return
 	# multipliers go in here
-	health = health - damage
+	health = health - damage * shield_scale
