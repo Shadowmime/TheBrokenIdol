@@ -9,16 +9,14 @@ func Exit():
 	pass
 
 func Update(_delta: float):
-	if Input.is_action_just_pressed("attack"):
+	if Input.is_action_just_pressed("attack") && !CharacterNerfs.has_nerf("attack1"):
 		state_transition.emit(self, "attack")
-	#elif Input.is_action_just_pressed("shield"):
-		#state_transition.emit(self, "shield")
-	elif Input.is_action_just_pressed("dash"):
-		state_transition.emit(self, "dash")
-	elif Input.is_action_just_pressed("fast_attack"):
+	#elif Input.is_action_just_pressed("dash") && !CharacterNerfs.has_nerf("dash1"):
+		#state_transition.emit(self, "dash")
+	elif Input.is_action_just_pressed("fast_attack") && !CharacterNerfs.has_nerf("eattack1"):
 		state_transition.emit(self, "fastattack")
-	#elif Input.is_action_just_pressed("interact") and player.can_talk:
-		#state_transition.emit(self, "npctalk")
+	elif Input.is_action_just_pressed("aoe_attack") && !CharacterNerfs.has_nerf("qattack1"):
+		state_transition.emit(self, "aoeattack")
 
 func Physics_Update(_delta: float):
 	pass

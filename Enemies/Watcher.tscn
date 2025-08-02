@@ -86,6 +86,7 @@ script = ExtResource("1_4fbfg")
 nav = NodePath("NavigationAgent2D")
 animation_player = NodePath("AnimationPlayer")
 health_bar = NodePath("Healthbar")
+max_health = 150
 sprite = NodePath("AnimatedSprite2D")
 state_machine = NodePath("StateMachine")
 

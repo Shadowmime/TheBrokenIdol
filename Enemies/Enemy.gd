@@ -12,9 +12,11 @@ signal dead(_name)
 
 func _ready() -> void:
 	play_animations()
+	health_bar.max_value = max_health
+	health = max_health
 
 @export var health_bar : ProgressBar
-var max_health = 100
+@export var max_health = 100
 var health = 100:
 	set(value):
 		health = clamp(value, 0, max_health)
@@ -30,9 +32,15 @@ func take_damage(damage, _damage_type = null):
 var attack_cd : float = 0
 var max_attack_cd : float = 2
 
+var slowed_duration = 0
+
 func _process(delta: float) -> void:
 	if attack_cd > 0:
 		attack_cd -= delta
+	if slowed_duration > 0:
+		slowed_duration -= delta
+	else:
+		speed_mult = 1
 
 func play_animations():
 	pass
@@ -83,3 +91,8 @@ func _on_navigation_agent_2d_target_reached() -> void:
 func on_death():
 	dead.emit(name)
 	queue_free()
+
+var speed_mult = 1
+func set_speed_mult(mult):
+	slowed_duration = 3
+	speed_mult = mult

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dma111exu28u1"]
+[gd_scene load_steps=18 format=3 uid="uid://dma111exu28u1"]
 
 [ext_resource type="Texture2D" uid="uid://b11kwu6ux7r02" path="res://Character/Frame0.png" id="1_schp4"]
 [ext_resource type="Script" uid="uid://c13epiayxdskq" path="res://Character/player.gd" id="1_ssuvf"]
@@ -6,10 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://dvgyopj5jiw45" path="res://Character/Frame2.png" id="2_ssuvf"]
 [ext_resource type="Script" uid="uid://ct8qkty76kdmf" path="res://Scripts/state_machine.gd" id="5_5ydrh"]
 [ext_resource type="Script" uid="uid://bfmhsojclpwdy" path="res://Character/idlestate.gd" id="6_gvj7u"]
-[ext_resource type="Script" uid="uid://bi4u0nch7ohag" path="res://Scripts/state.gd" id="7_7llnk"]
 [ext_resource type="Script" uid="uid://bnmth1ru8d8yt" path="res://Character/attack_state.gd" id="7_gvj7u"]
 [ext_resource type="Script" uid="uid://c61tipvj72dy4" path="res://Character/dash.gd" id="8_o1y46"]
 [ext_resource type="Script" uid="uid://b0ekswxlypp82" path="res://Character/fast_attack.gd" id="9_7llnk"]
+[ext_resource type="Script" uid="uid://sgrhae7dudek" path="res://Character/aoe_attack.gd" id="10_o1y46"]
+[ext_resource type="Script" uid="uid://bwaemjlqr7j21" path="res://Character/idlemovement.gd" id="10_qolio"]
+[ext_resource type="PackedScene" uid="uid://bvruwtewb0q4y" path="res://Character/Projectiles/bomb.tscn" id="10_y83ax"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o1y46"]
 bg_color = Color(1, 0.290747, 0.541075, 1)
@@ -50,12 +52,13 @@ height = 275.0
 radius = 125.0
 height = 250.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "camera", "shield", "timer", "health_bar")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "camera", "shield", "timer", "regen_timer", "health_bar")]
 script = ExtResource("1_ssuvf")
 sprite = NodePath("AnimatedSprite2D")
 camera = NodePath("Camera2D")
 shield = NodePath("Shield")
 timer = NodePath("HUD/Timer")
+regen_timer = NodePath("Timer")
 health_bar = NodePath("HUD/Health")
 
 [node name="HUD" type="CanvasLayer" parent="."]
@@ -94,47 +97,60 @@ limit_smoothed = true
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ssuvf")
 
-[node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("initial_state", "character")]
+[node name="CombatSM" type="Node2D" parent="." node_paths=PackedStringArray("initial_state", "character")]
 script = ExtResource("5_5ydrh")
 initial_state = NodePath("Idle")
 character = NodePath("..")
 metadata/_custom_type_script = "uid://ct8qkty76kdmf"
 
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+[node name="Idle" type="Node" parent="CombatSM" node_paths=PackedStringArray("player")]
 script = ExtResource("6_gvj7u")
 player = NodePath("../..")
 metadata/_custom_type_script = "uid://bi4u0nch7ohag"
 
-[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("point_spawn", "player")]
+[node name="Attack" type="Node" parent="CombatSM" node_paths=PackedStringArray("point_spawn", "player")]
 script = ExtResource("7_gvj7u")
 point_spawn = NodePath("../../PointSpawn")
 player = NodePath("../..")
 metadata/_custom_type_script = "uid://bi4u0nch7ohag"
 
-[node name="Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
-script = ExtResource("8_o1y46")
-player = NodePath("../..")
-metadata/_custom_type_script = "uid://bi4u0nch7ohag"
-
-[node name="FastAttack" type="Node" parent="StateMachine" node_paths=PackedStringArray("point_spawn", "player")]
+[node name="FastAttack" type="Node" parent="CombatSM" node_paths=PackedStringArray("point_spawn", "player")]
 script = ExtResource("9_7llnk")
 point_spawn = NodePath("../../PointSpawn")
 player = NodePath("../..")
 metadata/_custom_type_script = "uid://bi4u0nch7ohag"
 
-[node name="AOEAttack" type="Node" parent="StateMachine"]
-script = ExtResource("7_7llnk")
+[node name="AOEAttack" type="Node" parent="CombatSM" node_paths=PackedStringArray("point_spawn")]
+script = ExtResource("10_o1y46")
+point_spawn = NodePath("../../PointSpawn")
+bomb_scene = ExtResource("10_y83ax")
 metadata/_custom_type_script = "uid://bi4u0nch7ohag"
 
-[node name="Shield" type="Node" parent="StateMachine"]
-script = ExtResource("7_7llnk")
+[node name="MovementSM" type="Node2D" parent="." node_paths=PackedStringArray("initial_state", "character")]
+script = ExtResource("5_5ydrh")
+initial_state = NodePath("Idle")
+character = NodePath("..")
+metadata/_custom_type_script = "uid://ct8qkty76kdmf"
+
+[node name="Idle" type="Node" parent="MovementSM"]
+script = ExtResource("10_qolio")
+metadata/_custom_type_script = "uid://bi4u0nch7ohag"
+
+[node name="Dash" type="Node" parent="MovementSM" node_paths=PackedStringArray("player")]
+script = ExtResource("8_o1y46")
+player = NodePath("../..")
 metadata/_custom_type_script = "uid://bi4u0nch7ohag"
 
 [node name="PointSpawn" type="Marker2D" parent="."]
 
 [node name="Shield" type="MeshInstance2D" parent="."]
-modulate = Color(0, 1, 1, 0.14902)
+modulate = Color(0, 1, 1, 0.294118)
 mesh = SubResource("SphereMesh_o1y46")
 
-[connection signal="spawn_note" from="StateMachine/Attack" to="." method="spawn_note"]
-[connection signal="spawn_note" from="StateMachine/FastAttack" to="." method="spawn_note"]
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[connection signal="spawn_note" from="CombatSM/Attack" to="." method="spawn_note"]
+[connection signal="spawn_note" from="CombatSM/FastAttack" to="." method="spawn_note"]
+[connection signal="spawn_bomb" from="CombatSM/AOEAttack" to="." method="_on_aoe_attack_spawn_bomb"]

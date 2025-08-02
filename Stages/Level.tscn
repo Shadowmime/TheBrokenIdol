@@ -120,13 +120,13 @@ navigation_polygon = SubResource("NavigationPolygon_kla8h")
 
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="Rival" parent="Enemies" instance=ExtResource("4_31xj6")]
+[node name="Rival" parent="Enemies" groups=["enemy"] instance=ExtResource("4_31xj6")]
 position = Vector2(871, 814)
 
-[node name="BrokenLight" parent="Enemies" instance=ExtResource("5_3hewx")]
+[node name="BrokenLight" parent="Enemies" groups=["enemy"] instance=ExtResource("5_3hewx")]
 position = Vector2(1343, 2556)
 
-[node name="Watcher" parent="Enemies" instance=ExtResource("6_k4q7x")]
+[node name="Watcher" parent="Enemies" groups=["enemy"] instance=ExtResource("6_k4q7x")]
 position = Vector2(4445, 643)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
@@ -156,5 +156,6 @@ libraries = {
 }
 
 [connection signal="projectile_spawn" from="Player" to="." method="_on_player_projectile_spawn"]
+[connection signal="spawn_bomb" from="Player" to="." method="_on_player_spawn_bomb"]
 [connection signal="survived" from="Player" to="." method="_on_player_survived"]
 [connection signal="spawn_note" from="Enemies/Watcher" to="." method="_on_watcher_spawn_note"]

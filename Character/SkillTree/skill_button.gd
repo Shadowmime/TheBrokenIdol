@@ -20,6 +20,9 @@ func _on_pressed() -> void:
 @export var line : Line2D
 @export var skill_sprite : Texture
 @export var skill_desc : String
+@export var skill_reference : String
+@export var base_damage : String
+@export var cooldown : String
 
 @export var delete_button : Button
 
@@ -28,11 +31,11 @@ func connect_signal(controller):
 	for child in get_children():
 		if child.has_method("connect_signal"):
 			child.connect_signal(controller)
-	if CharacterNerfs.has_nerf(skill_name):
+	if CharacterNerfs.has_nerf(skill_reference):
 		queue_free()
 
 func remove():
-	CharacterNerfs.add_nerf(skill_name)
+	CharacterNerfs.add_nerf(skill_reference)
 	$AnimationPlayer.play("delete")
 	await get_tree().create_timer(0.5).timeout
 	queue_free()
@@ -42,3 +45,6 @@ func is_highest_node() -> bool:
 		if child is SkillNode:
 			return false
 	return true
+
+func clicked_off():
+	$Panel.hide()

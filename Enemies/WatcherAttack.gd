@@ -31,5 +31,6 @@ func attack():
 	proj.set_speed(2500)
 	proj.is_lightstick()
 	proj.is_enemy()
+	proj.set_damage(70)
 	#note.set_direction(player.get_look_direction(), self.global_position)
 	spawn_note.emit(proj)
