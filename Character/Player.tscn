@@ -1,0 +1,140 @@
+[gd_scene load_steps=16 format=3 uid="uid://dma111exu28u1"]
+
+[ext_resource type="Texture2D" uid="uid://b11kwu6ux7r02" path="res://Character/Frame0.png" id="1_schp4"]
+[ext_resource type="Script" uid="uid://c13epiayxdskq" path="res://Character/player.gd" id="1_ssuvf"]
+[ext_resource type="Texture2D" uid="uid://3gfspw2umws3" path="res://Character/Frame1.png" id="2_pusnx"]
+[ext_resource type="Texture2D" uid="uid://dvgyopj5jiw45" path="res://Character/Frame2.png" id="2_ssuvf"]
+[ext_resource type="Script" uid="uid://ct8qkty76kdmf" path="res://Scripts/state_machine.gd" id="5_5ydrh"]
+[ext_resource type="Script" uid="uid://bfmhsojclpwdy" path="res://Character/idlestate.gd" id="6_gvj7u"]
+[ext_resource type="Script" uid="uid://bi4u0nch7ohag" path="res://Scripts/state.gd" id="7_7llnk"]
+[ext_resource type="Script" uid="uid://bnmth1ru8d8yt" path="res://Character/attack_state.gd" id="7_gvj7u"]
+[ext_resource type="Script" uid="uid://c61tipvj72dy4" path="res://Character/dash.gd" id="8_o1y46"]
+[ext_resource type="Script" uid="uid://b0ekswxlypp82" path="res://Character/fast_attack.gd" id="9_7llnk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o1y46"]
+bg_color = Color(1, 0.290747, 0.541075, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qolio"]
+bg_color = Color(0.165907, 0.722246, 0, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ssuvf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_schp4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ssuvf")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_schp4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_pusnx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ssuvf"]
+radius = 75.0
+height = 275.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_o1y46"]
+radius = 125.0
+height = 250.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "camera", "shield", "timer", "health_bar")]
+script = ExtResource("1_ssuvf")
+sprite = NodePath("AnimatedSprite2D")
+camera = NodePath("Camera2D")
+shield = NodePath("Shield")
+timer = NodePath("HUD/Timer")
+health_bar = NodePath("HUD/Health")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Health" type="ProgressBar" parent="HUD"]
+offset_left = 802.0
+offset_top = 999.0
+offset_right = 1157.0
+offset_bottom = 1033.0
+theme_override_styles/background = SubResource("StyleBoxFlat_o1y46")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qolio")
+value = 100.0
+
+[node name="Timer" type="ProgressBar" parent="HUD"]
+offset_left = 47.0
+offset_top = 57.0
+offset_right = 1879.0
+offset_bottom = 126.0
+max_value = 60.0
+value = 60.0
+show_percentage = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ssuvf")
+frame = 1
+frame_progress = 0.974703
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.75, 0.75)
+limit_left = 0
+limit_top = 0
+limit_right = 5760
+limit_bottom = 3240
+limit_smoothed = true
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_ssuvf")
+
+[node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("initial_state", "character")]
+script = ExtResource("5_5ydrh")
+initial_state = NodePath("Idle")
+character = NodePath("..")
+metadata/_custom_type_script = "uid://ct8qkty76kdmf"
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+script = ExtResource("6_gvj7u")
+player = NodePath("../..")
+metadata/_custom_type_script = "uid://bi4u0nch7ohag"
+
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("point_spawn", "player")]
+script = ExtResource("7_gvj7u")
+point_spawn = NodePath("../../PointSpawn")
+player = NodePath("../..")
+metadata/_custom_type_script = "uid://bi4u0nch7ohag"
+
+[node name="Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+script = ExtResource("8_o1y46")
+player = NodePath("../..")
+metadata/_custom_type_script = "uid://bi4u0nch7ohag"
+
+[node name="FastAttack" type="Node" parent="StateMachine" node_paths=PackedStringArray("point_spawn", "player")]
+script = ExtResource("9_7llnk")
+point_spawn = NodePath("../../PointSpawn")
+player = NodePath("../..")
+metadata/_custom_type_script = "uid://bi4u0nch7ohag"
+
+[node name="AOEAttack" type="Node" parent="StateMachine"]
+script = ExtResource("7_7llnk")
+metadata/_custom_type_script = "uid://bi4u0nch7ohag"
+
+[node name="Shield" type="Node" parent="StateMachine"]
+script = ExtResource("7_7llnk")
+metadata/_custom_type_script = "uid://bi4u0nch7ohag"
+
+[node name="PointSpawn" type="Marker2D" parent="."]
+
+[node name="Shield" type="MeshInstance2D" parent="."]
+modulate = Color(0, 1, 1, 0.14902)
+mesh = SubResource("SphereMesh_o1y46")
+
+[connection signal="spawn_note" from="StateMachine/Attack" to="." method="spawn_note"]
+[connection signal="spawn_note" from="StateMachine/FastAttack" to="." method="spawn_note"]

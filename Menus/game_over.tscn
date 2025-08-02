@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://3bid6nk8ypta"]
+
+[node name="GameOver" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 296.0
+offset_top = 456.0
+offset_right = 1532.0
+offset_bottom = 798.0
+theme_override_font_sizes/font_size = 250
+text = "YOU SUCK"

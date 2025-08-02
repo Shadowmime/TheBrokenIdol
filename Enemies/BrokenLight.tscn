@@ -1,0 +1,164 @@
+[gd_scene load_steps=15 format=3 uid="uid://cbfjfujjwuk3d"]
+
+[ext_resource type="Script" uid="uid://k4a0yqllahfe" path="res://Enemies/broken_light.gd" id="1_2dilx"]
+[ext_resource type="Script" uid="uid://ct8qkty76kdmf" path="res://Scripts/state_machine.gd" id="2_24ljj"]
+[ext_resource type="Script" uid="uid://bi260f3hqhnj7" path="res://Enemies/RivalIdle.gd" id="3_0yo4u"]
+[ext_resource type="Script" uid="uid://c0m2l0nmxq06w" path="res://Enemies/RivalTracking.gd" id="4_p5fc5"]
+[ext_resource type="Script" uid="uid://bcxhg78p8c6o4" path="res://Enemies/BFattack.gd" id="5_2dilx"]
+[ext_resource type="Texture2D" uid="uid://dhcuvk3s22qx4" path="res://Enemies/BrokenFans/BrokenFans0.png" id="6_2dilx"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jcwuj"]
+radius = 128.0
+height = 256.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ejajv"]
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2x7ij"]
+bg_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ejajv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_2dilx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="Animation" id="Animation_2x7ij"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_xueyo"]
+resource_name = "charge_spin"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.46667, 2, 2.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 3.14159, 6.28319, 0.0, -6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_ejajv"]
+resource_name = "idle"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.766667, 1.43333, 2.06667, 3, 3.66667, 4.26667, 5.03333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2x7ij"]
+_data = {
+&"RESET": SubResource("Animation_2x7ij"),
+&"charge_spin": SubResource("Animation_xueyo"),
+&"idle": SubResource("Animation_ejajv")
+}
+
+[node name="BrokenLight" type="CharacterBody2D" node_paths=PackedStringArray("nav", "animation_player", "health_bar", "sprite", "state_machine")]
+collision_layer = 2
+script = ExtResource("1_2dilx")
+nav = NodePath("NavigationAgent2D")
+animation_player = NodePath("AnimationPlayer")
+health_bar = NodePath("Healthbar")
+sprite = NodePath("AnimatedSprite2D")
+state_machine = NodePath("StateMachine")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_jcwuj")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 10.0
+target_desired_distance = 750.0
+
+[node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("initial_state", "character")]
+script = ExtResource("2_24ljj")
+initial_state = NodePath("Idle")
+character = NodePath("..")
+metadata/_custom_type_script = "uid://ct8qkty76kdmf"
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_0yo4u")
+metadata/_custom_type_script = "uid://dd7akicqh5561"
+
+[node name="Tracking" type="Node" parent="StateMachine"]
+script = ExtResource("4_p5fc5")
+metadata/_custom_type_script = "uid://dd7akicqh5561"
+
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_player")]
+script = ExtResource("5_2dilx")
+animation_player = NodePath("../../AnimationPlayer")
+metadata/_custom_type_script = "uid://dd7akicqh5561"
+
+[node name="Healthbar" type="ProgressBar" parent="."]
+offset_left = -113.0
+offset_top = -160.0
+offset_right = 114.0
+offset_bottom = -133.0
+theme_override_styles/background = SubResource("StyleBoxFlat_ejajv")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7ij")
+value = 100.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ejajv")
+frame_progress = 0.32943
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_2x7ij")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_jcwuj")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]

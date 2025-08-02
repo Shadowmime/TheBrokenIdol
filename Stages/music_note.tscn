@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7jl2d8b7ie12"]
+
+[ext_resource type="PackedScene" uid="uid://c5m3pj26a3ijc" path="res://Character/Projectiles/Projectile.tscn" id="1_bptd6"]
+[ext_resource type="Script" uid="uid://cwlo4vd78qfmg" path="res://Stages/music_note.gd" id="2_o2aea"]
+
+[node name="MusicNote" instance=ExtResource("1_bptd6")]
+script = ExtResource("2_o2aea")

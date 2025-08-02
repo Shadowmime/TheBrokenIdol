@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://cphujktoyhco"]
+
+[ext_resource type="Script" uid="uid://ct8qkty76kdmf" path="res://Scripts/state_machine.gd" id="1_4isyn"]
+[ext_resource type="Script" uid="uid://bpbay1xhompgq" path="res://Enemies/Enemy.gd" id="1_wdetw"]
+[ext_resource type="Script" uid="uid://dd7akicqh5561" path="res://Scripts/enemy_state.gd" id="2_4isyn"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jcwuj"]
+
+[node name="Enemy" type="CharacterBody2D"]
+script = ExtResource("1_wdetw")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_jcwuj")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="StateMachine" type="Node2D" parent="."]
+script = ExtResource("1_4isyn")
+metadata/_custom_type_script = "uid://ct8qkty76kdmf"
+
+[node name="EnemyState" type="Node" parent="StateMachine"]
+script = ExtResource("2_4isyn")
+metadata/_custom_type_script = "uid://dd7akicqh5561"
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_right = 4.0
+offset_bottom = 27.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

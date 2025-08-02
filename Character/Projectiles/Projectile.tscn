@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5m3pj26a3ijc"]
+
+[ext_resource type="Script" uid="uid://c4q04yuwocgp2" path="res://Character/Projectiles/projectile.gd" id="1_5pbqm"]
+[ext_resource type="Texture2D" uid="uid://chluh8tof5cbh" path="res://Character/Projectiles/Double_Note.png" id="2_pxuy0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_073bl"]
+radius = 20.0
+
+[node name="MusicNote" type="Area2D"]
+collision_mask = 3
+script = ExtResource("1_5pbqm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_073bl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_pxuy0")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

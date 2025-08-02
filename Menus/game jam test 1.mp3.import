@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ty6308wvka5k"
+path="res://.godot/imported/game jam test 1.mp3-c4d65d1b1afbf1adbe83c90fa27a0a92.mp3str"
+
+[deps]
+
+source_file="res://Menus/game jam test 1.mp3"
+dest_files=["res://.godot/imported/game jam test 1.mp3-c4d65d1b1afbf1adbe83c90fa27a0a92.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

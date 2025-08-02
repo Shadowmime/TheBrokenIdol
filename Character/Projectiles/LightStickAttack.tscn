@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8x20un8pauja"]
+
+[ext_resource type="Script" uid="uid://c4q04yuwocgp2" path="res://Character/Projectiles/projectile.gd" id="1_ajvus"]
+[ext_resource type="Texture2D" uid="uid://px74382u0vhy" path="res://Enemies/BrokenFans/Lightsticks.png" id="2_0mmvm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5wpvj"]
+radius = 128.0
+
+[node name="LightStickAttack" type="Area2D"]
+collision_mask = 3
+script = ExtResource("1_ajvus")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5wpvj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_0mmvm")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

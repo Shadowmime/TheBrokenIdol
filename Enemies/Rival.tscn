@@ -1,0 +1,179 @@
+[gd_scene load_steps=24 format=3 uid="uid://g4pjwp4jvyf3"]
+
+[ext_resource type="Script" uid="uid://ct8qkty76kdmf" path="res://Scripts/state_machine.gd" id="1_je477"]
+[ext_resource type="Script" uid="uid://su35u4n0ftx8" path="res://Enemies/rival.gd" id="1_xmuc0"]
+[ext_resource type="Script" uid="uid://bi260f3hqhnj7" path="res://Enemies/RivalIdle.gd" id="3_5hdkq"]
+[ext_resource type="Texture2D" uid="uid://cslrotipwbn" path="res://Enemies/Rival/Rival0.png" id="3_c06ik"]
+[ext_resource type="Script" uid="uid://c0m2l0nmxq06w" path="res://Enemies/RivalTracking.gd" id="4_5hdkq"]
+[ext_resource type="Texture2D" uid="uid://ccubjmioe53s6" path="res://Enemies/Rival/Rival1.png" id="4_xmuc0"]
+[ext_resource type="Texture2D" uid="uid://bonrugqc6x4oj" path="res://Enemies/Rival/Rival2.png" id="5_5hdkq"]
+[ext_resource type="Script" uid="uid://bp71fef7kxkuq" path="res://Enemies/RivalAttack.gd" id="5_ejajv"]
+[ext_resource type="Texture2D" uid="uid://ckwixtsju65es" path="res://Enemies/Rival/attack/RivalAttack0.png" id="9_lhi4e"]
+[ext_resource type="Texture2D" uid="uid://dbfqqtn463m2w" path="res://Enemies/Rival/attack/RivalAttack1.png" id="10_ghdg8"]
+[ext_resource type="Texture2D" uid="uid://dq4wasisnck17" path="res://Enemies/Rival/attack/RivalAttack2.png" id="11_munvp"]
+[ext_resource type="Texture2D" uid="uid://cw3b7ocs60bha" path="res://Enemies/Rival/attack/RivalAttack3.png" id="12_u8krl"]
+[ext_resource type="Texture2D" uid="uid://ds7du5fb4mvhg" path="res://Enemies/Rival/attack/RivalAttack4.png" id="13_cu05v"]
+[ext_resource type="Texture2D" uid="uid://bb5hyg3b8hee6" path="res://Enemies/Rival/attack/RivalAttack5.png" id="14_14h1c"]
+[ext_resource type="Texture2D" uid="uid://cg3p1lfu634ch" path="res://Enemies/Rival/attack/RivalAttack6.png" id="15_ho4g0"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jcwuj"]
+radius = 75.0
+height = 275.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ejajv"]
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2x7ij"]
+bg_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ejajv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_c06ik")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_xmuc0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_5hdkq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_2x7ij"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ejajv"]
+resource_name = "idle"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.766667, 1.43333, 2.06667, 3, 3.66667, 4.26667, 5.03333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2x7ij"]
+_data = {
+&"RESET": SubResource("Animation_2x7ij"),
+&"idle": SubResource("Animation_ejajv")
+}
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lq75t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_lhi4e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ghdg8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_munvp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_u8krl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_cu05v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_14h1c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_ho4g0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[node name="Rival" type="CharacterBody2D" node_paths=PackedStringArray("nav", "animation_player", "health_bar", "sprite", "state_machine")]
+script = ExtResource("1_xmuc0")
+nav = NodePath("NavigationAgent2D")
+animation_player = NodePath("AnimationPlayer")
+health_bar = NodePath("Healthbar")
+sprite = NodePath("AnimatedSprite2D")
+state_machine = NodePath("StateMachine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_jcwuj")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 10.0
+target_desired_distance = 200.0
+
+[node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("initial_state", "character")]
+script = ExtResource("1_je477")
+initial_state = NodePath("Idle")
+character = NodePath("..")
+metadata/_custom_type_script = "uid://ct8qkty76kdmf"
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_5hdkq")
+metadata/_custom_type_script = "uid://dd7akicqh5561"
+
+[node name="Tracking" type="Node" parent="StateMachine"]
+script = ExtResource("4_5hdkq")
+metadata/_custom_type_script = "uid://dd7akicqh5561"
+
+[node name="Attack" type="Node" parent="StateMachine"]
+script = ExtResource("5_ejajv")
+metadata/_custom_type_script = "uid://dd7akicqh5561"
+
+[node name="Healthbar" type="ProgressBar" parent="."]
+offset_left = -113.0
+offset_top = -160.0
+offset_right = 114.0
+offset_bottom = -133.0
+theme_override_styles/background = SubResource("StyleBoxFlat_ejajv")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7ij")
+value = 100.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ejajv")
+frame = 2
+frame_progress = 0.189152
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_2x7ij")
+}
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+position = Vector2(84.75, -47.5)
+scale = Vector2(0.724609, 0.730469)
+sprite_frames = SubResource("SpriteFrames_lq75t")
+frame = 6
+frame_progress = 0.0446074
+
+[connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]

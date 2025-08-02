@@ -1,0 +1,139 @@
+[gd_scene load_steps=16 format=3 uid="uid://bt1x4cyi4swre"]
+
+[ext_resource type="Script" uid="uid://co2clrsa0mjw8" path="res://Enemies/watcher.gd" id="1_4fbfg"]
+[ext_resource type="Script" uid="uid://ct8qkty76kdmf" path="res://Scripts/state_machine.gd" id="2_85int"]
+[ext_resource type="Script" uid="uid://bi260f3hqhnj7" path="res://Enemies/RivalIdle.gd" id="3_koew0"]
+[ext_resource type="Script" uid="uid://c0m2l0nmxq06w" path="res://Enemies/RivalTracking.gd" id="4_h50it"]
+[ext_resource type="Script" uid="uid://dffu0g4wdb8fp" path="res://Enemies/WatcherAttack.gd" id="5_4fbfg"]
+[ext_resource type="Texture2D" uid="uid://c60a8jprfasen" path="res://Enemies/Watcher/Watcher0.png" id="6_4fbfg"]
+[ext_resource type="Texture2D" uid="uid://co234yk62uoel" path="res://Enemies/Watcher/Watcher1.png" id="7_85int"]
+[ext_resource type="Texture2D" uid="uid://b5qpfyj80atfw" path="res://Enemies/Watcher/Watcher2.png" id="8_koew0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_h50it"]
+radius = 128.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ejajv"]
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2x7ij"]
+bg_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ejajv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_4fbfg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_85int")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_koew0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="Animation" id="Animation_2x7ij"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ejajv"]
+resource_name = "idle"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.766667, 1.43333, 2.06667, 3, 3.66667, 4.26667, 5.03333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2x7ij"]
+_data = {
+&"RESET": SubResource("Animation_2x7ij"),
+&"idle": SubResource("Animation_ejajv")
+}
+
+[node name="Watcher" type="CharacterBody2D" node_paths=PackedStringArray("nav", "animation_player", "health_bar", "sprite", "state_machine")]
+script = ExtResource("1_4fbfg")
+nav = NodePath("NavigationAgent2D")
+animation_player = NodePath("AnimationPlayer")
+health_bar = NodePath("Healthbar")
+sprite = NodePath("AnimatedSprite2D")
+state_machine = NodePath("StateMachine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_h50it")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 10.0
+target_desired_distance = 2000.0
+
+[node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("initial_state", "character")]
+script = ExtResource("2_85int")
+initial_state = NodePath("Idle")
+character = NodePath("..")
+metadata/_custom_type_script = "uid://ct8qkty76kdmf"
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_koew0")
+metadata/_custom_type_script = "uid://dd7akicqh5561"
+
+[node name="Tracking" type="Node" parent="StateMachine"]
+script = ExtResource("4_h50it")
+metadata/_custom_type_script = "uid://dd7akicqh5561"
+
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("point_spawn")]
+script = ExtResource("5_4fbfg")
+point_spawn = NodePath("../../Marker2D")
+metadata/_custom_type_script = "uid://dd7akicqh5561"
+
+[node name="Healthbar" type="ProgressBar" parent="."]
+offset_left = -113.0
+offset_top = -160.0
+offset_right = 114.0
+offset_bottom = -133.0
+theme_override_styles/background = SubResource("StyleBoxFlat_ejajv")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2x7ij")
+value = 100.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ejajv")
+frame = 1
+frame_progress = 0.585338
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_2x7ij")
+}
+
+[node name="Marker2D" type="Marker2D" parent="."]
+
+[connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
+[connection signal="spawn_note" from="StateMachine/Attack" to="." method="_on_attack_spawn_note"]

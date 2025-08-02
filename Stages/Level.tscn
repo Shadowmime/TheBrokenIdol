@@ -1,0 +1,160 @@
+[gd_scene load_steps=12 format=3 uid="uid://dsbhfcrbkfulg"]
+
+[ext_resource type="Script" uid="uid://cy817r4r8nb3b" path="res://Stages/level.gd" id="1_kla8h"]
+[ext_resource type="Texture2D" uid="uid://cgjd1p13di5y8" path="res://Assets/Background.png" id="1_ragna"]
+[ext_resource type="PackedScene" uid="uid://dma111exu28u1" path="res://Character/Player.tscn" id="2_8tfpl"]
+[ext_resource type="PackedScene" uid="uid://g4pjwp4jvyf3" path="res://Enemies/Rival.tscn" id="4_31xj6"]
+[ext_resource type="PackedScene" uid="uid://cbfjfujjwuk3d" path="res://Enemies/BrokenLight.tscn" id="5_3hewx"]
+[ext_resource type="PackedScene" uid="uid://bt1x4cyi4swre" path="res://Enemies/Watcher.tscn" id="6_k4q7x"]
+[ext_resource type="AudioStream" uid="uid://bk6c3ltl5on3b" path="res://Menus/music_box.mp3" id="7_0jlh6"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_kla8h"]
+vertices = PackedVector2Array(5745.95, 3229.98, 26.9375, 3222.01, 8.04688, 11.9766, 5731.04, 4.00781)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(5741, -6, 5740, 3240, 17, 3232, -2, 2)])
+
+[sub_resource type="Animation" id="Animation_0jlh6"]
+resource_name = "ending1"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.46667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(5720, 3240)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.46667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2740, 1660), Vector2(2, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.46667),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_07bur"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(5720, 3240)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h4tav"]
+_data = {
+&"RESET": SubResource("Animation_07bur"),
+&"ending1": SubResource("Animation_0jlh6")
+}
+
+[node name="Level" type="Node2D" node_paths=PackedStringArray("projectiles", "enemy_node", "player", "anim_player")]
+script = ExtResource("1_kla8h")
+projectiles = NodePath("Projectiles")
+enemy_node = NodePath("Enemies")
+player = NodePath("Player")
+anim_player = NodePath("AnimationPlayer")
+enemy_scenes = Array[PackedScene]([ExtResource("4_31xj6"), ExtResource("6_k4q7x"), ExtResource("5_3hewx")])
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(2880, 1620)
+texture = ExtResource("1_ragna")
+
+[node name="Player" parent="." groups=["player"] instance=ExtResource("2_8tfpl")]
+position = Vector2(2838, 1451)
+
+[node name="Projectiles" type="Node2D" parent="."]
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_kla8h")
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Rival" parent="Enemies" instance=ExtResource("4_31xj6")]
+position = Vector2(871, 814)
+
+[node name="BrokenLight" parent="Enemies" instance=ExtResource("5_3hewx")]
+position = Vector2(1343, 2556)
+
+[node name="Watcher" parent="Enemies" instance=ExtResource("6_k4q7x")]
+position = Vector2(4445, 643)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_0jlh6")
+autoplay = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 5722.0
+offset_bottom = 3241.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_h4tav")
+}
+
+[connection signal="projectile_spawn" from="Player" to="." method="_on_player_projectile_spawn"]
+[connection signal="survived" from="Player" to="." method="_on_player_survived"]
+[connection signal="spawn_note" from="Enemies/Watcher" to="." method="_on_watcher_spawn_note"]
