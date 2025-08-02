@@ -13,9 +13,9 @@ func Update(_delta: float):
 		state_transition.emit(self, "attack")
 	#elif Input.is_action_just_pressed("shield"):
 		#state_transition.emit(self, "shield")
-	elif Input.is_action_just_pressed("dash"):
+	elif Input.is_action_just_pressed("dash") && !CharacterNerfs.has_nerf("dash1"):
 		state_transition.emit(self, "dash")
-	elif Input.is_action_just_pressed("fast_attack"):
+	elif Input.is_action_just_pressed("fast_attack") && !CharacterNerfs.has_nerf("eattack1"):
 		state_transition.emit(self, "fastattack")
 	#elif Input.is_action_just_pressed("interact") and player.can_talk:
 		#state_transition.emit(self, "npctalk")

@@ -1,12 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://doyo0u380gcxn"]
+[gd_scene load_steps=12 format=3 uid="uid://doyo0u380gcxn"]
 
 [ext_resource type="Script" uid="uid://dg0spun41i0j5" path="res://Character/SkillTree/skill_tree.gd" id="1_8fi17"]
 [ext_resource type="Texture2D" uid="uid://dqgu73p0lb6s0" path="res://Character/SkillTree/Button3.png" id="1_fl80d"]
 [ext_resource type="PackedScene" uid="uid://cg0ioact5bp7i" path="res://Character/SkillTree/SkillButton.tscn" id="1_u2lak"]
-[ext_resource type="Texture2D" uid="uid://chluh8tof5cbh" path="res://Character/Projectiles/Double_Note.png" id="4_6mokx"]
-[ext_resource type="Texture2D" uid="uid://03ho5i5g13uo" path="res://Character/Blume.png" id="5_5usc3"]
+[ext_resource type="Texture2D" uid="uid://ysa764qa72dk" path="res://Character/SkillTree/Icons/Shield.png" id="4_sgfpf"]
+[ext_resource type="Texture2D" uid="uid://dyq40q0ct0dqb" path="res://Character/SkillTree/Icons/MusicNote_DoubleBlue.png" id="5_4b4nt"]
+[ext_resource type="Texture2D" uid="uid://i1b7l4rlqorg" path="res://Character/SkillTree/Icons/Blume2.png" id="6_4b4nt"]
+[ext_resource type="Texture2D" uid="uid://bcjjnw0dp6sov" path="res://Character/SkillTree/Icons/Dash.png" id="7_r5fr6"]
+[ext_resource type="Texture2D" uid="uid://bm3wxik2v62yh" path="res://Character/SkillTree/Icons/Attack.png" id="8_r5fr6"]
+[ext_resource type="Texture2D" uid="uid://3uv2d22fbcfk" path="res://Character/SkillTree/Icons/Health.png" id="9_2ax38"]
+[ext_resource type="Texture2D" uid="uid://02odrygcwc47" path="res://Character/SkillTree/Icons/Speed.png" id="10_0ujbg"]
+[ext_resource type="Texture2D" uid="uid://bcnq5e1sitgik" path="res://Character/SkillTree/Icons/DashSingleArrow.png" id="11_i1usj"]
 
-[node name="SkillTree" type="Control" node_paths=PackedStringArray("continue_level", "pages_buttons", "skill_info", "skill_name", "skill_desc", "skill_cost", "total_points", "delete")]
+[node name="SkillTree" type="Control" node_paths=PackedStringArray("continue_level", "pages_buttons", "skill_info", "skill_name", "skill_desc", "skill_cost", "total_points", "base_damage", "cooldown", "delete")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,6 +28,8 @@ skill_name = NodePath("SkillInfo/SkillName")
 skill_desc = NodePath("SkillInfo/SkillDesc")
 skill_cost = NodePath("SkillInfo/Cost")
 total_points = NodePath("CurrentPoints")
+base_damage = NodePath("SkillInfo/Base Damage")
+cooldown = NodePath("SkillInfo/Cooldown")
 delete = NodePath("SkillInfo/Delete")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -124,8 +132,11 @@ grow_horizontal = 1
 grow_vertical = 1
 skill_name = "Star Barrier : Basic Guard"
 skill_cost = 5
+skill_sprite = ExtResource("4_sgfpf")
 skill_desc = "Aria gains a shield that reduces any damage taken by half, permanently!"
 skill_reference = "shield1"
+base_damage = "N/A"
+cooldown = "Always On"
 
 [node name="InvinciShield" parent="Pages/SkillPage/Shield" instance=ExtResource("1_u2lak")]
 z_index = 1
@@ -142,8 +153,11 @@ offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
 skill_name = "Star Barrier : Celestial Guard"
+skill_sprite = ExtResource("4_sgfpf")
 skill_desc = "Aria cannot take any damage!"
 skill_reference = "shield2"
+base_damage = "N/A"
+cooldown = "Always On"
 
 [node name="BasicAtt" parent="Pages/SkillPage" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -160,9 +174,11 @@ grow_horizontal = 1
 grow_vertical = 1
 skill_name = "Melody Shot"
 skill_cost = 3
-skill_sprite = ExtResource("4_6mokx")
-skill_desc = "Aria gains the ability to left click to shoot notes at enemies. (10 Base Damage, doubled on third hit)"
+skill_sprite = ExtResource("5_4b4nt")
+skill_desc = "Aria gains the ability to left click to shoot notes at enemies. Damage is doubled on third hit."
 skill_reference = "attack1"
+base_damage = "10"
+cooldown = "0.5"
 
 [node name="SkillButton" parent="Pages/SkillPage/BasicAtt" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -179,9 +195,11 @@ grow_horizontal = 1
 grow_vertical = 1
 skill_name = "Melody Shot: Crescendo"
 skill_cost = 2
-skill_sprite = ExtResource("4_6mokx")
+skill_sprite = ExtResource("5_4b4nt")
 skill_desc = "The note projectiles increase in size by 100%"
 skill_reference = "attack2"
+base_damage = "10"
+cooldown = "0.5"
 
 [node name="SkillButton" parent="Pages/SkillPage/BasicAtt/SkillButton" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -198,9 +216,11 @@ grow_horizontal = 1
 grow_vertical = 1
 skill_name = "Melody Shot: Accelerando"
 skill_cost = 2
-skill_sprite = ExtResource("4_6mokx")
+skill_sprite = ExtResource("5_4b4nt")
 skill_desc = "Aria's notes will fly 50% faster"
 skill_reference = "attack3"
+base_damage = "10"
+cooldown = "0.5"
 
 [node name="SkillButton" parent="Pages/SkillPage/BasicAtt/SkillButton/SkillButton" instance=ExtResource("1_u2lak")]
 layout_mode = 1
@@ -217,9 +237,11 @@ grow_horizontal = 1
 grow_vertical = 0
 skill_name = "Melody Shot: Seeker Tune"
 skill_cost = 7
-skill_sprite = ExtResource("4_6mokx")
+skill_sprite = ExtResource("5_4b4nt")
 skill_desc = "Aria's notes will now curve towards enemies"
 skill_reference = "attack4"
+base_damage = "10"
+cooldown = "0.5"
 
 [node name="FastAtt" parent="Pages/SkillPage" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -237,6 +259,9 @@ grow_vertical = 1
 skill_name = "Lightstick Chakram"
 skill_cost = 4
 skill_desc = "Unlocks Aria's E skill, which launches a high speed lightstick chakram at enemies.  (30 Base Damage)"
+skill_reference = "eattack1"
+base_damage = "30"
+cooldown = "7"
 
 [node name="SkillButton" parent="Pages/SkillPage/FastAtt" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -251,7 +276,12 @@ offset_right = 128.0
 offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
-skill_name = "Lightstick Chakram : "
+skill_name = "Lightstick Chakram: Stunning Light"
+skill_cost = 5
+skill_desc = "Stuns enemies for 1 second on hit."
+skill_reference = "eattack2"
+base_damage = "30"
+cooldown = "7"
 
 [node name="SkillButton" parent="Pages/SkillPage/FastAtt/SkillButton" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -266,13 +296,23 @@ offset_right = 128.0
 offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
-skill_name = "Lightstick Chakram : Pierce"
+skill_name = "Lightstick Chakram: Pierce"
+skill_cost = 10
 skill_desc = "Allows the lightstick chakram to pierce through numerous enemies"
+skill_reference = "eattack3"
+base_damage = "30"
+cooldown = "7"
 
 [node name="SkillButton" parent="Pages/SkillPage/FastAtt/SkillButton/SkillButton" instance=ExtResource("1_u2lak")]
 layout_mode = 1
 offset_top = -264.0
 offset_bottom = -136.0
+skill_name = "Lightstick Chakram: "
+skill_cost = 10
+skill_desc = "Greatly reduces cooldown time"
+skill_reference = "eattack4"
+base_damage = "30"
+cooldown = "2"
 
 [node name="AOEAtt" parent="Pages/SkillPage" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -288,7 +328,7 @@ offset_bottom = 878.0
 grow_horizontal = 1
 grow_vertical = 1
 skill_name = "Centre of Attention : Gravity Bloom"
-skill_sprite = ExtResource("5_5usc3")
+skill_sprite = ExtResource("6_4b4nt")
 
 [node name="SkillButton" parent="Pages/SkillPage/AOEAtt" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -303,7 +343,7 @@ offset_right = 128.0
 offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
-skill_sprite = ExtResource("5_5usc3")
+skill_sprite = ExtResource("6_4b4nt")
 
 [node name="SkillButton" parent="Pages/SkillPage/AOEAtt/SkillButton" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -318,12 +358,13 @@ offset_right = 128.0
 offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
-skill_sprite = ExtResource("5_5usc3")
+skill_sprite = ExtResource("6_4b4nt")
 
 [node name="SkillButton" parent="Pages/SkillPage/AOEAtt/SkillButton/SkillButton" instance=ExtResource("1_u2lak")]
 layout_mode = 1
 offset_top = -264.0
 offset_bottom = -136.0
+skill_sprite = ExtResource("6_4b4nt")
 
 [node name="Dash" parent="Pages/SkillPage" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -338,6 +379,13 @@ offset_right = 1171.0
 offset_bottom = 878.0
 grow_horizontal = 1
 grow_vertical = 1
+skill_name = "Rhythm Step"
+skill_cost = 3
+skill_sprite = ExtResource("7_r5fr6")
+skill_desc = "Allows Aria to dash using [shift]."
+skill_reference = "dash1"
+base_damage = "N/A"
+cooldown = "5"
 
 [node name="SkillButton" parent="Pages/SkillPage/Dash" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -352,6 +400,13 @@ offset_right = 128.0
 offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
+skill_name = "Rhythm Step: Invincible"
+skill_cost = 10
+skill_sprite = ExtResource("7_r5fr6")
+skill_desc = "Aria is immune to damage while dashing."
+skill_reference = "dash2"
+base_damage = "N/A"
+cooldown = "5"
 
 [node name="SkillButton" parent="Pages/SkillPage/Dash/SkillButton" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -366,11 +421,13 @@ offset_right = 128.0
 offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
-
-[node name="SkillButton" parent="Pages/SkillPage/Dash/SkillButton/SkillButton" instance=ExtResource("1_u2lak")]
-layout_mode = 1
-offset_top = -264.0
-offset_bottom = -136.0
+skill_name = "Rhythm Step: Tempo Rush"
+skill_cost = 8
+skill_sprite = ExtResource("7_r5fr6")
+skill_desc = "Cooldown of Rhythm Step is greatly reduced!"
+skill_reference = "dash3"
+base_damage = "N/A"
+cooldown = "1"
 
 [node name="Troll1" type="Control" parent="Pages/SkillPage"]
 z_index = 1
@@ -541,20 +598,6 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="SkillButton4" parent="Pages/StatsPage" instance=ExtResource("1_u2lak")]
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 254.0
-offset_top = 753.0
-offset_right = 382.0
-offset_bottom = 881.0
-grow_horizontal = 1
-grow_vertical = 1
-
 [node name="Label" type="Label" parent="Pages/StatsPage"]
 offset_left = 457.0
 offset_top = 969.0
@@ -563,33 +606,319 @@ offset_bottom = 1038.0
 theme_override_font_sizes/font_size = 50
 text = "Stats Multipliers"
 
-[node name="ControlsPage" type="Control" parent="Pages"]
-visible = false
+[node name="AttackMult" parent="Pages/StatsPage" instance=ExtResource("1_u2lak")]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 143.0
+offset_top = 750.0
+offset_right = 271.0
+offset_bottom = 878.0
+grow_horizontal = 1
+grow_vertical = 1
+skill_name = "Attack Mult I"
+skill_cost = 5
+skill_sprite = ExtResource("8_r5fr6")
+skill_desc = "Base attack is increased by 50%"
+skill_reference = "amult1"
 
-[node name="SkillButton4" parent="Pages/ControlsPage" instance=ExtResource("1_u2lak")]
+[node name="InvinciShield" parent="Pages/StatsPage/AttackMult" instance=ExtResource("1_u2lak")]
+z_index = 1
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 194.0
-offset_top = 867.0
-offset_right = 322.0
-offset_bottom = 995.0
+offset_left = 0.0
+offset_top = -200.0
+offset_right = 128.0
+offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
+skill_name = "Attack Mult II"
+skill_cost = 5
+skill_sprite = ExtResource("8_r5fr6")
+skill_desc = "Base attack is increased by 100%"
+skill_reference = "amult2"
+
+[node name="SkillButton" parent="Pages/StatsPage/AttackMult/InvinciShield" instance=ExtResource("1_u2lak")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = -200.0
+offset_right = 128.0
+offset_bottom = -72.0
+grow_horizontal = 1
+grow_vertical = 1
+skill_name = "Attack Mult III"
+skill_cost = 10
+skill_sprite = ExtResource("8_r5fr6")
+skill_desc = "Base attack is increased by 200%"
+skill_reference = "amult3"
+
+[node name="HealthMult" parent="Pages/StatsPage" instance=ExtResource("1_u2lak")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 425.0
+offset_top = 750.0
+offset_right = 553.0
+offset_bottom = 878.0
+grow_horizontal = 1
+grow_vertical = 1
+skill_name = "Health Mult I"
+skill_cost = 5
+skill_sprite = ExtResource("9_2ax38")
+skill_desc = "Health is increased to 100"
+skill_reference = "hmult1"
+
+[node name="SkillButton" parent="Pages/StatsPage/HealthMult" instance=ExtResource("1_u2lak")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = -200.0
+offset_right = 128.0
+offset_bottom = -72.0
+grow_horizontal = 1
+grow_vertical = 1
+skill_name = "Health Mult II"
+skill_cost = 5
+skill_sprite = ExtResource("9_2ax38")
+skill_desc = "Health is increased to 200"
+skill_reference = "hmult2"
+
+[node name="SkillButton" parent="Pages/StatsPage/HealthMult/SkillButton" instance=ExtResource("1_u2lak")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = -200.0
+offset_right = 128.0
+offset_bottom = -72.0
+grow_horizontal = 1
+grow_vertical = 1
+skill_name = "Health Mult III"
+skill_cost = 2
+skill_sprite = ExtResource("9_2ax38")
+skill_desc = "Health is increased to 500"
+skill_reference = "hmult3"
+
+[node name="SpeedMult" parent="Pages/StatsPage" instance=ExtResource("1_u2lak")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 715.0
+offset_top = 750.0
+offset_right = 843.0
+offset_bottom = 878.0
+grow_horizontal = 1
+grow_vertical = 1
+skill_name = "Speed Mult I"
+skill_cost = 5
+skill_sprite = ExtResource("10_0ujbg")
+skill_desc = "Aria's speed increases by 50%"
+skill_reference = "smult1"
+
+[node name="SkillButton" parent="Pages/StatsPage/SpeedMult" instance=ExtResource("1_u2lak")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = -200.0
+offset_right = 128.0
+offset_bottom = -72.0
+grow_horizontal = 1
+grow_vertical = 1
+skill_name = "Speed Mult II"
+skill_cost = 5
+skill_sprite = ExtResource("10_0ujbg")
+skill_desc = "Aria's speed increases by 100%"
+skill_reference = "smult2"
+
+[node name="SkillButton" parent="Pages/StatsPage/SpeedMult/SkillButton" instance=ExtResource("1_u2lak")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = -200.0
+offset_right = 128.0
+offset_bottom = -72.0
+grow_horizontal = 1
+grow_vertical = 1
+skill_name = "Speed Mult III"
+skill_cost = 10
+skill_sprite = ExtResource("10_0ujbg")
+skill_desc = "Aria's speed increases by 200%"
+skill_reference = "smult3"
+
+[node name="Health Regen" parent="Pages/StatsPage" instance=ExtResource("1_u2lak")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1000.0
+offset_top = 750.0
+offset_right = 1128.0
+offset_bottom = 878.0
+grow_horizontal = 1
+grow_vertical = 1
+skill_name = "Health Regen I"
+skill_cost = 5
+skill_sprite = ExtResource("9_2ax38")
+skill_desc = "Aria will heal 10 health every 10 seconds"
+skill_reference = "hregen1"
+
+[node name="SkillButton" parent="Pages/StatsPage/Health Regen" instance=ExtResource("1_u2lak")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = -200.0
+offset_right = 128.0
+offset_bottom = -72.0
+grow_horizontal = 1
+grow_vertical = 1
+skill_name = "Health Regen II"
+skill_cost = 5
+skill_sprite = ExtResource("9_2ax38")
+skill_desc = "Aria will heal 20 hp every 10 seconds"
+skill_reference = "hregen2"
+
+[node name="SkillButton" parent="Pages/StatsPage/Health Regen/SkillButton" instance=ExtResource("1_u2lak")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = -200.0
+offset_right = 128.0
+offset_bottom = -72.0
+grow_horizontal = 1
+grow_vertical = 1
+skill_name = "Health Regen III"
+skill_cost = 10
+skill_sprite = ExtResource("9_2ax38")
+skill_desc = "Aria recovers 10% of her max hp every 5 seconds"
+skill_reference = "hregen3"
+
+[node name="ControlsPage" type="Control" parent="Pages"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="Label" type="Label" parent="Pages/ControlsPage"]
-offset_left = 457.0
+offset_left = 515.0
 offset_top = 969.0
-offset_right = 849.0
+offset_right = 744.0
 offset_bottom = 1038.0
 theme_override_font_sizes/font_size = 50
 text = "Controls"
+
+[node name="Left" parent="Pages/ControlsPage" instance=ExtResource("1_u2lak")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 143.0
+offset_top = 630.0
+offset_right = 271.0
+offset_bottom = 758.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = -1.5708
+skill_name = "Control: Left"
+skill_cost = 20
+skill_sprite = ExtResource("11_i1usj")
+skill_desc = "Aria can move left"
+skill_reference = "left"
+
+[node name="Up" parent="Pages/ControlsPage" instance=ExtResource("1_u2lak")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 425.0
+offset_top = 500.0
+offset_right = 553.0
+offset_bottom = 628.0
+grow_horizontal = 1
+grow_vertical = 1
+skill_name = "Control: Up"
+skill_cost = 20
+skill_sprite = ExtResource("11_i1usj")
+skill_desc = "Aria can move up"
+skill_reference = "up"
+
+[node name="Right" parent="Pages/ControlsPage" instance=ExtResource("1_u2lak")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 840.0
+offset_top = 500.0
+offset_right = 968.0
+offset_bottom = 628.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 1.5708
+skill_name = "Control: Right"
+skill_cost = 20
+skill_sprite = ExtResource("11_i1usj")
+skill_desc = "Aria can move right"
+skill_reference = "right"
+
+[node name="Down" parent="Pages/ControlsPage" instance=ExtResource("1_u2lak")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1124.0
+offset_top = 630.0
+offset_right = 1252.0
+offset_bottom = 758.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 3.14159
+skill_name = "Control: Down"
+skill_cost = 20
+skill_sprite = ExtResource("11_i1usj")
+skill_desc = "Aria can move down"
+skill_reference = "down"
 
 [node name="Label" type="Label" parent="."]
 z_index = 1
@@ -628,6 +957,16 @@ size_flags_vertical = 3
 theme_override_font_sizes/font_size = 30
 text = "Description of skill yada yada"
 autowrap_mode = 2
+
+[node name="Base Damage" type="Label" parent="SkillInfo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Base Damage : "
+
+[node name="Cooldown" type="Label" parent="SkillInfo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Cooldown : "
 
 [node name="Delete" type="Button" parent="SkillInfo"]
 layout_mode = 2

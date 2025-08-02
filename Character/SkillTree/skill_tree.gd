@@ -83,6 +83,9 @@ func show_page():
 @export var skill_desc : Label
 @export var skill_cost : Label
 @export var total_points : Label
+
+@export var base_damage : Label
+@export var cooldown : Label
 var skill_cost_num : int
 var current_points = 0
 
@@ -101,6 +104,14 @@ func skill_pressed(skill):
 	skill_desc.text = skill.skill_desc
 	skill_cost_num = skill.skill_cost
 	skill_cost.text = "Cost: " + str(skill_cost_num)
+	if skill.base_damage:
+		base_damage.text = "Base Damage : " + skill.base_damage
+	else:
+		base_damage.text = ""
+	if skill.cooldown:
+		cooldown.text = "Cooldown : " + skill.cooldown
+	else:
+		cooldown.text = ""
 	if skill.is_highest_node():
 		delete.disabled = false
 		delete.pressed.connect(skill.remove)

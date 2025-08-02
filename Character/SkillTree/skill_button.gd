@@ -21,6 +21,8 @@ func _on_pressed() -> void:
 @export var skill_sprite : Texture
 @export var skill_desc : String
 @export var skill_reference : String
+@export var base_damage : String
+@export var cooldown : String
 
 @export var delete_button : Button
 

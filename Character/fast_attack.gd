@@ -8,6 +8,11 @@ var proj_scene: PackedScene = preload("res://Character/Projectiles/LightStickAtt
 signal spawn_note(note: Projectile)
 
 func Enter():
+	if player.eattack_cooldown <= 0:
+		player.eattack_cooldown = player.EATTACK_COOLDOWN_TIME
+	else:
+		state_transition.emit(self, "idle")
+		return
 	attack()
 	await get_tree().create_timer(0.5).timeout
 	state_transition.emit(self, "idle")
@@ -21,10 +26,6 @@ func Update(_delta: float):
 func Physics_Update(_delta: float):
 	pass
 
-#basically the issue im having with sword is that sometimes it gets stuck in the can damage state.
-#if you click twice in succession, it gets permanently stuck in the can attack state.
-
-# I plan to add attack here, as well as on attack finished for further sycing in the future
 func attack():
 	if not player.is_attacking():
 		var proj = proj_scene.instantiate()
@@ -35,7 +36,8 @@ func attack():
 		proj.set_scale(Vector2(0.5, 0.5))
 		proj.set_speed(2500)
 		proj.set_damage(30)
-		proj.is_lightstick()
+		if !CharacterNerfs.has_nerf("eattack3"):
+			proj.is_lightstick()
 		#note.set_direction(player.get_look_direction(), self.global_position)
 		spawn_note.emit(proj)
 
