@@ -1,11 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://b47odwm1g0rt3"]
+[gd_scene load_steps=14 format=3 uid="uid://b47odwm1g0rt3"]
 
 [ext_resource type="Texture2D" uid="uid://by6ohkgnogs5o" path="res://Enemies/Mirror/Mirror.png" id="1_1id8s"]
 [ext_resource type="Script" uid="uid://bgbvtjh6kgq3x" path="res://Menus/home_scene.gd" id="1_fum1s"]
+[ext_resource type="Texture2D" uid="uid://dshf70ys5sic" path="res://Assets/WheelChairOnly2.png" id="2_4bf23"]
 [ext_resource type="Texture2D" uid="uid://b11kwu6ux7r02" path="res://Character/Frame0.png" id="2_heyhx"]
 [ext_resource type="Texture2D" uid="uid://dqgu73p0lb6s0" path="res://Character/SkillTree/Button3.png" id="3_heyhx"]
 [ext_resource type="Texture2D" uid="uid://cslrotipwbn" path="res://Enemies/Rival/Rival0.png" id="5_smh3n"]
 [ext_resource type="Texture2D" uid="uid://dhcuvk3s22qx4" path="res://Enemies/BrokenFans/BrokenFans0.png" id="6_1epc0"]
+[ext_resource type="Script" uid="uid://c5a88mm8cnti7" path="res://Scripts/UITextureButton.gd" id="6_4bf23"]
+[ext_resource type="Texture2D" uid="uid://bvuq0h6oy48xi" path="res://Assets/Logo.png" id="6_iw5q3"]
+[ext_resource type="Texture2D" uid="uid://baor0vb1emb6j" path="res://Assets/2024 ShadowPop.png" id="7_dh2d6"]
 [ext_resource type="Texture2D" uid="uid://c60a8jprfasen" path="res://Enemies/Watcher/Watcher0.png" id="7_xnglo"]
 [ext_resource type="Texture2D" uid="uid://cdu02ub3emy6x" path="res://Enemies/Scribbles/Scribble0.png" id="8_7mew6"]
 [ext_resource type="AudioStream" uid="uid://ty6308wvka5k" path="res://Menus/game jam test 1.mp3" id="9_vtunp"]
@@ -23,35 +27,60 @@ offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="Home"]
+[node name="Bg" type="TextureRect" parent="Home"]
 layout_mode = 0
-offset_left = 201.0
-offset_top = 170.0
-offset_right = 964.0
-offset_bottom = 497.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_4bf23")
+
+[node name="TextureRect" type="TextureRect" parent="Home"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("7_dh2d6")
+
+[node name="Logo" type="TextureRect" parent="Home"]
+layout_mode = 0
+offset_left = 406.0
+offset_top = 344.0
+offset_right = 1296.0
+offset_bottom = 809.0
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("6_iw5q3")
+
+[node name="Label" type="Label" parent="Home"]
+visible = false
+layout_mode = 0
+offset_left = 1164.0
+offset_top = 895.0
+offset_right = 1927.0
+offset_bottom = 1222.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 50
-text = "Aria's Neverending Nightmare that makes her wanna cry and give up but she looked at herself and ...."
+text = "It was never meant to be..."
+horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="Mirror" type="Sprite2D" parent="Home"]
+visible = false
 position = Vector2(1314, 510)
 texture = ExtResource("1_1id8s")
 
 [node name="Frame0" type="Sprite2D" parent="Home"]
+visible = false
 modulate = Color(1, 1, 1, 0.396078)
 position = Vector2(1320, 511)
 texture = ExtResource("2_heyhx")
 
-[node name="Campaign" type="Button" parent="Home"]
+[node name="Campaign" type="TextureButton" parent="Home"]
 layout_mode = 0
-offset_left = 388.0
-offset_top = 703.0
-offset_right = 875.0
-offset_bottom = 929.0
-theme_override_font_sizes/font_size = 100
-icon = ExtResource("3_heyhx")
-flat = true
-icon_alignment = 1
+offset_left = 460.0
+offset_top = 720.0
+offset_right = 947.0
+offset_bottom = 946.0
+pivot_offset = Vector2(243.5, 113)
+texture_normal = ExtResource("3_heyhx")
+script = ExtResource("6_4bf23")
 
 [node name="Label" type="Label" parent="Home/Campaign"]
 layout_mode = 1
@@ -62,7 +91,7 @@ offset_right = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 100
-text = "CAMPAINGASD"
+text = "START"
 horizontal_alignment = 1
 vertical_alignment = 1
 
