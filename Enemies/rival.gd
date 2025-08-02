@@ -6,7 +6,7 @@ func play_animations():
 
 func deal_damage():
 	if player:
-		player.take_damage(40)
+		player.take_damage(30)
 
 var player : Character = null
 func _on_area_2d_body_entered(body: Node2D) -> void:

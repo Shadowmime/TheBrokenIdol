@@ -33,6 +33,8 @@ func _skill_update():
 		DASH_COOLDOWN_TIME = 5
 	if CharacterNerfs.has_nerf("eattack4"):
 		EATTACK_COOLDOWN_TIME = 7
+	if CharacterNerfs.has_nerf("qattack2"):
+		EATTACK_COOLDOWN_TIME = 6
 	
 	#Mults
 	# speed
@@ -96,6 +98,8 @@ func _physics_process(delta):
 		dash_cooldown -= delta
 	if eattack_cooldown > 0:
 		eattack_cooldown -= delta
+	if qattack_cooldown > 0:
+		qattack_cooldown -= delta
 	
 	_move()
 	move_and_slide()
@@ -174,6 +178,9 @@ var DASH_COOLDOWN_TIME : float = 1.0
 var eattack_cooldown : float = 0.0
 var EATTACK_COOLDOWN_TIME : float = 2.0
 
+var qattack_cooldown : float = 0.0
+var QATTACK_COOLDOWN_TIME : float = 3.0
+
 var is_dash : bool = false
 
 @export var health_bar : ProgressBar
@@ -195,3 +202,7 @@ func take_damage(damage, _damage_type = null):
 var damage_taken_mult = 1
 func set_damage_taken_multiplier(_damage_mult = 1):
 	damage_taken_mult = _damage_mult
+
+signal spawn_bomb(bomb: Bomb)
+func _on_aoe_attack_spawn_bomb(bomb: Bomb) -> void:
+	spawn_bomb.emit(bomb)

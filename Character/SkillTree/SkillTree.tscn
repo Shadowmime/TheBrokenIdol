@@ -327,8 +327,13 @@ offset_right = 946.0
 offset_bottom = 878.0
 grow_horizontal = 1
 grow_vertical = 1
-skill_name = "Centre of Attention : Gravity Bloom"
+skill_name = "Center of Attention"
+skill_cost = 5
 skill_sprite = ExtResource("6_4b4nt")
+skill_desc = "Aria is able to use her Q skill : Centre of Attention, which does damage in a radius.  It hits 3 times."
+skill_reference = "qattack1"
+base_damage = "20"
+cooldown = "6"
 
 [node name="SkillButton" parent="Pages/SkillPage/AOEAtt" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -343,7 +348,13 @@ offset_right = 128.0
 offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
+skill_name = "Center of Attention: Encore Delay"
+skill_cost = 9
 skill_sprite = ExtResource("6_4b4nt")
+skill_desc = "Halves the time needed to reuse Aria's Q skill."
+skill_reference = "qattack2"
+base_damage = "20"
+cooldown = "3"
 
 [node name="SkillButton" parent="Pages/SkillPage/AOEAtt/SkillButton" instance=ExtResource("1_u2lak")]
 layout_mode = 0
@@ -358,13 +369,25 @@ offset_right = 128.0
 offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
+skill_name = "Center of Attention: Spotlight Snare"
+skill_cost = 2
 skill_sprite = ExtResource("6_4b4nt")
+skill_desc = "Enemies that get hit by this attack will be slowed by 50%"
+skill_reference = "qattack3"
+base_damage = "20"
+cooldown = "3"
 
 [node name="SkillButton" parent="Pages/SkillPage/AOEAtt/SkillButton/SkillButton" instance=ExtResource("1_u2lak")]
 layout_mode = 1
 offset_top = -264.0
 offset_bottom = -136.0
+skill_name = "Center of Attention: Gravity Bloom"
+skill_cost = 10
 skill_sprite = ExtResource("6_4b4nt")
+skill_desc = "Center of Attention will now pull enemies towards the center for the duration of the attack!"
+skill_reference = "qattack4"
+base_damage = "20"
+cooldown = "3"
 
 [node name="Dash" parent="Pages/SkillPage" instance=ExtResource("1_u2lak")]
 layout_mode = 0

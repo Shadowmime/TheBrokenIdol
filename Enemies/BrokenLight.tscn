@@ -103,11 +103,11 @@ _data = {
 }
 
 [node name="BrokenLight" type="CharacterBody2D" node_paths=PackedStringArray("nav", "animation_player", "health_bar", "sprite", "state_machine")]
-collision_layer = 2
 script = ExtResource("1_2dilx")
 nav = NodePath("NavigationAgent2D")
 animation_player = NodePath("AnimationPlayer")
 health_bar = NodePath("Healthbar")
+max_health = 75
 sprite = NodePath("AnimatedSprite2D")
 state_machine = NodePath("StateMachine")
 

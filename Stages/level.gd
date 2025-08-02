@@ -78,3 +78,6 @@ func _process(delta):
 func spawn_wave(count: int):
 	for i in count:
 		spawn_enemy_near_player()
+
+func _on_player_spawn_bomb(bomb: Bomb) -> void:
+	projectiles.add_child(bomb)
