@@ -61,6 +61,8 @@ func attack():
 		if !CharacterNerfs.has_nerf("attack4"):
 			note.set_homing(10)
 		
+		note.set_attack_mod(player.attack_mod)
+		
 		spawn_note.emit(note)
 
 func connect_signals():

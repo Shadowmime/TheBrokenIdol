@@ -2,7 +2,7 @@ extends PlayerState
 
 class_name Dash
 
-const DASH_MULTIPLIER := 20
+const DASH_MULTIPLIER := 1.5
 
 func Enter():
 	if player.dash_cooldown <= 0:
@@ -19,7 +19,7 @@ func Exit():
 	player.is_dash = false
 
 func Update(_delta: float):
-	await get_tree().create_timer(0.15).timeout
+	await get_tree().create_timer(0.5).timeout
 	state_transition.emit(self, "idle")
 
 func Physics_Update(_delta: float):

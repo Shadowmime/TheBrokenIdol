@@ -67,12 +67,12 @@ func _on_body_entered(body: Node2D) -> void:
 	if enemy && !body.is_in_group("player"):
 		return
 	if body.is_in_group("player") && enemy:
-		body.take_damage(damage)
+		body.take_damage(damage * attack_mod)
 	elif body.is_in_group("player"):
 		pass
 	else:
 		if body.has_method("take_damage"):
-			body.take_damage(damage)
+			body.take_damage(damage * attack_mod)
 		if lightstick:
 			return
 		queue_free()
@@ -111,3 +111,7 @@ func set_speed_mod(_speed_mod):
 func set_homing(strength):
 	homing_enabled = true
 	homing_strength = strength
+
+var attack_mod = 1
+func set_attack_mod(mod):
+	attack_mod = mod

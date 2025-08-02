@@ -50,12 +50,13 @@ height = 275.0
 radius = 125.0
 height = 250.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "camera", "shield", "timer", "health_bar")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "camera", "shield", "timer", "regen_timer", "health_bar")]
 script = ExtResource("1_ssuvf")
 sprite = NodePath("AnimatedSprite2D")
 camera = NodePath("Camera2D")
 shield = NodePath("Shield")
 timer = NodePath("HUD/Timer")
+regen_timer = NodePath("Timer")
 health_bar = NodePath("HUD/Health")
 
 [node name="HUD" type="CanvasLayer" parent="."]
@@ -131,6 +132,10 @@ metadata/_custom_type_script = "uid://bi4u0nch7ohag"
 [node name="Shield" type="MeshInstance2D" parent="."]
 modulate = Color(0, 1, 1, 0.294118)
 mesh = SubResource("SphereMesh_o1y46")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
 
 [connection signal="spawn_note" from="StateMachine/Attack" to="." method="spawn_note"]
 [connection signal="spawn_note" from="StateMachine/FastAttack" to="." method="spawn_note"]

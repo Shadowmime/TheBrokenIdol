@@ -13,7 +13,7 @@ var speed_multiplier: float = 5.0
 
 @export var shield : MeshInstance2D
 
-var max_time = 60
+var max_time = 30
 @export var timer : ProgressBar
 signal survived
 
@@ -22,6 +22,7 @@ var hud_open := false
 var stage_rect = Rect2(Vector2.ZERO, Vector2(5760, 3240))
 
 func _skill_update():
+	#SKills
 	if CharacterNerfs.has_nerf("shield2"):
 		shield.modulate.a = 0.05
 		shield_scale = 0.5
@@ -32,15 +33,52 @@ func _skill_update():
 		DASH_COOLDOWN_TIME = 5
 	if CharacterNerfs.has_nerf("eattack4"):
 		EATTACK_COOLDOWN_TIME = 7
+	
+	#Mults
+	# speed
+	if CharacterNerfs.has_nerf("smult1"):
+		speed_multiplier = 2
+	elif CharacterNerfs.has_nerf("smult2"):
+		speed_multiplier = 3
+	elif CharacterNerfs.has_nerf("smult3"):
+		speed_multiplier = 4
+	else:
+		speed_multiplier = 6
+	
+	# health
+	if CharacterNerfs.has_nerf("hmult1"):
+		max_health = 50
+	elif CharacterNerfs.has_nerf("hmult2"):
+		max_health = 100
+	elif CharacterNerfs.has_nerf("hmult3"):
+		max_health = 200
+	else:
+		max_health = 500
+	health = max_health
+	health_bar.max_value = max_health
+	health_bar.value = max_health
+	
+	# attack
+	if CharacterNerfs.has_nerf("amult1"):
+		attack_mod = 1
+	elif CharacterNerfs.has_nerf("amult2"):
+		attack_mod = 1.5
+	elif CharacterNerfs.has_nerf("amult3"):
+		attack_mod = 2
+	else:
+		attack_mod = 3
 
 var shield_scale = 0
+var attack_mod = 1
+
+@export var regen_timer : Timer
 
 func _ready():
 	_current_speed = NORMAL_SPEED * speed_multiplier
-	health_bar.max_value = max_health
-	health_bar.value = max_health
 	timer.max_value = max_time
 	timer.value = max_time
+	regen_timer.timeout.connect(_on_regen_timer_timeout)
+	regen_timer.start()
 
 func _process(delta: float) -> void:
 	$AnimatedSprite2D.play("default")
@@ -77,7 +115,15 @@ func freeze():
 	velocity = Vector2.ZERO
 
 func _move():
-	var input_vector = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var input_vector := Vector2.ZERO
+	if not CharacterNerfs.has_nerf("left") and Input.is_action_pressed("move_left"):
+		input_vector.x -= 1
+	if not CharacterNerfs.has_nerf("right") and Input.is_action_pressed("move_right"):
+		input_vector.x += 1
+	if not CharacterNerfs.has_nerf("up") and Input.is_action_pressed("move_up"):
+		input_vector.y -= 1
+	if not CharacterNerfs.has_nerf("down") and Input.is_action_pressed("move_down"):
+		input_vector.y += 1
 
 	is_running()
 	if input_vector != Vector2.ZERO:
@@ -85,11 +131,12 @@ func _move():
 	else:
 		velocity = Vector2.ZERO
 
-func set_speed_multiplier(multiplier: float = 5.0):
-	speed_multiplier = multiplier
+var dash_multiplier = 1
+func set_speed_multiplier(multiplier: float = 1):
+	dash_multiplier = multiplier
 
 func is_running():
-	_current_speed = NORMAL_SPEED * speed_multiplier
+	_current_speed = NORMAL_SPEED * speed_multiplier * dash_multiplier
 
 func _flip_sprite_to_mouse():
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -111,6 +158,15 @@ func spawn_note(note):
 func is_attacking():
 	return false
 
+func _on_regen_timer_timeout():
+	if CharacterNerfs.has_nerf("regen1"):
+		return # No regen
+	elif CharacterNerfs.has_nerf("regen2"):
+		health += 10
+	elif CharacterNerfs.has_nerf("regen3"):
+		health += 20
+	else:
+		health += int(max_health * 0.1)
 
 var dash_cooldown : float = 0.0
 var DASH_COOLDOWN_TIME : float = 1.0
@@ -119,7 +175,6 @@ var eattack_cooldown : float = 0.0
 var EATTACK_COOLDOWN_TIME : float = 2.0
 
 var is_dash : bool = false
-
 
 @export var health_bar : ProgressBar
 var max_health = 500

@@ -36,6 +36,7 @@ func attack():
 		proj.set_scale(Vector2(0.5, 0.5))
 		proj.set_speed(2500)
 		proj.set_damage(30)
+		proj.set_attack_mod(player.attack_mod)
 		if !CharacterNerfs.has_nerf("eattack3"):
 			proj.is_lightstick()
 		#note.set_direction(player.get_look_direction(), self.global_position)
