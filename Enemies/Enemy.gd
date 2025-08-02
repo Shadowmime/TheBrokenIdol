@@ -33,11 +33,6 @@ var max_attack_cd : float = 2
 func _process(delta: float) -> void:
 	if attack_cd > 0:
 		attack_cd -= delta
-	
-	#if not can_knockback:
-		#knockback_cd -= delta
-		#if knockback_cd <= 0:
-			#can_knockback = true
 
 func play_animations():
 	pass
@@ -53,12 +48,17 @@ func _on_health_changed(new_health: Variant) -> void:
 var target : Character
 @export var sprite : AnimatedSprite2D
 
+@export var attack : AnimatedSprite2D
 func target_position(target):
 	nav.target_position = target
 	if target.x - position.x < 0:
 		sprite.scale.x = -abs(sprite.scale.x)  # Face left
+		if attack:
+			attack.scale.x = -abs(attack.scale.x)
 	else:
 		sprite.scale.x = abs(sprite.scale.x)
+		if attack:
+			attack.scale.x = abs(attack.scale.x)
 
 func get_player_in_range():
 	var closest = null

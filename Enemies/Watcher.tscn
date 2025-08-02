@@ -81,6 +81,7 @@ _data = {
 }
 
 [node name="Watcher" type="CharacterBody2D" node_paths=PackedStringArray("nav", "animation_player", "health_bar", "sprite", "state_machine")]
+collision_layer = 2
 script = ExtResource("1_4fbfg")
 nav = NodePath("NavigationAgent2D")
 animation_player = NodePath("AnimationPlayer")

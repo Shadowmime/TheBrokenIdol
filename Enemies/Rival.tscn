@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://g4pjwp4jvyf3"]
+[gd_scene load_steps=26 format=3 uid="uid://g4pjwp4jvyf3"]
 
 [ext_resource type="Script" uid="uid://ct8qkty76kdmf" path="res://Scripts/state_machine.gd" id="1_je477"]
 [ext_resource type="Script" uid="uid://su35u4n0ftx8" path="res://Enemies/rival.gd" id="1_xmuc0"]
@@ -16,9 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://bb5hyg3b8hee6" path="res://Enemies/Rival/attack/RivalAttack5.png" id="14_14h1c"]
 [ext_resource type="Texture2D" uid="uid://cg3p1lfu634ch" path="res://Enemies/Rival/attack/RivalAttack6.png" id="15_ho4g0"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jcwuj"]
-radius = 75.0
-height = 275.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_lhi4e"]
+radius = 86.56
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ejajv"]
 corner_radius_top_left = 25
@@ -82,15 +81,49 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_lhi4e"]
+resource_name = "attack"
+length = 0.6666
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"deal_damage"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2x7ij"]
 _data = {
 &"RESET": SubResource("Animation_2x7ij"),
+&"attack": SubResource("Animation_lhi4e"),
 &"idle": SubResource("Animation_ejajv")
 }
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lq75t"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_ho4g0")
+}, {
 "duration": 1.0,
 "texture": ExtResource("9_lhi4e")
 }, {
@@ -114,23 +147,30 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 15.0
+"speed": 12.0
 }]
 
-[node name="Rival" type="CharacterBody2D" node_paths=PackedStringArray("nav", "animation_player", "health_bar", "sprite", "state_machine")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_ghdg8"]
+radius = 86.56
+
+[node name="Rival" type="CharacterBody2D" node_paths=PackedStringArray("nav", "animation_player", "health_bar", "sprite", "attack", "state_machine")]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_xmuc0")
 nav = NodePath("NavigationAgent2D")
 animation_player = NodePath("AnimationPlayer")
 health_bar = NodePath("Healthbar")
 sprite = NodePath("AnimatedSprite2D")
+attack = NodePath("attack")
 state_machine = NodePath("StateMachine")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_jcwuj")
+position = Vector2(-2, 45)
+shape = SubResource("CircleShape2D_lhi4e")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 10.0
-target_desired_distance = 200.0
+target_desired_distance = 125.0
 
 [node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("initial_state", "character")]
 script = ExtResource("1_je477")
@@ -146,8 +186,10 @@ metadata/_custom_type_script = "uid://dd7akicqh5561"
 script = ExtResource("4_5hdkq")
 metadata/_custom_type_script = "uid://dd7akicqh5561"
 
-[node name="Attack" type="Node" parent="StateMachine"]
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack", "anim_player")]
 script = ExtResource("5_ejajv")
+attack = NodePath("../../attack")
+anim_player = NodePath("../../AnimationPlayer")
 metadata/_custom_type_script = "uid://dd7akicqh5561"
 
 [node name="Healthbar" type="ProgressBar" parent="."]
@@ -169,11 +211,19 @@ libraries = {
 &"": SubResource("AnimationLibrary_2x7ij")
 }
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
-position = Vector2(84.75, -47.5)
+[node name="attack" type="AnimatedSprite2D" parent="."]
+position = Vector2(34, 23)
 scale = Vector2(0.724609, 0.730469)
 sprite_frames = SubResource("SpriteFrames_lq75t")
-frame = 6
-frame_progress = 0.0446074
+
+[node name="Area2D" type="Area2D" parent="attack"]
+position = Vector2(-46.9218, -31.4866)
+scale = Vector2(1.38005, 1.36898)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attack/Area2D"]
+position = Vector2(29, 17)
+shape = SubResource("CircleShape2D_ghdg8")
 
 [connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
+[connection signal="body_entered" from="attack/Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="attack/Area2D" to="." method="_on_area_2d_body_exited"]
