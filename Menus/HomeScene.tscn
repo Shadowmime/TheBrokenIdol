@@ -169,6 +169,7 @@ Now, Aria is trapped in a mental loop: dreams of glory play on repeat, warped by
 autowrap_mode = 2
 
 [node name="Controls" type="Label" parent="Controls"]
+layout_mode = 0
 offset_left = 804.0
 offset_top = 145.0
 offset_right = 2038.0

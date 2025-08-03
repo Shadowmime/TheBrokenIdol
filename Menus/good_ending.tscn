@@ -1,12 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://q3i283yo04bd"]
+[gd_scene load_steps=6 format=3 uid="uid://q3i283yo04bd"]
 
 [ext_resource type="Script" uid="uid://c0yticoi2pjdw" path="res://Menus/good_ending.gd" id="1_8lmp0"]
 [ext_resource type="Texture2D" uid="uid://dshf70ys5sic" path="res://Assets/WheelChairOnly2.png" id="2_trkqo"]
-[ext_resource type="Texture2D" uid="uid://dqgu73p0lb6s0" path="res://Character/SkillTree/Button3.png" id="3_kv5de"]
+[ext_resource type="Texture2D" uid="uid://dtwy80fkuevae" path="res://Assets/Button0.png" id="3_kv5de"]
+[ext_resource type="Script" uid="uid://c5a88mm8cnti7" path="res://Scripts/UITextureButton.gd" id="4_hmxp2"]
+[ext_resource type="Texture2D" uid="uid://brni6grtwj0nm" path="res://Assets/Button2.png" id="5_5uy1w"]
 
-[node name="Good Ending" type="Node2D" node_paths=PackedStringArray("text_box")]
+[node name="Good Ending" type="Node2D" node_paths=PackedStringArray("text_box", "hint_button_label")]
 script = ExtResource("1_8lmp0")
 text_box = NodePath("Label")
+hint_button_label = NodePath("hint/Label")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 40.0
@@ -15,12 +18,12 @@ texture = ExtResource("2_trkqo")
 
 [node name="Label" type="Label" parent="."]
 offset_left = 15.0
-offset_top = 617.0
-offset_right = 1025.0
-offset_bottom = 1068.0
+offset_top = 983.0
+offset_right = 2141.0
+offset_bottom = 1374.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 100
-text = "You perservered.  but did you break out of the loop?"
+theme_override_font_sizes/font_size = 60
+text = "You perservered, but did you break out of the loop?"
 autowrap_mode = 2
 
 [node name="Title" type="Label" parent="."]
@@ -34,11 +37,13 @@ text = "Good Ending"
 autowrap_mode = 2
 
 [node name="Home" type="TextureButton" parent="."]
-offset_left = -4.0
-offset_top = 401.0
-offset_right = 475.0
-offset_bottom = 619.0
+offset_left = 6.0
+offset_top = 756.0
+offset_right = 446.0
+offset_bottom = 976.0
+pivot_offset = Vector2(220, 110)
 texture_normal = ExtResource("3_kv5de")
+script = ExtResource("4_hmxp2")
 
 [node name="Label" type="Label" parent="Home"]
 layout_mode = 1
@@ -53,11 +58,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="hint" type="TextureButton" parent="."]
-offset_left = 1407.0
-offset_top = 20.0
-offset_right = 1886.0
-offset_bottom = 238.0
-texture_normal = ExtResource("3_kv5de")
+offset_left = 448.0
+offset_top = 756.0
+offset_right = 888.0
+offset_bottom = 976.0
+pivot_offset = Vector2(220, 110)
+texture_normal = ExtResource("5_5uy1w")
+script = ExtResource("4_hmxp2")
 
 [node name="Label" type="Label" parent="hint"]
 layout_mode = 1
@@ -68,7 +75,7 @@ offset_top = -5.0
 offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 60
 text = "Hint for 
 true ending"
 horizontal_alignment = 1

@@ -1,75 +1,205 @@
-[gd_scene load_steps=4 format=3 uid="uid://dn2xmn5s6o3bk"]
+[gd_scene load_steps=7 format=3 uid="uid://dn2xmn5s6o3bk"]
 
-[ext_resource type="Script" uid="uid://caq2icyb23y4l" path="res://Menus/game_over.gd" id="1_mwmw2"]
-[ext_resource type="Texture2D" uid="uid://dshf70ys5sic" path="res://Assets/WheelChairOnly2.png" id="2_r6h0s"]
-[ext_resource type="Texture2D" uid="uid://dqgu73p0lb6s0" path="res://Character/SkillTree/Button3.png" id="3_ce482"]
+[ext_resource type="Script" uid="uid://bj27sirctqsab" path="res://Menus/true_ending.gd" id="1_mwmw2"]
+[ext_resource type="Texture2D" uid="uid://lm571t0qpgpf" path="res://Assets/EndScene.png" id="2_mwmw2"]
+[ext_resource type="AudioStream" uid="uid://kfbdrf1a5jwn" path="res://Menus/c major.mp3" id="3_mwmw2"]
 
-[node name="GameOver" type="Node2D"]
+[sub_resource type="Animation" id="Animation_r6h0s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control/Label2:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Control/Label3:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Control:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mwmw2"]
+resource_name = "fadeinlabel1"
+length = 13.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 3, 3.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control/Label2:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(3.4, 3.8, 9, 9.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Control/Label3:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(9.4, 9.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Control:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(13, 13.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ce482"]
+_data = {
+&"RESET": SubResource("Animation_r6h0s"),
+&"fadeinlabels": SubResource("Animation_mwmw2")
+}
+
+[node name="GameOver" type="Node2D" node_paths=PackedStringArray("anim_player", "music_player")]
 script = ExtResource("1_mwmw2")
+anim_player = NodePath("AnimationPlayer")
+music_player = NodePath("AudioStreamPlayer")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("2_r6h0s")
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_mwmw2")
 
-[node name="Label" type="Label" parent="."]
-offset_left = 24.0
-offset_top = 631.0
-offset_right = 1034.0
-offset_bottom = 1082.0
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(960, 540)
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Label" type="Label" parent="Control"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 161.0
+offset_top = 461.0
+offset_right = 1753.0
+offset_bottom = 738.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 100
-text = "YOU SUCKumbed to the pressure.  GG get a life haha"
-autowrap_mode = 2
+text = "Aria escaped her mental loop"
+horizontal_alignment = 1
 
-[node name="Home" type="TextureButton" parent="."]
-offset_left = -4.0
-offset_top = 401.0
-offset_right = 475.0
-offset_bottom = 619.0
-texture_normal = ExtResource("3_ce482")
-
-[node name="Label" type="Label" parent="Home"]
+[node name="Label2" type="Label" parent="Control"]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 161.0
+offset_top = 381.0
+offset_right = 1753.0
+offset_bottom = 658.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 100
-text = "Home"
+text = "What they thought was the end
+became Aria's loudest beginning."
 horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="Retry" type="TextureButton" parent="."]
-offset_left = 501.0
-offset_top = 397.0
-offset_right = 980.0
-offset_bottom = 615.0
-texture_normal = ExtResource("3_ce482")
-
-[node name="Label" type="Label" parent="Retry"]
+[node name="Label3" type="Label" parent="Control"]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 199.0
+offset_top = 465.0
+offset_right = 1715.0
+offset_bottom = 742.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 100
-text = "Retry"
+text = "Aria became a star"
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="Retry"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 50
-text = "(From Last Loop)"
-horizontal_alignment = 1
-vertical_alignment = 2
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_mwmw2")
 
-[connection signal="pressed" from="Home" to="." method="_on_home_pressed"]
-[connection signal="pressed" from="Retry" to="." method="_on_retry_pressed"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ce482")
+}
