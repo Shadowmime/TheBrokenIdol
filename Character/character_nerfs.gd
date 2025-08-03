@@ -12,7 +12,8 @@ func add_nerf(nerf):
 func retry():
 	loop -= 1
 	for nerf in temp_nerfs:
-		nerfs.erase(nerf)
+		if !nerf == "shield2":
+			nerfs.erase(nerf)
 
 func clear_temp_nerfs():
 	temp_nerfs = []
@@ -43,3 +44,12 @@ var campaign = true
 var score = 0
 
 var game_over = false
+
+func reset():
+	game_over = false
+	campaign = true
+	score = 0
+	loop = 0
+	temp_nerfs = []
+	nerfs = []
+	first_tree = true

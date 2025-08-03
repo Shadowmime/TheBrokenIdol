@@ -1,5 +1,8 @@
 extends Control
 
+func _ready():
+	CharacterNerfs.reset()
+
 func _on_campaign_pressed() -> void:
 	$Home.hide()
 	$Controls.show()

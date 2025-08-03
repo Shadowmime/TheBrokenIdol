@@ -9,10 +9,6 @@ var first = false
 var points_needed = 0
 
 func _ready() -> void:
-	if CharacterNerfs.campaign:
-		loop_text.text = "Loop: " + str(CharacterNerfs.loop) + " / 5"
-	else:
-		loop_text.text = "Loop: " + str(CharacterNerfs.loop) + " / ?"
 	CharacterNerfs.clear_temp_nerfs()
 	for page in pages_buttons.get_children():
 		for skill in page.get_children():
@@ -25,6 +21,8 @@ func _ready() -> void:
 		if CharacterNerfs.campaign:
 			points_needed = CharacterNerfs.get_points_needed()
 			total_points.text = "0 / " + str(points_needed)
+			if points_needed == 0:
+				continue_level.disabled = false
 		else:
 			total_points.text = str(CharacterNerfs.score) + " / ?"
 			continue_level.disabled = false
@@ -32,6 +30,10 @@ func _ready() -> void:
 		$Prev.show()
 		$Pages/SkillPage/Troll1.hide()
 		$Pages/SkillPage/Troll2.hide()
+	if CharacterNerfs.campaign:
+		loop_text.text = "Loop: " + str(CharacterNerfs.loop) + " / 5"
+	else:
+		loop_text.text = "Loop: " + str(CharacterNerfs.loop) + " / ?"
 	if CharacterNerfs.game_over:
 		continue_level.disabled = false
 		continue_level.text = "Home"
