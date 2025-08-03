@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dn2xmn5s6o3bk"]
+[gd_scene load_steps=8 format=3 uid="uid://dn2xmn5s6o3bk"]
 
 [ext_resource type="Script" uid="uid://bj27sirctqsab" path="res://Menus/true_ending.gd" id="1_mwmw2"]
 [ext_resource type="Texture2D" uid="uid://lm571t0qpgpf" path="res://Assets/EndScene.png" id="2_mwmw2"]
@@ -9,7 +9,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Control/Label:modulate")
+tracks/0/path = NodePath("Control/ColorRect/Label:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -21,7 +21,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Control/Label2:modulate")
+tracks/1/path = NodePath("Control/ColorRect/Label2:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -33,7 +33,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Control/Label3:modulate")
+tracks/2/path = NodePath("Control/ColorRect/Label3:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -54,6 +54,18 @@ tracks/3/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Control2:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_mwmw2"]
 resource_name = "fadeinlabel1"
@@ -61,7 +73,7 @@ length = 13.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Control/Label:modulate")
+tracks/0/path = NodePath("Control/ColorRect/Label:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -73,7 +85,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Control/Label2:modulate")
+tracks/1/path = NodePath("Control/ColorRect/Label2:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -85,7 +97,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Control/Label3:modulate")
+tracks/2/path = NodePath("Control/ColorRect/Label3:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -107,9 +119,25 @@ tracks/3/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_ce482"]
+resource_name = "fadeincredits"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control2:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ce482"]
 _data = {
 &"RESET": SubResource("Animation_r6h0s"),
+&"fadeincredits": SubResource("Animation_ce482"),
 &"fadeinlabels": SubResource("Animation_mwmw2")
 }
 
@@ -139,7 +167,7 @@ layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 
-[node name="Label" type="Label" parent="Control"]
+[node name="Label" type="Label" parent="Control/ColorRect"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 8
@@ -147,18 +175,19 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 161.0
-offset_top = 461.0
-offset_right = 1753.0
-offset_bottom = 738.0
+offset_left = -796.0
+offset_top = -138.5
+offset_right = 796.0
+offset_bottom = 138.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 100
 text = "Aria escaped her mental loop"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Label2" type="Label" parent="Control"]
+[node name="Label2" type="Label" parent="Control/ColorRect"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 8
@@ -166,19 +195,20 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 161.0
-offset_top = 381.0
-offset_right = 1753.0
-offset_bottom = 658.0
+offset_left = -796.0
+offset_top = -138.5
+offset_right = 796.0
+offset_bottom = 138.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 100
 text = "What they thought was the end
-became Aria's loudest beginning."
+became Aria's loudest beginning"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Label3" type="Label" parent="Control"]
+[node name="Label3" type="Label" parent="Control/ColorRect"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 8
@@ -186,15 +216,83 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 199.0
-offset_top = 465.0
-offset_right = 1715.0
-offset_bottom = 742.0
+offset_left = -758.0
+offset_top = -138.5
+offset_right = 758.0
+offset_bottom = 138.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 100
 text = "Aria became a star"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control2" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Control2"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="Control2/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -457.5
+offset_top = -395.0
+offset_right = 457.5
+offset_bottom = -258.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "Thanks for playing!"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Control2/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -457.5
+offset_top = -102.0
+offset_right = 457.5
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 90
+text = "Credits:"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Control2/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -983.5
+offset_top = 54.0
+offset_right = 983.5
+offset_bottom = 611.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 70
+text = "
+Programmer: ShadowMime
+Artist: ToppeePop
+Music: Samuel Lam"
 horizontal_alignment = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
