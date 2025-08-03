@@ -175,7 +175,7 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 100
 text = "What they thought was the end
-became Aria's loudest beginning."
+became Aria's loudest beginning"
 horizontal_alignment = 1
 
 [node name="Label3" type="Label" parent="Control"]
