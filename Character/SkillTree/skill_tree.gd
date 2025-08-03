@@ -31,7 +31,7 @@ func _ready() -> void:
 		$Pages/SkillPage/Troll1.hide()
 		$Pages/SkillPage/Troll2.hide()
 	if CharacterNerfs.campaign:
-		loop_text.text = "Loop: " + str(CharacterNerfs.loop) + " / 5"
+		loop_text.text = "Loop: " + str(CharacterNerfs.loop) + " / 4"
 	else:
 		loop_text.text = "Loop: " + str(CharacterNerfs.loop) + " / ?"
 	if CharacterNerfs.game_over:

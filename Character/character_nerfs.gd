@@ -29,7 +29,7 @@ func func_loop():
 	return loop
 
 func is_finished():
-	if loop == points_needed.size() && campaign:
+	if (loop == points_needed.size() - 1) && campaign:
 		return true
 	return false
 

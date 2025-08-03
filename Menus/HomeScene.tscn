@@ -224,9 +224,9 @@ offset_top = -216.0
 offset_right = 715.0
 offset_bottom = 129.0
 theme_override_font_sizes/font_size = 40
-text = "Represents Aria's competition. 
+text = "?epresents Aria's comp?tition. 
 
-They will follow you around, sometimes phasing in and out, and melee attack you when they get closen"
+They follow you ?round and strike when they get close enough.  They don't do much ?amage, but they are tanky."
 autowrap_mode = 2
 
 [node name="Fans" type="Control" parent="enemies"]
@@ -266,9 +266,9 @@ offset_top = -216.0
 offset_right = 715.0
 offset_bottom = 129.0
 theme_override_font_sizes/font_size = 40
-text = "Represents the fans that have lost hope in Aria.
+text = "Reflects the fans who’ve given up hope in Aria’s ?omeback.
 
-When they start spinning it indicates they are gonna do a charged attack."
+When they st?rt s?inning, they're prepar?ng to launch a high speed a?tack at ?ria.  However, they don't have much hea?th at all."
 autowrap_mode = 2
 
 [node name="Watcher" type="Control" parent="enemies"]
@@ -278,6 +278,7 @@ offset_left = 757.0
 offset_top = 521.0
 offset_right = 1071.0
 offset_bottom = 769.0
+scale = Vector2(1, 1.01534)
 
 [node name="Name" type="Label" parent="enemies/Watcher"]
 layout_mode = 1
@@ -308,9 +309,9 @@ offset_top = -216.0
 offset_right = 715.0
 offset_bottom = 129.0
 theme_override_font_sizes/font_size = 40
-text = "Represents the eyes always watching and expectations.
+text = "Represents the eyes a?ways watching and ?xpectations.
 
-Will shoot projectiles at aria, however, do not move very fast."
+Shoots projec?iles at Aria, but ?hey don't mov? ve?y fa?t."
 autowrap_mode = 2
 
 [node name="Emotions" type="Control" parent="enemies"]
@@ -336,7 +337,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.996078, 0, 0.152941, 1)
 theme_override_font_sizes/font_size = 100
-text = "Supressed Emotions"
+text = "Supressed Emot?ons"
 horizontal_alignment = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="enemies/Emotions"]
@@ -350,9 +351,11 @@ offset_top = -216.0
 offset_right = 715.0
 offset_bottom = 129.0
 theme_override_font_sizes/font_size = 40
-text = "Represents Aria's negative thoughts that formed after the accidentn
+text = "Represe?ts Aria's negative 
+thou?hts that formed after the 
+?ccident.
 
-They do not follow Aria around, but deal damage if she stumbles into them."
+They deal ?ental damage, but float around the stag?, as opposed to following Aria around."
 autowrap_mode = 2
 
 [node name="Start2" type="TextureButton" parent="enemies"]

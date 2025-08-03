@@ -1,5 +1,8 @@
 extends Enemy
 
+func _ready() -> void:
+	speed = 300
+
 func play_animations():
 	sprite.play("default")
 	animation_player.play("idle")

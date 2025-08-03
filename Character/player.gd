@@ -41,7 +41,7 @@ func _skill_update():
 	if CharacterNerfs.has_nerf("eattack4"):
 		EATTACK_COOLDOWN_TIME = 7
 	if CharacterNerfs.has_nerf("qattack2"):
-		EATTACK_COOLDOWN_TIME = 6
+		QATTACK_COOLDOWN_TIME = 6
 	
 	#Mults
 	# speed
