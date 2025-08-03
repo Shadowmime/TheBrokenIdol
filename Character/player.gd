@@ -20,6 +20,12 @@ signal survived
 @export var mirror_health: ProgressBar
 var hud_open := false
 
+@export var dash_cd_bar: TextureProgressBar
+
+@export var eattack_cd_bar: TextureProgressBar
+
+@export var qattack_cd_bar: TextureProgressBar
+
 var stage_rect = Rect2(Vector2.ZERO, Vector2(5760, 3240))
 
 func _skill_update():
@@ -116,13 +122,30 @@ func _physics_process(delta):
 	if hud_open:
 		freeze()
 		return
-
+	
+	
 	if dash_cooldown > 0:
 		dash_cooldown -= delta
 	if eattack_cooldown > 0:
 		eattack_cooldown -= delta
 	if qattack_cooldown > 0:
 		qattack_cooldown -= delta
+	# Dash
+	dash_cd_bar.max_value = DASH_COOLDOWN_TIME
+	dash_cd_bar.value = dash_cooldown
+	dash_cd_bar.visible = dash_cooldown > 0
+
+	# E attack
+	eattack_cd_bar.max_value = EATTACK_COOLDOWN_TIME
+	eattack_cd_bar.value = eattack_cooldown
+	eattack_cd_bar.visible = eattack_cooldown > 0
+
+	# Q attack
+	qattack_cd_bar.max_value = QATTACK_COOLDOWN_TIME
+	qattack_cd_bar.value = qattack_cooldown
+	qattack_cd_bar.visible = qattack_cooldown > 0
+	
+	
 	
 	_move()
 	move_and_slide()
