@@ -3,9 +3,19 @@ extends Node
 var first_tree = true
 var loop = 0
 var nerfs = []
+var temp_nerfs = []
 
 func add_nerf(nerf):
 	nerfs.append(nerf)
+	temp_nerfs.append(nerf)
+
+func retry():
+	loop -= 1
+	for nerf in temp_nerfs:
+		nerfs.erase(nerf)
+
+func clear_temp_nerfs():
+	temp_nerfs = []
 
 func has_nerf(nerf):
 	if nerf in nerfs:
