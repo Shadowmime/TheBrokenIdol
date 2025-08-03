@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://doyo0u380gcxn"]
+[gd_scene load_steps=17 format=3 uid="uid://doyo0u380gcxn"]
 
 [ext_resource type="Script" uid="uid://dg0spun41i0j5" path="res://Character/SkillTree/skill_tree.gd" id="1_8fi17"]
 [ext_resource type="PackedScene" uid="uid://cg0ioact5bp7i" path="res://Character/SkillTree/SkillButton.tscn" id="1_u2lak"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://c2cpgykj0ub8e" path="res://Assets/Button1.png" id="13_2cn67"]
 [ext_resource type="Texture2D" uid="uid://brni6grtwj0nm" path="res://Assets/Button2.png" id="14_he3rc"]
 [ext_resource type="Script" uid="uid://c5a88mm8cnti7" path="res://Scripts/UITextureButton.gd" id="14_kya0c"]
+[ext_resource type="AudioStream" uid="uid://cdi01601o70p4" path="res://Menus/ariahome.mp3" id="16_he3rc"]
 
 [node name="SkillTree" type="Control" node_paths=PackedStringArray("continue_level", "loop_text", "pages_buttons", "skill_info", "skill_name", "skill_desc", "skill_cost", "total_points", "base_damage", "cooldown", "delete")]
 layout_mode = 3
@@ -1057,6 +1058,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 60
 text = "CONTINUE"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_he3rc")
+autoplay = true
 
 [connection signal="pressed" from="Clickoff" to="." method="_on_clickoff_pressed"]
 [connection signal="pressed" from="Next" to="." method="_on_next_pressed"]
