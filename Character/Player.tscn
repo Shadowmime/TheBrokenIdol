@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dma111exu28u1"]
+[gd_scene load_steps=34 format=3 uid="uid://dma111exu28u1"]
 
 [ext_resource type="Texture2D" uid="uid://b11kwu6ux7r02" path="res://Character/Frame0.png" id="1_schp4"]
 [ext_resource type="Script" uid="uid://c13epiayxdskq" path="res://Character/player.gd" id="1_ssuvf"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://sgrhae7dudek" path="res://Character/aoe_attack.gd" id="10_o1y46"]
 [ext_resource type="Script" uid="uid://bwaemjlqr7j21" path="res://Character/idlemovement.gd" id="10_qolio"]
 [ext_resource type="PackedScene" uid="uid://bvruwtewb0q4y" path="res://Character/Projectiles/bomb.tscn" id="10_y83ax"]
+[ext_resource type="Texture2D" uid="uid://drleicpiuhfeq" path="res://Assets/Arrow3.png" id="16_p4yhq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o1y46"]
 bg_color = Color(1, 0.290747, 0.541075, 1)
@@ -321,10 +322,11 @@ height = 275.0
 radius = 125.0
 height = 250.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "camera", "shield", "timer", "mirror_health", "dash_cd_bar", "eattack_cd_bar", "qattack_cd_bar", "regen_timer", "ui_anim_player", "health_bar")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "camera", "arrow", "shield", "timer", "mirror_health", "dash_cd_bar", "eattack_cd_bar", "qattack_cd_bar", "regen_timer", "ui_anim_player", "health_bar")]
 script = ExtResource("1_ssuvf")
 sprite = NodePath("AnimatedSprite2D")
 camera = NodePath("Camera2D")
+arrow = NodePath("Arrow")
 shield = NodePath("Shield")
 max_time = 30
 timer = NodePath("HUD/Timer")
@@ -563,6 +565,9 @@ mesh = SubResource("SphereMesh_o1y46")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 10.0
 autostart = true
+
+[node name="Arrow" type="Sprite2D" parent="."]
+texture = ExtResource("16_p4yhq")
 
 [connection signal="spawn_note" from="CombatSM/Attack" to="." method="spawn_note"]
 [connection signal="spawn_note" from="CombatSM/FastAttack" to="." method="spawn_note"]

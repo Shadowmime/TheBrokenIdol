@@ -37,7 +37,6 @@ func _on_start_pressed() -> void:
 	if start_pressed:
 		return
 	start_pressed = true
-	print("im doing it?")
 	$enemies/AnimationPlayer.play("start_game")
 	await get_tree().create_timer(4).timeout
 	get_tree().change_scene_to_file("res://Stages/Level.tscn")

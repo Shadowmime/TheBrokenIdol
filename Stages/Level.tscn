@@ -125,13 +125,13 @@ navigation_polygon = SubResource("NavigationPolygon_kla8h")
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Rival" parent="Enemies" groups=["enemy"] instance=ExtResource("4_31xj6")]
-position = Vector2(871, 814)
+position = Vector2(1638, 841)
 
 [node name="BrokenLight" parent="Enemies" groups=["enemy"] instance=ExtResource("5_3hewx")]
-position = Vector2(1343, 2556)
+position = Vector2(1673, 2051)
 
 [node name="Watcher" parent="Enemies" groups=["enemy"] instance=ExtResource("6_k4q7x")]
-position = Vector2(4445, 643)
+position = Vector2(4095, 724)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_0jlh6")

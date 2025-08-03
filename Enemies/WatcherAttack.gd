@@ -4,15 +4,19 @@ class_name watcherattack
 
 @export var point_spawn: Marker2D
 var proj_scene: PackedScene = preload("res://Character/Projectiles/LightStickAttack.tscn")
+@export var sprite : AnimatedSprite2D
 
 signal spawn_note(note: Projectile)
 
 func Enter():
+	sprite.frame = 2
 	attack()
 	await get_tree().create_timer(3).timeout
 	state_transition.emit(self, "idle")
 	
 func Exit():
+	sprite.frame = 0
+	sprite.play("default")
 	pass
 
 func Update(_delta: float):

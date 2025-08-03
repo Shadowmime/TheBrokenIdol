@@ -100,7 +100,7 @@ shape = SubResource("CircleShape2D_h50it")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 10.0
-target_desired_distance = 2000.0
+target_desired_distance = 1200.0
 
 [node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("initial_state", "character")]
 script = ExtResource("2_85int")
@@ -116,9 +116,10 @@ metadata/_custom_type_script = "uid://dd7akicqh5561"
 script = ExtResource("4_h50it")
 metadata/_custom_type_script = "uid://dd7akicqh5561"
 
-[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("point_spawn")]
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("point_spawn", "sprite")]
 script = ExtResource("5_4fbfg")
 point_spawn = NodePath("../../Marker2D")
+sprite = NodePath("../../AnimatedSprite2D")
 metadata/_custom_type_script = "uid://dd7akicqh5561"
 
 [node name="Healthbar" type="ProgressBar" parent="."]

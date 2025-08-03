@@ -3,6 +3,7 @@ class_name Character
 
 @export var sprite: AnimatedSprite2D
 @export var camera: Camera2D
+@export var arrow : Sprite2D
 
 const SPRITE_HALF_WIDTH = 128
 const SPRITE_HALF_HEIGHT = 128
@@ -91,6 +92,7 @@ func _ready():
 	regen_timer.start()
 
 func _process(delta: float) -> void:
+	_update_arrow()
 	$AnimatedSprite2D.play("default")
 	_flip_sprite_to_mouse()
 	timer.value = clamp(timer.value - delta, 0, 60)
@@ -302,3 +304,18 @@ func flash_twice(sprite: CanvasItem, original_color: Color, flash_color: Color) 
 	sprite.modulate = flash_color
 	await get_tree().create_timer(0.05).timeout
 	sprite.modulate = original_color
+
+@export var arrow_distance := 150.0  # Radius from player to arrow
+
+func _update_arrow():
+	if !arrow:
+		return
+
+	var mouse_pos = get_global_mouse_position()
+	var dir = (mouse_pos - global_position).normalized()
+
+	# Set arrow position around player
+	arrow.global_position = global_position + dir * arrow_distance
+
+	# Rotate arrow to face the mouse direction
+	arrow.rotation = dir.angle() + deg_to_rad(90)
