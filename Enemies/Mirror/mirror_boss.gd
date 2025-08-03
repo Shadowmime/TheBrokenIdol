@@ -256,7 +256,9 @@ func transition_to_phase_3():
 	spawning_phase2 = false
 	choose_next_attack()
 
+var dead = false
 func die():
+	dead = true
 	radius = 300
 	target.movement_disabled = true
 	$AnimationPlayer.play("death")
@@ -268,6 +270,8 @@ func die():
 
 var original = Color(1, 1, 1)
 func flash_red():
+	if dead:
+		return
 	var flash_color = Color(1, 0.3, 0.3)  # soft red
 	flash_twice(mirror_sprite, original, flash_color)
 	flash_twice(glass_sprite, original, flash_color)
