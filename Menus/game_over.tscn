@@ -52,6 +52,7 @@ offset_right = 960.0
 offset_bottom = 936.0
 pivot_offset = Vector2(220, 110)
 texture_normal = ExtResource("5_kuryv")
+script = ExtResource("4_kf51k")
 
 [node name="Label" type="Label" parent="Retry"]
 layout_mode = 1
