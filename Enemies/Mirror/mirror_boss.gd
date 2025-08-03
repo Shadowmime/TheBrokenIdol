@@ -41,9 +41,10 @@ var t := 0.0
 var do_infinity_move := false
 var anchor_pos := Vector2.ZERO
 
+
+var radius = 500
 func _process(delta):
 	if orbit_mode:
-		var radius = 500
 		var angle = dir * PI / 3 - PI / 2
 		var center = target.global_position
 		var offset = Vector2(cos(angle), sin(angle)) * radius
@@ -256,6 +257,8 @@ func transition_to_phase_3():
 	choose_next_attack()
 
 func die():
+	radius = 300
+	target.movement_disabled = true
 	$AnimationPlayer.play("death")
 	dir = 0
 	await get_tree().create_timer(4).timeout
@@ -263,12 +266,11 @@ func die():
 	queue_free()
 	#mirror_defeated.emit()
 
+var original = Color(1, 1, 1)
 func flash_red():
-	var original = mirror_sprite.modulate
-	var original2 = glass_sprite.modulate
 	var flash_color = Color(1, 0.3, 0.3)  # soft red
 	flash_twice(mirror_sprite, original, flash_color)
-	flash_twice(glass_sprite, original2, flash_color)
+	flash_twice(glass_sprite, original, flash_color)
 
 func flash_twice(sprite: CanvasItem, original_color: Color, flash_color: Color) -> void:
 	await get_tree().create_timer(0.01).timeout
@@ -279,3 +281,8 @@ func flash_twice(sprite: CanvasItem, original_color: Color, flash_color: Color) 
 	sprite.modulate = flash_color
 	await get_tree().create_timer(0.05).timeout
 	sprite.modulate = original_color
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		body.take_damage(50)

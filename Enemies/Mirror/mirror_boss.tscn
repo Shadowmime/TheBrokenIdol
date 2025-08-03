@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bvfffh6ejbeq3"]
+[gd_scene load_steps=24 format=3 uid="uid://bvfffh6ejbeq3"]
 
 [ext_resource type="Script" uid="uid://h6q3kogf6qh4" path="res://Enemies/Mirror/mirror_boss.gd" id="1_orpdr"]
 [ext_resource type="Texture2D" uid="uid://i10mniugfve8" path="res://Enemies/Mirror/MirrorFrame00.png" id="2_4565x"]
@@ -212,6 +212,10 @@ _data = {
 &"uninvis": SubResource("Animation_r4ykg")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4565x"]
+radius = 80.0
+height = 256.0
+
 [node name="MirrorBoss" type="CharacterBody2D" node_paths=PackedStringArray("mirror_sprite", "glass_sprite")]
 collision_layer = 2
 collision_mask = 2
@@ -239,3 +243,10 @@ shape = SubResource("CapsuleShape2D_orpdr")
 libraries = {
 &"": SubResource("AnimationLibrary_4565x")
 }
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_4565x")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

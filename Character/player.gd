@@ -84,6 +84,7 @@ var attack_mod = 1
 
 func _ready():
 	_current_speed = NORMAL_SPEED * speed_multiplier
+	max_time += (CharacterNerfs.loop - 1) * 5
 	timer.max_value = max_time
 	timer.value = max_time
 	regen_timer.timeout.connect(_on_regen_timer_timeout)
@@ -114,21 +115,25 @@ func mirror_defeated():
 	# it will display the image of aria on the mirror
 	# and then it will play a fade out.
 	var ran = randi_range(1, 2)
-	match CharacterNerfs.loop:
-		1:
-			$HUD/Quote.text = "i want to give up... i must PRESS on..."
-		2:
-			$HUD/Quote.text = "i need to go BACK to the idol SPACE"
-		3:
-			$HUD/Quote.text = "why am i still ON this stage? 
-			every ARIA sounds the same now. empty. hollow."
-		4:
-			$HUD/Quote.text = "It's was so poiNTless afteR all...  
-			i can't dO this anymore"
-		5:
-			$HUD/Quote.text = "i don’t know who i am anymore... 
-			thiS is just a Cruel Routine. 
-			i don’t Even rEalize when it's Night or day..."
+	if CharacterNerfs.campaign:
+		match CharacterNerfs.loop:
+			1:
+				$HUD/Quote.text = "i want to give up... i must PRESS on..."
+			2:
+				$HUD/Quote.text = "i need to go BACK to the idol SPACE"
+			3:
+				$HUD/Quote.text = "why am i still ON this stage? 
+				every ARIA sounds the same now. empty. hollow."
+			4:
+				$HUD/Quote.text = "It's was so poiNTless afteR all...  
+				i can't dO this anymore"
+			5:
+				$HUD/Quote.text = "i don’t know who i am anymore... 
+				thiS is just a Cruel Routine. 
+				i don’t Even rEalize when it's Night or day..."
+	else:
+		$HUD/Quote.text = "Score Mode : How many skills can you remove
+		Current Score : " + str(CharacterNerfs.score)
 	ui_anim_player.play("fade_out" + str(ran))
 	await get_tree().create_timer(5).timeout
 	boss_defeated.emit()
@@ -282,8 +287,8 @@ signal spawn_bomb(bomb: Bomb)
 func _on_aoe_attack_spawn_bomb(bomb: Bomb) -> void:
 	spawn_bomb.emit(bomb)
 
+var original = Color(1, 1, 1)
 func flash_red():
-	var original = sprite.modulate
 	var flash_color = Color(1, 0.3, 0.3)  # soft red
 	flash_twice(sprite, original, flash_color)
 
