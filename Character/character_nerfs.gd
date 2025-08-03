@@ -6,6 +6,8 @@ var nerfs = []
 var temp_nerfs = []
 
 func add_nerf(nerf):
+	if nerf == "shield2":
+		loop = 2
 	nerfs.append(nerf)
 	temp_nerfs.append(nerf)
 
