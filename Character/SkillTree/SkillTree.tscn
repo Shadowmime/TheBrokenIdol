@@ -1,8 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://doyo0u380gcxn"]
+[gd_scene load_steps=17 format=3 uid="uid://doyo0u380gcxn"]
 
 [ext_resource type="Script" uid="uid://dg0spun41i0j5" path="res://Character/SkillTree/skill_tree.gd" id="1_8fi17"]
-[ext_resource type="Texture2D" uid="uid://dqgu73p0lb6s0" path="res://Character/SkillTree/Button3.png" id="1_fl80d"]
 [ext_resource type="PackedScene" uid="uid://cg0ioact5bp7i" path="res://Character/SkillTree/SkillButton.tscn" id="1_u2lak"]
+[ext_resource type="Texture2D" uid="uid://dqrvy2p7kcbrg" path="res://Assets/Arrow1.png" id="2_kya0c"]
 [ext_resource type="Texture2D" uid="uid://ysa764qa72dk" path="res://Character/SkillTree/Icons/Shield.png" id="4_sgfpf"]
 [ext_resource type="Texture2D" uid="uid://dyq40q0ct0dqb" path="res://Character/SkillTree/Icons/MusicNote_DoubleBlue.png" id="5_4b4nt"]
 [ext_resource type="Texture2D" uid="uid://i1b7l4rlqorg" path="res://Character/SkillTree/Icons/Blume2.png" id="6_4b4nt"]
@@ -11,6 +11,11 @@
 [ext_resource type="Texture2D" uid="uid://3uv2d22fbcfk" path="res://Character/SkillTree/Icons/Health.png" id="9_2ax38"]
 [ext_resource type="Texture2D" uid="uid://02odrygcwc47" path="res://Character/SkillTree/Icons/Speed.png" id="10_0ujbg"]
 [ext_resource type="Texture2D" uid="uid://bcnq5e1sitgik" path="res://Character/SkillTree/Icons/DashSingleArrow.png" id="11_i1usj"]
+[ext_resource type="Texture2D" uid="uid://drgh53l4k4jil" path="res://Character/SkillTree/Icons/Regenerate.png" id="11_vs8cm"]
+[ext_resource type="Texture2D" uid="uid://c2cpgykj0ub8e" path="res://Assets/Button1.png" id="13_2cn67"]
+[ext_resource type="Texture2D" uid="uid://brni6grtwj0nm" path="res://Assets/Button2.png" id="14_he3rc"]
+[ext_resource type="Script" uid="uid://c5a88mm8cnti7" path="res://Scripts/UITextureButton.gd" id="14_kya0c"]
+[ext_resource type="AudioStream" uid="uid://cdi01601o70p4" path="res://Menus/ariahome.mp3" id="16_he3rc"]
 
 [node name="SkillTree" type="Control" node_paths=PackedStringArray("continue_level", "loop_text", "pages_buttons", "skill_info", "skill_name", "skill_desc", "skill_cost", "total_points", "base_damage", "cooldown", "delete")]
 layout_mode = 3
@@ -41,7 +46,7 @@ offset_top = -2.0
 offset_right = 1920.0
 offset_bottom = 1075.0
 mouse_filter = 2
-color = Color(0.468468, 0.000153922, 0.468465, 1)
+color = Color(0.15792, 0.300414, 0.378419, 1)
 
 [node name="Clickoff" type="Button" parent="."]
 z_index = -1
@@ -53,52 +58,31 @@ grow_horizontal = 2
 grow_vertical = 2
 flat = true
 
-[node name="Next" type="Button" parent="."]
+[node name="Next" type="TextureButton" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 1077.0
-offset_top = 937.0
-offset_right = 1564.0
-offset_bottom = 1163.0
-scale = Vector2(0.5, 0.5)
-theme_override_font_sizes/font_size = 100
-icon = ExtResource("1_fl80d")
-flat = true
+offset_left = 1186.0
+offset_top = 941.0
+offset_right = 1314.0
+offset_bottom = 1069.0
+rotation = 1.5708
+pivot_offset = Vector2(64, 64)
+texture_normal = ExtResource("2_kya0c")
+script = ExtResource("14_kya0c")
+metadata/_custom_type_script = "uid://c5a88mm8cnti7"
 
-[node name="Label" type="Label" parent="Next"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 100
-text = "Next"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Prev" type="Button" parent="."]
+[node name="Prev" type="TextureButton" parent="."]
 visible = false
 layout_mode = 0
 offset_left = 20.0
 offset_top = 941.0
-offset_right = 507.0
-offset_bottom = 1167.0
-scale = Vector2(0.5, 0.5)
-icon = ExtResource("1_fl80d")
-flat = true
-
-[node name="Label" type="Label" parent="Prev"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 100
-text = "Prev"
-horizontal_alignment = 1
-vertical_alignment = 1
+offset_right = 148.0
+offset_bottom = 1069.0
+rotation = -1.5708
+pivot_offset = Vector2(64, 64)
+texture_normal = ExtResource("2_kya0c")
+script = ExtResource("14_kya0c")
+metadata/_custom_type_script = "uid://c5a88mm8cnti7"
 
 [node name="Pages" type="Control" parent="."]
 layout_mode = 1
@@ -529,8 +513,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 1399.0
-offset_top = 671.0
+offset_top = 700.0
 offset_right = -61.0
+offset_bottom = 29.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -540,8 +525,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 1399.0
+offset_top = -28.0
 offset_right = -61.0
-offset_bottom = -603.0
+offset_bottom = -631.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -592,8 +578,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 1399.0
+offset_top = -42.0
 offset_right = -61.0
-offset_bottom = -208.0
+offset_bottom = -250.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -818,7 +805,7 @@ grow_horizontal = 1
 grow_vertical = 1
 skill_name = "Health Regen I"
 skill_cost = 5
-skill_sprite = ExtResource("9_2ax38")
+skill_sprite = ExtResource("11_vs8cm")
 skill_desc = "Aria will heal 10 health every 10 seconds"
 skill_reference = "hregen1"
 
@@ -837,7 +824,7 @@ grow_horizontal = 1
 grow_vertical = 1
 skill_name = "Health Regen II"
 skill_cost = 5
-skill_sprite = ExtResource("9_2ax38")
+skill_sprite = ExtResource("11_vs8cm")
 skill_desc = "Aria will heal 20 hp every 10 seconds"
 skill_reference = "hregen2"
 
@@ -856,7 +843,7 @@ grow_horizontal = 1
 grow_vertical = 1
 skill_name = "Health Regen III"
 skill_cost = 12
-skill_sprite = ExtResource("9_2ax38")
+skill_sprite = ExtResource("11_vs8cm")
 skill_desc = "Aria recovers 10% of her max hp every 5 seconds"
 skill_reference = "hregen3"
 
@@ -1014,12 +1001,12 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Cooldown : "
 
-[node name="Delete" type="Button" parent="SkillInfo"]
+[node name="Delete" type="TextureButton" parent="SkillInfo"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 100
-icon = ExtResource("1_fl80d")
-flat = true
-icon_alignment = 1
+size_flags_horizontal = 4
+texture_normal = ExtResource("14_he3rc")
+script = ExtResource("14_kya0c")
+metadata/_custom_type_script = "uid://c5a88mm8cnti7"
 
 [node name="Label" type="Label" parent="SkillInfo/Delete"]
 layout_mode = 1
@@ -1044,18 +1031,37 @@ theme_override_font_sizes/font_size = 50
 text = "/ Infinity"
 horizontal_alignment = 1
 
-[node name="Continue" type="Button" parent="."]
+[node name="Continue" type="TextureButton" parent="."]
 layout_mode = 2
-offset_left = 1387.0
-offset_top = 859.0
-offset_right = 1874.0
-offset_bottom = 1085.0
-theme_override_font_sizes/font_size = 100
+offset_left = 1413.0
+offset_top = 843.0
+offset_right = 1853.0
+offset_bottom = 1063.0
+pivot_offset = Vector2(220, 110)
 disabled = true
-text = "Continue"
-icon = ExtResource("1_fl80d")
-flat = true
-icon_alignment = 1
+texture_normal = ExtResource("13_2cn67")
+script = ExtResource("14_kya0c")
+metadata/_custom_type_script = "uid://c5a88mm8cnti7"
+
+[node name="Label" type="Label" parent="Continue"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -41.5
+offset_top = -11.5
+offset_right = 41.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 60
+text = "CONTINUE"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_he3rc")
+autoplay = true
 
 [connection signal="pressed" from="Clickoff" to="." method="_on_clickoff_pressed"]
 [connection signal="pressed" from="Next" to="." method="_on_next_pressed"]

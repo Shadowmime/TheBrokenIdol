@@ -4,7 +4,7 @@ var pages = ["skill", "stats", "controls"]
 var page_index = 0
 var first = false
 
-@export var continue_level: Button
+@export var continue_level: UITextureButton
 @export var loop_text: Label
 var points_needed = 0
 
@@ -36,7 +36,7 @@ func _ready() -> void:
 		loop_text.text = "Loop: " + str(CharacterNerfs.loop) + " / ?"
 	if CharacterNerfs.game_over:
 		continue_level.disabled = false
-		continue_level.text = "Home"
+		continue_level.get_node("Label").text = "Home"
 		# Need to fully disable delete, and also change total points text
 		delete.disabled = true
 		total_points.text = "Final Score : " + str(CharacterNerfs.score)
@@ -113,7 +113,7 @@ var current_points = 0
 
 var clicked_skill : SkillNode
 
-@export var delete : Button
+@export var delete : UITextureButton
 func skill_pressed(skill):
 	if clicked_skill:
 		clicked_skill.clicked_off()
