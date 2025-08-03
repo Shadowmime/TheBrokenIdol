@@ -44,7 +44,7 @@ func _on_damage_tick():
 
 var enemies_damage_range = []
 func _on_damagerange_body_entered(body: Node2D) -> void:
-	if body.is_in_group("enemy"):
+	if body.is_in_group("enemy") or body.is_in_group("boss_enemy"):
 		enemies_damage_range.append(body)
 
 func _on_damagerange_body_exited(body: Node2D) -> void:
@@ -53,7 +53,7 @@ func _on_damagerange_body_exited(body: Node2D) -> void:
 
 var enemies_pulling_range = []
 func _on_pullingrange_body_entered(body: Node2D) -> void:
-	if body.is_in_group("enemy"):
+	if body.is_in_group("enemy") or body.is_in_group("boss_enemy"):
 		enemies_pulling_range.append(body)
 
 func _on_pullingrange_body_exited(body: Node2D) -> void:

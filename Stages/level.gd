@@ -107,6 +107,11 @@ var enemies_per_wave := 2
 const SPAWN_INTERVAL := 10.0
 
 func _process(delta):
+	scribble_timer += delta
+	if scribble_timer >= scribble_interval:
+		scribble_timer = 0
+		if randi() % 2 == 0:
+			spawn_scribble()
 	if !boss_spawned:
 		spawn_timer += delta
 		if spawn_timer >= SPAWN_INTERVAL:
@@ -139,3 +144,41 @@ func player_died_change():
 	else:
 		CharacterNerfs.game_over = true
 		get_tree().change_scene_to_file("res://Character/SkillTree/SkillTree.tscn")
+
+#################################################3
+#scribbles
+var screen_size = Vector2(5440, 3240)
+
+@export var scribble_scene: PackedScene
+var scribble_timer := 0.0
+var scribble_interval := 5.0
+
+# Singleton or Level.gd static var
+var current_scale = 0.4
+
+func spawn_scribble():
+	var scribble = scribble_scene.instantiate()
+	
+	var from_edge = randi() % 4
+	var from := Vector2.ZERO
+	var to := Vector2.ZERO
+
+	match from_edge:
+		0:  # left to right
+			from = Vector2(0, randf_range(0, screen_size.y))
+			to = Vector2(screen_size.x, from.y)
+		1:  # right to left
+			from = Vector2(screen_size.x, randf_range(0, screen_size.y))
+			to = Vector2(0, from.y)
+		2:  # top to bottom
+			from = Vector2(randf_range(0, screen_size.x), 0)
+			to = Vector2(from.x, screen_size.y)
+		3:  # bottom to top
+			from = Vector2(randf_range(0, screen_size.x), screen_size.y)
+			to = Vector2(from.x, 0)
+
+	scribble.scale = Vector2.ONE * current_scale
+	current_scale += 0.05
+
+	scribble.set_direction(from, to)
+	add_child(scribble)

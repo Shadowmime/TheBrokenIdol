@@ -32,7 +32,14 @@ func update_enemy_screen():
 	current_enemy.show()
 	
 
+var start_pressed = false
 func _on_start_pressed() -> void:
+	if start_pressed:
+		return
+	start_pressed = true
+	print("im doing it?")
+	$enemies/AnimationPlayer.play("start_game")
+	await get_tree().create_timer(4).timeout
 	get_tree().change_scene_to_file("res://Stages/Level.tscn")
 
 func _on_freeplay_pressed() -> void:
@@ -40,3 +47,11 @@ func _on_freeplay_pressed() -> void:
 	CharacterNerfs.first_tree = false
 	CharacterNerfs.add_nerf("shield2")
 	get_tree().change_scene_to_file("res://Stages/Level.tscn")
+
+func _input(event):
+	if event.is_action_pressed("true_ending"):
+		if $Controls.visible:
+			trigger_true_ending()
+
+func trigger_true_ending():
+	get_tree().change_scene_to_file("res://Menus/true_ending.tscn")

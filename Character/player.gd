@@ -84,6 +84,7 @@ var attack_mod = 1
 
 func _ready():
 	_current_speed = NORMAL_SPEED * speed_multiplier
+	max_time += (CharacterNerfs.loop - 1) * 5
 	timer.max_value = max_time
 	timer.value = max_time
 	regen_timer.timeout.connect(_on_regen_timer_timeout)
@@ -114,8 +115,27 @@ func mirror_defeated():
 	# it will display the image of aria on the mirror
 	# and then it will play a fade out.
 	var ran = randi_range(1, 2)
+	if CharacterNerfs.campaign:
+		match CharacterNerfs.loop:
+			1:
+				$HUD/Quote.text = "i want to give up... i must PRESS on..."
+			2:
+				$HUD/Quote.text = "i need to go BACK to the idol SPACE"
+			3:
+				$HUD/Quote.text = "why am i still ON this stage? 
+				every ARIA sounds the same now. empty. hollow."
+			4:
+				$HUD/Quote.text = "It's was so poiNTless afteR all...  
+				i can't dO this anymore"
+			5:
+				$HUD/Quote.text = "i don’t know who i am anymore... 
+				thiS is just a Cruel Routine. 
+				i don’t Even rEalize when it's Night or day..."
+	else:
+		$HUD/Quote.text = "Score Mode : How many skills can you remove
+		Current Score : " + str(CharacterNerfs.score)
 	ui_anim_player.play("fade_out" + str(ran))
-	await get_tree().create_timer(4).timeout
+	await get_tree().create_timer(5).timeout
 	boss_defeated.emit()
 
 func _physics_process(delta):
@@ -254,7 +274,10 @@ func take_damage(damage, _damage_type = null):
 	if invincible:
 		return
 	# multipliers go in here
-	health = health - damage * shield_scale * damage_taken_mult
+	var total_damage = damage * shield_scale * damage_taken_mult
+	if total_damage != 0:
+		flash_red()
+	health = health - total_damage
 
 var damage_taken_mult = 1
 func set_damage_taken_multiplier(_damage_mult = 1):
@@ -263,3 +286,18 @@ func set_damage_taken_multiplier(_damage_mult = 1):
 signal spawn_bomb(bomb: Bomb)
 func _on_aoe_attack_spawn_bomb(bomb: Bomb) -> void:
 	spawn_bomb.emit(bomb)
+
+var original = Color(1, 1, 1)
+func flash_red():
+	var flash_color = Color(1, 0.3, 0.3)  # soft red
+	flash_twice(sprite, original, flash_color)
+
+func flash_twice(sprite: CanvasItem, original_color: Color, flash_color: Color) -> void:
+	await get_tree().create_timer(0.01).timeout
+	sprite.modulate = flash_color
+	await get_tree().create_timer(0.05).timeout
+	sprite.modulate = original_color
+	await get_tree().create_timer(0.05).timeout
+	sprite.modulate = flash_color
+	await get_tree().create_timer(0.05).timeout
+	sprite.modulate = original_color
