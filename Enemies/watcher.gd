@@ -1,7 +1,7 @@
 extends Enemy
 
 func _ready() -> void:
-	speed = 100
+	speed = 150
 	ready()
 
 signal spawn_note(note: Projectile)

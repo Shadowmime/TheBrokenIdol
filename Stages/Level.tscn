@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dsbhfcrbkfulg"]
+[gd_scene load_steps=14 format=3 uid="uid://dsbhfcrbkfulg"]
 
 [ext_resource type="Script" uid="uid://cy817r4r8nb3b" path="res://Stages/level.gd" id="1_kla8h"]
 [ext_resource type="Texture2D" uid="uid://cgjd1p13di5y8" path="res://Assets/Background.png" id="1_ragna"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://g4pjwp4jvyf3" path="res://Enemies/Rival.tscn" id="4_31xj6"]
 [ext_resource type="PackedScene" uid="uid://cbfjfujjwuk3d" path="res://Enemies/BrokenLight.tscn" id="5_3hewx"]
 [ext_resource type="PackedScene" uid="uid://bvfffh6ejbeq3" path="res://Enemies/Mirror/mirror_boss.tscn" id="5_07bur"]
+[ext_resource type="PackedScene" uid="uid://cby0o4e0ikfvq" path="res://Enemies/Scribbles/scribbles.tscn" id="6_h4tav"]
 [ext_resource type="PackedScene" uid="uid://bt1x4cyi4swre" path="res://Enemies/Watcher.tscn" id="6_k4q7x"]
 [ext_resource type="AudioStream" uid="uid://bk6c3ltl5on3b" path="res://Menus/music_box.mp3" id="7_0jlh6"]
 
@@ -107,6 +108,7 @@ player = NodePath("Player")
 anim_player = NodePath("AnimationPlayer")
 enemy_scenes = Array[PackedScene]([ExtResource("4_31xj6"), ExtResource("6_k4q7x"), ExtResource("5_3hewx")])
 mirror_scene = ExtResource("5_07bur")
+scribble_scene = ExtResource("6_h4tav")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(2880, 1620)
