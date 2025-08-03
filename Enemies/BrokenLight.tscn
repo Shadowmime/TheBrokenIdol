@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cbfjfujjwuk3d"]
+[gd_scene load_steps=16 format=3 uid="uid://cbfjfujjwuk3d"]
 
 [ext_resource type="Script" uid="uid://k4a0yqllahfe" path="res://Enemies/broken_light.gd" id="1_2dilx"]
 [ext_resource type="Script" uid="uid://ct8qkty76kdmf" path="res://Scripts/state_machine.gd" id="2_24ljj"]
@@ -102,7 +102,11 @@ _data = {
 &"idle": SubResource("Animation_ejajv")
 }
 
-[node name="BrokenLight" type="CharacterBody2D" node_paths=PackedStringArray("nav", "animation_player", "health_bar", "sprite", "state_machine")]
+[sub_resource type="SphereMesh" id="SphereMesh_2dilx"]
+radius = 135.0
+height = 270.0
+
+[node name="BrokenLight" type="CharacterBody2D" node_paths=PackedStringArray("nav", "animation_player", "health_bar", "sprite", "state_machine", "boss_shading")]
 script = ExtResource("1_2dilx")
 nav = NodePath("NavigationAgent2D")
 animation_player = NodePath("AnimationPlayer")
@@ -110,6 +114,7 @@ health_bar = NodePath("Healthbar")
 max_health = 75
 sprite = NodePath("AnimatedSprite2D")
 state_machine = NodePath("StateMachine")
+boss_shading = NodePath("BossShading")
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -159,6 +164,11 @@ libraries = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_jcwuj")
+
+[node name="BossShading" type="MeshInstance2D" parent="."]
+visible = false
+modulate = Color(1, 0, 0, 0.0784314)
+mesh = SubResource("SphereMesh_2dilx")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]

@@ -13,10 +13,11 @@ var speed_multiplier: float = 5.0
 
 @export var shield : MeshInstance2D
 
-var max_time = 30
+@export var max_time = 10
 @export var timer : ProgressBar
 signal survived
 
+@export var mirror_health: ProgressBar
 var hud_open := false
 
 var stage_rect = Rect2(Vector2.ZERO, Vector2(5760, 3240))
@@ -87,7 +88,29 @@ func _process(delta: float) -> void:
 	_flip_sprite_to_mouse()
 	timer.value = clamp(timer.value - delta, 0, 60)
 	if timer.value == 0:
-		survived.emit()
+		boss_spawn()
+
+var already_spawned = false
+func boss_spawn():
+	#TODO if you want to skip boss while testing
+	#boss_defeated.emit()
+	if already_spawned:
+		return
+	else:
+		already_spawned = true
+	survived.emit()
+	timer.hide()
+	mirror_health.show()
+
+@export var ui_anim_player: AnimationPlayer
+signal boss_defeated
+func mirror_defeated():
+	# it will display the image of aria on the mirror
+	# and then it will play a fade out.
+	var ran = randi_range(1, 2)
+	ui_anim_player.play("fade_out" + str(ran))
+	await get_tree().create_timer(4).timeout
+	boss_defeated.emit()
 
 func _physics_process(delta):
 	if hud_open:
@@ -118,6 +141,7 @@ func _physics_process(delta):
 func freeze():
 	velocity = Vector2.ZERO
 
+var movement_disabled = false
 func _move():
 	var input_vector := Vector2.ZERO
 	if not CharacterNerfs.has_nerf("left") and Input.is_action_pressed("move_left"):
@@ -140,7 +164,10 @@ func set_speed_multiplier(multiplier: float = 1):
 	dash_multiplier = multiplier
 
 func is_running():
-	_current_speed = NORMAL_SPEED * speed_multiplier * dash_multiplier
+	if movement_disabled: 
+		_current_speed = 0
+	else:
+		_current_speed = NORMAL_SPEED * speed_multiplier * dash_multiplier
 
 func _flip_sprite_to_mouse():
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -192,10 +219,17 @@ var health = 500:
 		if health == 0:
 			on_death()
 
+signal player_died
 func on_death():
-	get_tree().change_scene_to_file("res://Menus/game_over.tscn")
+	player_died.emit()
+
+var invincible = false
+func set_invincible(state = true):
+	invincible = state
 
 func take_damage(damage, _damage_type = null):
+	if invincible:
+		return
 	# multipliers go in here
 	health = health - damage * shield_scale * damage_taken_mult
 

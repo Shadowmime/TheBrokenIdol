@@ -1,7 +1,7 @@
 extends Node
 
 var first_tree = true
-var loop = -1
+var loop = 0
 var nerfs = []
 
 func add_nerf(nerf):
@@ -13,10 +13,23 @@ func has_nerf(nerf):
 	else:
 		return false
 
-func get_loop():
+func func_loop():
 	loop += 1
 	return loop
 
-var points_needed = [0, 5]
+func is_finished():
+	if loop == points_needed.size() && campaign:
+		return true
+	return false
+
+var points_needed = [0, 10, 20, 30, 40]
 func get_points_needed():
-	return points_needed[loop]
+	return points_needed[func_loop()]
+
+# Campaign vs Freeplay mode
+# Campaign theres 5 waves where you have to delete x amount of skills
+# Freeplay its a high scoring mode
+var campaign = true
+var score = 0
+
+var game_over = false

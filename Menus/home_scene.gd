@@ -8,10 +8,6 @@ func _on_continue_pressed() -> void:
 	$Controls.hide()
 	$enemies.show()
 
-func _on_start_pressed() -> void:
-	get_tree().change_scene_to_file("res://Stages/Level.tscn")
-
-
 @export var enemies : Control
 var enemy_index = 0
 @export var current_enemy : Control
@@ -32,3 +28,12 @@ func update_enemy_screen():
 	current_enemy = enemies.get_child(enemy_index)
 	current_enemy.show()
 	
+
+func _on_start_pressed() -> void:
+	get_tree().change_scene_to_file("res://Stages/Level.tscn")
+
+func _on_freeplay_pressed() -> void:
+	CharacterNerfs.campaign = false
+	CharacterNerfs.first_tree = false
+	CharacterNerfs.add_nerf("shield2")
+	get_tree().change_scene_to_file("res://Stages/Level.tscn")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bt1x4cyi4swre"]
+[gd_scene load_steps=17 format=3 uid="uid://bt1x4cyi4swre"]
 
 [ext_resource type="Script" uid="uid://co2clrsa0mjw8" path="res://Enemies/watcher.gd" id="1_4fbfg"]
 [ext_resource type="Script" uid="uid://ct8qkty76kdmf" path="res://Scripts/state_machine.gd" id="2_85int"]
@@ -80,7 +80,11 @@ _data = {
 &"idle": SubResource("Animation_ejajv")
 }
 
-[node name="Watcher" type="CharacterBody2D" node_paths=PackedStringArray("nav", "animation_player", "health_bar", "sprite", "state_machine")]
+[sub_resource type="SphereMesh" id="SphereMesh_4fbfg"]
+radius = 135.0
+height = 270.0
+
+[node name="Watcher" type="CharacterBody2D" node_paths=PackedStringArray("nav", "animation_player", "health_bar", "sprite", "state_machine", "boss_shading")]
 collision_layer = 2
 script = ExtResource("1_4fbfg")
 nav = NodePath("NavigationAgent2D")
@@ -89,6 +93,7 @@ health_bar = NodePath("Healthbar")
 max_health = 150
 sprite = NodePath("AnimatedSprite2D")
 state_machine = NodePath("StateMachine")
+boss_shading = NodePath("BossColour")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_h50it")
@@ -136,6 +141,11 @@ libraries = {
 }
 
 [node name="Marker2D" type="Marker2D" parent="."]
+
+[node name="BossColour" type="MeshInstance2D" parent="."]
+visible = false
+modulate = Color(1, 0, 0, 0.0784314)
+mesh = SubResource("SphereMesh_4fbfg")
 
 [connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
 [connection signal="spawn_note" from="StateMachine/Attack" to="." method="_on_attack_spawn_note"]

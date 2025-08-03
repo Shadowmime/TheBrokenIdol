@@ -292,7 +292,7 @@ offset_top = 836.0
 offset_right = 1897.0
 offset_bottom = 1062.0
 theme_override_font_sizes/font_size = 100
-text = "Ready!"
+text = "Story Mode"
 icon = ExtResource("3_heyhx")
 flat = true
 icon_alignment = 1
@@ -311,12 +311,24 @@ icon_alignment = 1
 
 [node name="Prev" type="Button" parent="enemies"]
 layout_mode = 0
-offset_left = 6.0
-offset_top = 804.0
-offset_right = 493.0
-offset_bottom = 1030.0
+offset_left = 4.0
+offset_top = 632.0
+offset_right = 491.0
+offset_bottom = 858.0
 theme_override_font_sizes/font_size = 100
 text = "Prev"
+icon = ExtResource("3_heyhx")
+flat = true
+icon_alignment = 1
+
+[node name="Freeplay" type="Button" parent="enemies"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 856.0
+offset_right = 486.0
+offset_bottom = 1082.0
+theme_override_font_sizes/font_size = 100
+text = "Free Play"
 icon = ExtResource("3_heyhx")
 flat = true
 icon_alignment = 1
@@ -330,3 +342,4 @@ autoplay = true
 [connection signal="pressed" from="enemies/Start2" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="enemies/Next" to="." method="_on_next_pressed"]
 [connection signal="pressed" from="enemies/Prev" to="." method="_on_prev_pressed"]
+[connection signal="pressed" from="enemies/Freeplay" to="." method="_on_freeplay_pressed"]

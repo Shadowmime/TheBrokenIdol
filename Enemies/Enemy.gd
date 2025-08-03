@@ -96,3 +96,8 @@ var speed_mult = 1
 func set_speed_mult(mult):
 	slowed_duration = 3
 	speed_mult = mult
+
+@export var boss_shading: MeshInstance2D
+func toggle_boss_shading():
+	if boss_shading:
+		boss_shading.show()

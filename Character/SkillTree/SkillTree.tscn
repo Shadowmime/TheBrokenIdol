@@ -528,7 +528,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 1399.0
-offset_top = 729.0
+offset_top = 671.0
 offset_right = -61.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -540,7 +540,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 1399.0
 offset_right = -61.0
-offset_bottom = -551.0
+offset_bottom = -603.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -622,6 +622,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Label" type="Label" parent="Pages/StatsPage"]
+layout_mode = 0
 offset_left = 457.0
 offset_top = 969.0
 offset_right = 849.0
@@ -630,6 +631,7 @@ theme_override_font_sizes/font_size = 50
 text = "Stats Multipliers"
 
 [node name="AttackMult" parent="Pages/StatsPage" instance=ExtResource("1_u2lak")]
+layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
 anchor_top = 0.0
@@ -687,6 +689,7 @@ skill_desc = "Base attack is increased by 200%"
 skill_reference = "amult3"
 
 [node name="HealthMult" parent="Pages/StatsPage" instance=ExtResource("1_u2lak")]
+layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
 anchor_top = 0.0
@@ -743,6 +746,7 @@ skill_desc = "Health is increased to 500"
 skill_reference = "hmult3"
 
 [node name="SpeedMult" parent="Pages/StatsPage" instance=ExtResource("1_u2lak")]
+layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
 anchor_top = 0.0
@@ -799,6 +803,7 @@ skill_desc = "Aria's speed increases by 200%"
 skill_reference = "smult3"
 
 [node name="Health Regen" parent="Pages/StatsPage" instance=ExtResource("1_u2lak")]
+layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
 anchor_top = 0.0
@@ -861,6 +866,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Label" type="Label" parent="Pages/ControlsPage"]
+layout_mode = 0
 offset_left = 515.0
 offset_top = 969.0
 offset_right = 744.0
@@ -869,6 +875,7 @@ theme_override_font_sizes/font_size = 50
 text = "Controls"
 
 [node name="Left" parent="Pages/ControlsPage" instance=ExtResource("1_u2lak")]
+layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
 anchor_top = 0.0
@@ -888,6 +895,7 @@ skill_desc = "Aria can move left"
 skill_reference = "left"
 
 [node name="Up" parent="Pages/ControlsPage" instance=ExtResource("1_u2lak")]
+layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
 anchor_top = 0.0
@@ -906,6 +914,7 @@ skill_desc = "Aria can move up"
 skill_reference = "up"
 
 [node name="Right" parent="Pages/ControlsPage" instance=ExtResource("1_u2lak")]
+layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
 anchor_top = 0.0
@@ -925,6 +934,7 @@ skill_desc = "Aria can move right"
 skill_reference = "right"
 
 [node name="Down" parent="Pages/ControlsPage" instance=ExtResource("1_u2lak")]
+layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
 anchor_top = 0.0
@@ -957,9 +967,9 @@ text = "Burnout Looms... Sacrifice skills to keep going"
 visible = false
 layout_mode = 0
 offset_left = 1346.0
-offset_top = 185.0
+offset_top = 50.0
 offset_right = 1915.0
-offset_bottom = 746.0
+offset_bottom = 689.0
 mouse_filter = 2
 
 [node name="SkillName" type="Label" parent="SkillInfo"]
@@ -1014,9 +1024,9 @@ vertical_alignment = 1
 [node name="CurrentPoints" type="Label" parent="."]
 layout_mode = 2
 offset_left = 1380.0
-offset_top = 739.0
+offset_top = 762.0
 offset_right = 1898.0
-offset_bottom = 827.0
+offset_bottom = 850.0
 theme_override_font_sizes/font_size = 50
 text = "/ Infinity"
 horizontal_alignment = 1
