@@ -11,4 +11,8 @@ func _ready() -> void:
 
 func on_animation_finished(anim_name: String):
 	if anim_name == "fadeinlabels":
+		music_player.finished.connect(_on_music_finished)
 		music_player.play()
+
+func _on_music_finished():
+	anim_player.play("fadeincredits")
