@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bvfffh6ejbeq3"]
+[gd_scene load_steps=21 format=3 uid="uid://bvfffh6ejbeq3"]
 
 [ext_resource type="Script" uid="uid://h6q3kogf6qh4" path="res://Enemies/Mirror/mirror_boss.gd" id="1_orpdr"]
 [ext_resource type="Texture2D" uid="uid://i10mniugfve8" path="res://Enemies/Mirror/MirrorFrame00.png" id="2_4565x"]
@@ -70,6 +70,94 @@ animations = [{
 radius = 80.0
 height = 256.0
 
+[sub_resource type="Animation" id="Animation_orpdr"]
+resource_name = "invis"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_4565x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_r4ykg"]
+resource_name = "uninvis"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4565x"]
+_data = {
+&"RESET": SubResource("Animation_4565x"),
+&"invis": SubResource("Animation_orpdr"),
+&"uninvis": SubResource("Animation_r4ykg")
+}
+
 [node name="MirrorBoss" type="CharacterBody2D" node_paths=PackedStringArray("mirror_sprite", "glass_sprite")]
 collision_layer = 2
 collision_mask = 2
@@ -87,3 +175,8 @@ sprite_frames = SubResource("SpriteFrames_ea3c3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_orpdr")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_4565x")
+}

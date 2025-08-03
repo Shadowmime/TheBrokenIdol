@@ -205,6 +205,7 @@ func _spawn_enemy_at_next_orbit():
 	if phase2_spawns >= 6:
 		target.movement_disabled = false
 		target.set_invincible(false)
+		$AnimationPlayer.play("invis")
 		await _wait_for_enemies_cleared()
 		transition_to_phase_3()
 		return
@@ -231,6 +232,7 @@ func _wait_for_enemies_cleared() -> void:
 		await get_tree().create_timer(0.5).timeout
 
 func transition_to_phase_3():
+	$AnimationPlayer.play("uninvis")
 	phase = 3
 	health = 250  # Set remaining health
 	spawning_phase2 = false

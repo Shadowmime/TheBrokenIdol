@@ -10,7 +10,7 @@ var speed = 500.0
 signal health_changed(new_health)
 signal dead(_name)
 
-func _ready() -> void:
+func ready() -> void:
 	play_animations()
 	health_bar.max_value = max_health
 	health = max_health

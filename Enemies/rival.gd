@@ -2,6 +2,7 @@ extends Enemy
 
 func _ready() -> void:
 	speed = 300
+	ready()
 
 func play_animations():
 	sprite.play("default")
