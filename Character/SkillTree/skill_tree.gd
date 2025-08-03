@@ -12,16 +12,26 @@ func _ready() -> void:
 		for skill in page.get_children():
 			if skill is SkillNode:
 				skill.connect_signal(self)
-	if CharacterNerfs.first_tree:
+	if CharacterNerfs.first_tree && CharacterNerfs.campaign:
 		CharacterNerfs.first_tree = false
 		_first()
 	else:
-		points_needed = CharacterNerfs.get_points_needed()
-		total_points.text = "0 / " + str(points_needed)
+		if CharacterNerfs.campaign:
+			points_needed = CharacterNerfs.get_points_needed()
+			total_points.text = "0 / " + str(points_needed)
+		else:
+			total_points.text = str(CharacterNerfs.score) + " / ?"
+			continue_level.disabled = false
 		$Next.show()
 		$Prev.show()
 		$Pages/SkillPage/Troll1.hide()
 		$Pages/SkillPage/Troll2.hide()
+	if CharacterNerfs.game_over:
+		continue_level.disabled = false
+		continue_level.text = "Home"
+		# Need to fully disable delete, and also change total points text
+		delete.disabled = true
+		total_points.text = "Final Score : " + str(CharacterNerfs.score)
 
 ###################################3
 # When its your first time, it forces you to delete invinci shield
@@ -43,10 +53,14 @@ func _on_delete_pressed() -> void:
 		total_points.text = "Infinity / Infinity"
 	else:
 		skill_info.hide()
-		current_points += skill_cost_num
-		total_points.text = str(current_points) + " / " + str(points_needed)
-		if current_points >= points_needed:
-			continue_level.disabled = false
+		if CharacterNerfs.campaign:
+			current_points += skill_cost_num
+			total_points.text = str(current_points) + " / " + str(points_needed)
+			if current_points >= points_needed:
+				continue_level.disabled = false
+		else:
+			CharacterNerfs.score += skill_cost_num
+			total_points.text = str(CharacterNerfs.score) + " / ?"
 		
 
 ####################################3
@@ -117,6 +131,8 @@ func skill_pressed(skill):
 		delete.pressed.connect(skill.remove)
 	else:
 		delete.disabled = true
+	if CharacterNerfs.game_over:
+		delete.disabled = true
 
 func _on_clickoff_pressed() -> void:
 	skill_info.hide()
@@ -126,4 +142,7 @@ func _on_clickoff_pressed() -> void:
 		clicked_skill.clicked_off()
 
 func _on_continue_pressed() -> void:
+	if CharacterNerfs.game_over:
+		get_tree().change_scene_to_file("res://Menus/HomeScene.tscn")
+		return
 	get_tree().change_scene_to_file("res://Stages/Level.tscn")

@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://dsbhfcrbkfulg"]
+[gd_scene load_steps=13 format=3 uid="uid://dsbhfcrbkfulg"]
 
 [ext_resource type="Script" uid="uid://cy817r4r8nb3b" path="res://Stages/level.gd" id="1_kla8h"]
 [ext_resource type="Texture2D" uid="uid://cgjd1p13di5y8" path="res://Assets/Background.png" id="1_ragna"]
 [ext_resource type="PackedScene" uid="uid://dma111exu28u1" path="res://Character/Player.tscn" id="2_8tfpl"]
 [ext_resource type="PackedScene" uid="uid://g4pjwp4jvyf3" path="res://Enemies/Rival.tscn" id="4_31xj6"]
 [ext_resource type="PackedScene" uid="uid://cbfjfujjwuk3d" path="res://Enemies/BrokenLight.tscn" id="5_3hewx"]
+[ext_resource type="PackedScene" uid="uid://bvfffh6ejbeq3" path="res://Enemies/Mirror/mirror_boss.tscn" id="5_07bur"]
 [ext_resource type="PackedScene" uid="uid://bt1x4cyi4swre" path="res://Enemies/Watcher.tscn" id="6_k4q7x"]
 [ext_resource type="AudioStream" uid="uid://bk6c3ltl5on3b" path="res://Menus/music_box.mp3" id="7_0jlh6"]
 
@@ -12,6 +13,45 @@
 vertices = PackedVector2Array(5745.95, 3229.98, 26.9375, 3222.01, 8.04688, 11.9766, 5731.04, 4.00781)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(5741, -6, 5740, 3240, 17, 3232, -2, 2)])
+
+[sub_resource type="Animation" id="Animation_07bur"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(5720, 3240)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_0jlh6"]
 resource_name = "ending1"
@@ -53,45 +93,6 @@ tracks/2/keys = {
 "values": [Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_07bur"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(5720, 3240)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ColorRect:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("ColorRect:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_h4tav"]
 _data = {
 &"RESET": SubResource("Animation_07bur"),
@@ -105,6 +106,7 @@ enemy_node = NodePath("Enemies")
 player = NodePath("Player")
 anim_player = NodePath("AnimationPlayer")
 enemy_scenes = Array[PackedScene]([ExtResource("4_31xj6"), ExtResource("6_k4q7x"), ExtResource("5_3hewx")])
+mirror_scene = ExtResource("5_07bur")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(2880, 1620)
@@ -155,6 +157,8 @@ libraries = {
 &"": SubResource("AnimationLibrary_h4tav")
 }
 
+[connection signal="boss_defeated" from="Player" to="." method="_on_player_boss_defeated"]
+[connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
 [connection signal="projectile_spawn" from="Player" to="." method="_on_player_projectile_spawn"]
 [connection signal="spawn_bomb" from="Player" to="." method="_on_player_spawn_bomb"]
 [connection signal="survived" from="Player" to="." method="_on_player_survived"]

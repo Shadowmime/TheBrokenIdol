@@ -1,0 +1,89 @@
+[gd_scene load_steps=17 format=3 uid="uid://bvfffh6ejbeq3"]
+
+[ext_resource type="Script" uid="uid://h6q3kogf6qh4" path="res://Enemies/Mirror/mirror_boss.gd" id="1_orpdr"]
+[ext_resource type="Texture2D" uid="uid://i10mniugfve8" path="res://Enemies/Mirror/MirrorFrame00.png" id="2_4565x"]
+[ext_resource type="Texture2D" uid="uid://b3rwqedh8wxgd" path="res://Enemies/Mirror/MirrorFrame01.png" id="3_r4ykg"]
+[ext_resource type="Texture2D" uid="uid://b272ig83gpy7i" path="res://Enemies/Mirror/MirrorFrame10.png" id="4_7h5qk"]
+[ext_resource type="Texture2D" uid="uid://cxttd25fxeqpg" path="res://Enemies/Mirror/MirrorFrame11.png" id="5_cbmxq"]
+[ext_resource type="Texture2D" uid="uid://cvwd77esfdwgq" path="res://Enemies/Mirror/MirrorFrame20.png" id="6_apuoe"]
+[ext_resource type="Texture2D" uid="uid://bbonlstbgxjla" path="res://Enemies/Mirror/MirrorFrame30.png" id="7_e616c"]
+[ext_resource type="Texture2D" uid="uid://bawps3ot21a2k" path="res://Enemies/Mirror/Mirror00.png" id="8_molpl"]
+[ext_resource type="Texture2D" uid="uid://c0lofuwplbsy1" path="res://Enemies/Mirror/Mirror01.png" id="9_v3dax"]
+[ext_resource type="Texture2D" uid="uid://cn0v6bumg71f1" path="res://Enemies/Mirror/Mirror02.png" id="10_smvp2"]
+[ext_resource type="Texture2D" uid="uid://cafn0r5ii0dpe" path="res://Enemies/Mirror/Mirror10.png" id="11_44gh0"]
+[ext_resource type="Texture2D" uid="uid://dui5s70w24115" path="res://Enemies/Mirror/Mirror11.png" id="12_fopak"]
+[ext_resource type="Texture2D" uid="uid://076h5kd6w87k" path="res://Enemies/Mirror/Mirror12.png" id="13_862oy"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mvony"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4565x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_r4ykg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_7h5qk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_cbmxq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_apuoe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_e616c")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ea3c3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_molpl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_v3dax")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_smvp2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_44gh0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_fopak")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_862oy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_orpdr"]
+radius = 80.0
+height = 256.0
+
+[node name="MirrorBoss" type="CharacterBody2D" node_paths=PackedStringArray("mirror_sprite", "glass_sprite")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_orpdr")
+mirror_sprite = NodePath("Mirror")
+glass_sprite = NodePath("Glass")
+
+[node name="Mirror" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_mvony")
+
+[node name="Glass" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ea3c3")
+
+[node name="PointSpawn" type="Marker2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_orpdr")

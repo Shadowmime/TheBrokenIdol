@@ -18,14 +18,28 @@ func _on_watcher_spawn_note(note: Projectile) -> void:
 	projectiles.add_child(note)
 
 func _on_player_survived() -> void:
-	$ColorRect.show()
-	anim_player.play("ending1")
-	await get_tree().create_timer(1.5).timeout
-	get_tree().change_scene_to_file("res://Character/SkillTree/SkillTree.tscn")
+	spawn_mirror()
+	#$ColorRect.show()
+	#anim_player.play("ending1")
+	#await get_tree().create_timer(1.5).timeout
+	#get_tree().change_scene_to_file("res://Character/SkillTree/SkillTree.tscn")
 
 @export var enemy_scenes: Array[PackedScene]
 @export var stage_rect := Rect2(Vector2.ZERO, Vector2(5760, 3240))
 @export var spawn_margin := 200
+
+@export var mirror_scene: PackedScene
+var boss_spawned = false
+func spawn_mirror():
+	boss_spawned = true
+	var center = player.global_position
+	var pos = center + Vector2(0, 500)
+	var mirror = mirror_scene.instantiate()
+	mirror.spawn_note.connect(_on_watcher_spawn_note)
+	mirror.global_position = pos
+	mirror.target = player
+	mirror.add_to_group("enemy")
+	enemy_node.add_child(mirror)
 
 func spawn_enemy_near_player():
 	var viewport_size = Vector2(1920, 1080)
@@ -64,16 +78,40 @@ func spawn_enemy_near_player():
 	enemy.add_to_group("enemy")
 	enemy_node.add_child(enemy)
 
+func spawn_specific_enemy_at(pos: Vector2, type: String):
+	var spawn_pos = pos.clamp(stage_rect.position, stage_rect.end)
+	var scene: PackedScene
+
+	match type:
+		"watcher":
+			scene = enemy_scenes[0]
+		"rival":
+			scene = enemy_scenes[1]
+		"broken_light":
+			scene = enemy_scenes[2]
+		_:
+			push_error("Unknown enemy type: " + type)
+			return
+
+	var enemy = scene.instantiate()
+	if enemy.has_signal("spawn_note"):
+		enemy.spawn_note.connect(_on_watcher_spawn_note)
+	enemy.global_position = spawn_pos
+	enemy.target = player
+	enemy.add_to_group("enemy")
+	enemy_node.add_child(enemy)
+
 var spawn_timer := 0.0
 var enemies_per_wave := 2
 const SPAWN_INTERVAL := 10.0
 
 func _process(delta):
-	spawn_timer += delta
-	if spawn_timer >= SPAWN_INTERVAL:
-		spawn_timer = 0
-		enemies_per_wave += 1
-		spawn_wave(enemies_per_wave)
+	if !boss_spawned:
+		spawn_timer += delta
+		if spawn_timer >= SPAWN_INTERVAL:
+			spawn_timer = 0
+			enemies_per_wave += 1
+			spawn_wave(enemies_per_wave)
 
 func spawn_wave(count: int):
 	for i in count:
@@ -81,3 +119,22 @@ func spawn_wave(count: int):
 
 func _on_player_spawn_bomb(bomb: Bomb) -> void:
 	projectiles.add_child(bomb)
+
+
+func _on_player_boss_defeated() -> void:
+	# check loop
+	if CharacterNerfs.is_finished():
+		get_tree().change_scene_to_file("res://Menus/good_ending.tscn")
+	else:
+		get_tree().change_scene_to_file("res://Character/SkillTree/SkillTree.tscn")
+
+
+func _on_player_player_died() -> void:
+	call_deferred("player_died_change")
+	
+func player_died_change():
+	if CharacterNerfs.campaign:
+		get_tree().change_scene_to_file("res://Menus/game_over.tscn")
+	else:
+		CharacterNerfs.game_over = true
+		get_tree().change_scene_to_file("res://Character/SkillTree/SkillTree.tscn")
