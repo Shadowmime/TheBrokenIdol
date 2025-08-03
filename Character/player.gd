@@ -112,6 +112,7 @@ func boss_spawn():
 @export var ui_anim_player: AnimationPlayer
 signal boss_defeated
 func mirror_defeated():
+	invincible = true
 	# it will display the image of aria on the mirror
 	# and then it will play a fade out.
 	var ran = randi_range(1, 2)
