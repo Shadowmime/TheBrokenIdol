@@ -5,9 +5,15 @@ var page_index = 0
 var first = false
 
 @export var continue_level: Button
+@export var loop_text: Label
 var points_needed = 0
 
 func _ready() -> void:
+	if CharacterNerfs.campaign:
+		loop_text.text = "Loop: " + str(CharacterNerfs.loop) + " / 5"
+	else:
+		loop_text.text = "Loop: " + str(CharacterNerfs.loop) + " / ?"
+	CharacterNerfs.clear_temp_nerfs()
 	for page in pages_buttons.get_children():
 		for skill in page.get_children():
 			if skill is SkillNode:
