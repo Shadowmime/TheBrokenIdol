@@ -1,18 +1,20 @@
-[gd_scene load_steps=14 format=3 uid="uid://b47odwm1g0rt3"]
+[gd_scene load_steps=16 format=3 uid="uid://b47odwm1g0rt3"]
 
-[ext_resource type="Texture2D" uid="uid://by6ohkgnogs5o" path="res://Enemies/Mirror/Mirror.png" id="1_1id8s"]
 [ext_resource type="Script" uid="uid://bgbvtjh6kgq3x" path="res://Menus/home_scene.gd" id="1_fum1s"]
 [ext_resource type="Texture2D" uid="uid://dshf70ys5sic" path="res://Assets/WheelChairOnly2.png" id="2_4bf23"]
 [ext_resource type="Texture2D" uid="uid://b11kwu6ux7r02" path="res://Character/Frame0.png" id="2_heyhx"]
-[ext_resource type="Texture2D" uid="uid://dqgu73p0lb6s0" path="res://Character/SkillTree/Button3.png" id="3_heyhx"]
 [ext_resource type="Texture2D" uid="uid://cslrotipwbn" path="res://Enemies/Rival/Rival0.png" id="5_smh3n"]
 [ext_resource type="Texture2D" uid="uid://dhcuvk3s22qx4" path="res://Enemies/BrokenFans/BrokenFans0.png" id="6_1epc0"]
 [ext_resource type="Script" uid="uid://c5a88mm8cnti7" path="res://Scripts/UITextureButton.gd" id="6_4bf23"]
 [ext_resource type="Texture2D" uid="uid://bvuq0h6oy48xi" path="res://Assets/Logo.png" id="6_iw5q3"]
 [ext_resource type="Texture2D" uid="uid://baor0vb1emb6j" path="res://Assets/2024 ShadowPop.png" id="7_dh2d6"]
+[ext_resource type="Texture2D" uid="uid://dtwy80fkuevae" path="res://Assets/Button0.png" id="7_rsqxs"]
 [ext_resource type="Texture2D" uid="uid://c60a8jprfasen" path="res://Enemies/Watcher/Watcher0.png" id="7_xnglo"]
 [ext_resource type="Texture2D" uid="uid://cdu02ub3emy6x" path="res://Enemies/Scribbles/Scribble0.png" id="8_7mew6"]
 [ext_resource type="AudioStream" uid="uid://ty6308wvka5k" path="res://Menus/game jam test 1.mp3" id="9_vtunp"]
+[ext_resource type="Texture2D" uid="uid://brni6grtwj0nm" path="res://Assets/Button2.png" id="12_yfar2"]
+[ext_resource type="Texture2D" uid="uid://dqrvy2p7kcbrg" path="res://Assets/Arrow1.png" id="13_c4rl2"]
+[ext_resource type="Texture2D" uid="uid://bhofa5x8jiq67" path="res://Assets/Button3.png" id="15_v73cf"]
 
 [node name="HomeScene" type="Control" node_paths=PackedStringArray("enemies", "current_enemy")]
 layout_mode = 3
@@ -20,6 +22,17 @@ anchors_preset = 0
 script = ExtResource("1_fum1s")
 enemies = NodePath("enemies")
 current_enemy = NodePath("enemies/Rival")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.222284, 0.319886, 0.371003, 1)
 
 [node name="Home" type="Control" parent="."]
 anchors_preset = 0
@@ -61,33 +74,27 @@ text = "It was never meant to be..."
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="Mirror" type="Sprite2D" parent="Home"]
-visible = false
-position = Vector2(1314, 510)
-texture = ExtResource("1_1id8s")
-
-[node name="Frame0" type="Sprite2D" parent="Home"]
-visible = false
-modulate = Color(1, 1, 1, 0.396078)
-position = Vector2(1320, 511)
-texture = ExtResource("2_heyhx")
-
 [node name="Campaign" type="TextureButton" parent="Home"]
 layout_mode = 0
-offset_left = 460.0
-offset_top = 720.0
-offset_right = 947.0
-offset_bottom = 946.0
-pivot_offset = Vector2(243.5, 113)
-texture_normal = ExtResource("3_heyhx")
+offset_left = 494.0
+offset_top = 719.0
+offset_right = 934.0
+offset_bottom = 939.0
+pivot_offset = Vector2(220, 110)
+texture_normal = ExtResource("7_rsqxs")
 script = ExtResource("6_4bf23")
 
 [node name="Label" type="Label" parent="Home/Campaign"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 2.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -149.0
+offset_top = -68.5
+offset_right = 149.0
+offset_bottom = 68.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 100
@@ -104,46 +111,72 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Continue" type="Button" parent="Controls"]
+[node name="Continue" type="TextureButton" parent="Controls"]
 layout_mode = 0
-offset_left = 1368.0
-offset_top = 825.0
-offset_right = 1855.0
-offset_bottom = 1051.0
-theme_override_font_sizes/font_size = 100
-text = "Continue"
-icon = ExtResource("3_heyhx")
-flat = true
-icon_alignment = 1
+offset_left = 1209.0
+offset_top = 698.0
+offset_right = 1649.0
+offset_bottom = 918.0
+pivot_offset = Vector2(220, 110)
+texture_normal = ExtResource("7_rsqxs")
+script = ExtResource("6_4bf23")
+
+[node name="Label" type="Label" parent="Controls/Continue"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -41.5
+offset_top = -11.5
+offset_right = 41.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
+text = "CONTINUE"
 
 [node name="Frame0" type="Sprite2D" parent="Controls"]
-position = Vector2(392, 520)
+position = Vector2(187, 553)
 scale = Vector2(2, 2)
 texture = ExtResource("2_heyhx")
 
 [node name="Label" type="Label" parent="Controls"]
 layout_mode = 0
-offset_left = 753.0
-offset_top = 489.0
-offset_right = 1987.0
-offset_bottom = 1196.0
-theme_override_font_sizes/font_size = 50
-text = "WASD TO MOVE
-LEFT CLICK TO BASIC ATTACK
-E TO FAST SKILL
-Q TO AOE SKILL
-Escape to open settings
-SHIFT TO DASH"
+offset_left = 1226.0
+offset_top = 274.0
+offset_right = 1979.0
+offset_bottom = 960.0
+theme_override_font_sizes/font_size = 45
+text = "- WASD TO MOVE
+- LEFT CLICK TO BASIC ATTACK
+- E TO FAST SKILL
+- Q TO AOE SKILL
+- E	SC to open settings
+- SHIFT TO DASH"
 
 [node name="Intro" type="Label" parent="Controls"]
 layout_mode = 0
-offset_left = 759.0
-offset_top = 52.0
-offset_right = 1796.0
-offset_bottom = 759.0
-theme_override_font_sizes/font_size = 50
-text = "Meet aria, she a girl who conquered the world but then accidentally broke her knee.  Help her escape the viscous mental cycle she living through"
+offset_left = 357.0
+offset_top = 109.0
+offset_right = 1100.0
+offset_bottom = 976.0
+theme_override_font_sizes/font_size = 40
+text = "Meet Aria, she once stood at the pinnacle of the idol world. But everything changed in one catastrophic moment. Both her legs were severely damaged in a tragic accident, leaving her body frail and her mobility forever compromised. 
+
+Now, Aria is trapped in a mental loop: dreams of glory play on repeat, warped by doubt and pain. Help her navigate this decaying dreamscape and find the strength to reclaim herself — not as who she was, but who she could become."
 autowrap_mode = 2
+
+[node name="Controls" type="Label" parent="Controls"]
+offset_left = 804.0
+offset_top = 145.0
+offset_right = 2038.0
+offset_bottom = 852.0
+theme_override_colors/font_color = Color(0.239859, 0.698033, 0.832044, 1)
+theme_override_font_sizes/font_size = 80
+text = "CONTROLS"
+horizontal_alignment = 1
 
 [node name="enemies" type="Control" parent="."]
 visible = false
@@ -162,28 +195,37 @@ offset_right = 1071.0
 offset_bottom = 769.0
 
 [node name="Name" type="Label" parent="enemies/Rival"]
-layout_mode = 0
-offset_left = 46.0
-offset_top = -478.0
-offset_right = 283.0
-offset_bottom = -341.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -118.5
+offset_top = -576.0
+offset_right = 118.5
+offset_bottom = -439.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.99664, 0, 0.152935, 1)
 theme_override_font_sizes/font_size = 100
 text = "Rival"
+horizontal_alignment = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="enemies/Rival"]
-position = Vector2(-300, -62)
+position = Vector2(-160, -62)
 texture = ExtResource("5_smh3n")
 
 [node name="Label" type="Label" parent="enemies/Rival"]
 layout_mode = 0
-offset_left = -108.0
+offset_left = 32.0
 offset_top = -216.0
-offset_right = 575.0
+offset_right = 715.0
 offset_bottom = 129.0
 theme_override_font_sizes/font_size = 40
 text = "Represents Aria's competition. 
 
-They will follow you around, sometimes phasing in and out, and melee attack you when they get close"
+They will follow you around, sometimes phasing in and out, and melee attack you when they get closen"
 autowrap_mode = 2
 
 [node name="Fans" type="Control" parent="enemies"]
@@ -195,28 +237,37 @@ offset_right = 1071.0
 offset_bottom = 769.0
 
 [node name="Name" type="Label" parent="enemies/Fans"]
-layout_mode = 0
-offset_left = 46.0
-offset_top = -478.0
-offset_right = 283.0
-offset_bottom = -341.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -298.5
+offset_top = -576.0
+offset_right = 298.5
+offset_bottom = -439.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.996078, 0, 0.152941, 1)
 theme_override_font_sizes/font_size = 100
 text = "Broken Fans"
+horizontal_alignment = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="enemies/Fans"]
-position = Vector2(-300, -62)
+position = Vector2(-160, -62)
 texture = ExtResource("6_1epc0")
 
 [node name="Label" type="Label" parent="enemies/Fans"]
 layout_mode = 0
-offset_left = -108.0
+offset_left = 32.0
 offset_top = -216.0
-offset_right = 575.0
+offset_right = 715.0
 offset_bottom = 129.0
 theme_override_font_sizes/font_size = 40
-text = "Represents the fans that hate Aria.
+text = "Represents the fans that have lost hope in Aria.
 
-When they start spinning it indicates they are gonna do a charged attack"
+When they start spinning it indicates they are gonna do a charged attack."
 autowrap_mode = 2
 
 [node name="Watcher" type="Control" parent="enemies"]
@@ -228,26 +279,35 @@ offset_right = 1071.0
 offset_bottom = 769.0
 
 [node name="Name" type="Label" parent="enemies/Watcher"]
-layout_mode = 0
-offset_left = 46.0
-offset_top = -478.0
-offset_right = 283.0
-offset_bottom = -341.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.0
+offset_top = -576.0
+offset_right = 203.0
+offset_bottom = -439.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.996078, 0, 0.152941, 1)
 theme_override_font_sizes/font_size = 100
 text = "Watcher"
+horizontal_alignment = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="enemies/Watcher"]
-position = Vector2(-300, -62)
+position = Vector2(-160, -62)
 texture = ExtResource("7_xnglo")
 
 [node name="Label" type="Label" parent="enemies/Watcher"]
 layout_mode = 0
-offset_left = -108.0
+offset_left = 32.0
 offset_top = -216.0
-offset_right = 575.0
+offset_right = 715.0
 offset_bottom = 129.0
 theme_override_font_sizes/font_size = 40
-text = "Represents the eyes always watching and expectation.
+text = "Represents the eyes always watching and expectations.
 
 Will shoot projectiles at aria, however, do not move very fast."
 autowrap_mode = 2
@@ -261,77 +321,127 @@ offset_right = 1071.0
 offset_bottom = 769.0
 
 [node name="Name" type="Label" parent="enemies/Emotions"]
-layout_mode = 0
-offset_left = -288.0
-offset_top = -465.0
-offset_right = 690.0
-offset_bottom = -328.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -489.0
+offset_top = -576.0
+offset_right = 489.0
+offset_bottom = -439.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.996078, 0, 0.152941, 1)
 theme_override_font_sizes/font_size = 100
 text = "Supressed Emotions"
+horizontal_alignment = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="enemies/Emotions"]
-position = Vector2(-300, -62)
+position = Vector2(-160, -62)
 texture = ExtResource("8_7mew6")
 
 [node name="Label" type="Label" parent="enemies/Emotions"]
 layout_mode = 0
-offset_left = -108.0
+offset_left = 32.0
 offset_top = -216.0
-offset_right = 575.0
+offset_right = 715.0
 offset_bottom = 129.0
 theme_override_font_sizes/font_size = 40
-text = "Represents the thoughts that Aria had while she was depressed.  
+text = "Represents Aria's negative thoughts that formed after the accidentn
 
 They do not follow Aria around, but deal damage if she stumbles into them."
 autowrap_mode = 2
 
-[node name="Start2" type="Button" parent="enemies"]
-layout_mode = 0
-offset_left = 1410.0
-offset_top = 836.0
-offset_right = 1897.0
-offset_bottom = 1062.0
-theme_override_font_sizes/font_size = 100
-text = "Story Mode"
-icon = ExtResource("3_heyhx")
-flat = true
-icon_alignment = 1
-
-[node name="Next" type="Button" parent="enemies"]
-layout_mode = 0
-offset_left = 1414.0
-offset_top = 596.0
-offset_right = 1901.0
-offset_bottom = 822.0
-theme_override_font_sizes/font_size = 100
-text = "Next"
-icon = ExtResource("3_heyhx")
-flat = true
-icon_alignment = 1
-
-[node name="Prev" type="Button" parent="enemies"]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 632.0
-offset_right = 491.0
-offset_bottom = 858.0
-theme_override_font_sizes/font_size = 100
-text = "Prev"
-icon = ExtResource("3_heyhx")
-flat = true
-icon_alignment = 1
-
-[node name="Freeplay" type="Button" parent="enemies"]
-layout_mode = 0
-offset_left = -1.0
+[node name="Start2" type="TextureButton" parent="enemies"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1480.0
 offset_top = 856.0
-offset_right = 486.0
-offset_bottom = 1082.0
-theme_override_font_sizes/font_size = 100
-text = "Free Play"
-icon = ExtResource("3_heyhx")
-flat = true
-icon_alignment = 1
+offset_right = 1920.0
+offset_bottom = 1076.0
+grow_horizontal = 0
+grow_vertical = 0
+pivot_offset = Vector2(220, 110)
+texture_normal = ExtResource("12_yfar2")
+script = ExtResource("6_4bf23")
+metadata/_custom_type_script = "uid://c5a88mm8cnti7"
+
+[node name="Label" type="Label" parent="enemies/Start2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -51.5
+offset_top = -11.5
+offset_right = 51.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 50
+text = "STORY MODE"
+
+[node name="Next" type="TextureButton" parent="enemies"]
+texture_filter = 2
+layout_mode = 0
+offset_left = 1694.0
+offset_top = 416.0
+offset_right = 1822.0
+offset_bottom = 544.0
+rotation = 1.5708
+scale = Vector2(2, 2)
+pivot_offset = Vector2(64, 64)
+texture_normal = ExtResource("13_c4rl2")
+script = ExtResource("6_4bf23")
+metadata/_custom_type_script = "uid://c5a88mm8cnti7"
+
+[node name="Prev" type="TextureButton" parent="enemies"]
+texture_filter = 2
+layout_mode = 0
+offset_left = 102.0
+offset_top = 416.0
+offset_right = 230.0
+offset_bottom = 544.0
+rotation = -1.5708
+scale = Vector2(2, 2)
+pivot_offset = Vector2(64, 64)
+texture_normal = ExtResource("13_c4rl2")
+script = ExtResource("6_4bf23")
+metadata/_custom_type_script = "uid://c5a88mm8cnti7"
+
+[node name="Freeplay" type="TextureButton" parent="enemies"]
+layout_mode = 0
+offset_top = 856.0
+offset_right = 440.0
+offset_bottom = 1076.0
+texture_normal = ExtResource("15_v73cf")
+script = ExtResource("6_4bf23")
+metadata/_custom_type_script = "uid://c5a88mm8cnti7"
+
+[node name="Label" type="Label" parent="enemies/Freeplay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -51.5
+offset_top = -11.5
+offset_right = 51.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 50
+text = "SCORE MODE"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_vtunp")
