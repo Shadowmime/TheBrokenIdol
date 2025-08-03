@@ -27,6 +27,7 @@ var health = 100:
 
 func take_damage(damage, _damage_type = null):
 	# multipliers go in here
+	flash_white()
 	health = health - damage
 
 var attack_cd : float = 0
@@ -101,3 +102,19 @@ func set_speed_mult(mult):
 func toggle_boss_shading():
 	if boss_shading:
 		boss_shading.show()
+
+func flash_white():
+	var original = sprite.modulate
+	var flash_color = Color(0.5, 0.9, 1.0)  # Light blue
+	# Start coroutine
+	flash_twice(sprite, original, flash_color)
+
+func flash_twice(sprite: CanvasItem, original_color: Color, flash_color: Color) -> void:
+	await get_tree().create_timer(0.01).timeout
+	sprite.modulate = flash_color
+	await get_tree().create_timer(0.05).timeout
+	sprite.modulate = original_color
+	await get_tree().create_timer(0.05).timeout
+	sprite.modulate = flash_color
+	await get_tree().create_timer(0.05).timeout
+	sprite.modulate = original_color

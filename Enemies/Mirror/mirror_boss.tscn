@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bvfffh6ejbeq3"]
+[gd_scene load_steps=23 format=3 uid="uid://bvfffh6ejbeq3"]
 
 [ext_resource type="Script" uid="uid://h6q3kogf6qh4" path="res://Enemies/Mirror/mirror_boss.gd" id="1_orpdr"]
 [ext_resource type="Texture2D" uid="uid://i10mniugfve8" path="res://Enemies/Mirror/MirrorFrame00.png" id="2_4565x"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://cafn0r5ii0dpe" path="res://Enemies/Mirror/Mirror10.png" id="11_44gh0"]
 [ext_resource type="Texture2D" uid="uid://dui5s70w24115" path="res://Enemies/Mirror/Mirror11.png" id="12_fopak"]
 [ext_resource type="Texture2D" uid="uid://076h5kd6w87k" path="res://Enemies/Mirror/Mirror12.png" id="13_862oy"]
+[ext_resource type="Texture2D" uid="uid://b11kwu6ux7r02" path="res://Character/Frame0.png" id="14_4565x"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mvony"]
 animations = [{
@@ -70,33 +71,6 @@ animations = [{
 radius = 80.0
 height = 256.0
 
-[sub_resource type="Animation" id="Animation_orpdr"]
-resource_name = "invis"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
 [sub_resource type="Animation" id="Animation_4565x"]
 length = 0.001
 tracks/0/type = "value"
@@ -122,6 +96,57 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_orpdr"]
+resource_name = "invis"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_r4ykg"]
@@ -151,9 +176,38 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_7h5qk"]
+resource_name = "death"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.01),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4565x"]
 _data = {
 &"RESET": SubResource("Animation_4565x"),
+&"death": SubResource("Animation_7h5qk"),
 &"invis": SubResource("Animation_orpdr"),
 &"uninvis": SubResource("Animation_r4ykg")
 }
@@ -170,6 +224,11 @@ sprite_frames = SubResource("SpriteFrames_mvony")
 
 [node name="Glass" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ea3c3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+texture = ExtResource("14_4565x")
 
 [node name="PointSpawn" type="Marker2D" parent="."]
 

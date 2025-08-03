@@ -19,6 +19,7 @@ var health = 750:
 		health = clamp(value, 0, 750)
 
 func take_damage(damage):
+	flash_red()
 	if phase == 1:
 		health = clamp(health - damage, 500, 750)
 		if health == 500:
@@ -59,6 +60,8 @@ func _process(delta):
 # Phase 1
 
 func choose_next_attack():
+	if health == 0:
+		return
 	if phase == 1:
 		if randi() % 2 == 0:
 			perform_phase1_attack1()
@@ -95,6 +98,11 @@ func _shoot_from_orbit():
 		await get_tree().create_timer(3).timeout
 		_on_attack_1_finished()
 		return
+	if phase == 1 and health == 500:
+		_on_attack_1_finished()
+		return
+	if health == 0:
+		return
 
 	dir = randi() % 6  # Choose a direction from 0–5
 
@@ -105,11 +113,20 @@ func _shoot_from_orbit():
 		proj.set_direction(proj_dir, proj.global_position)
 		if i == 0:
 			proj._set_sprite(sprite1)
-			proj.set_damage(50)
+			if phase == 3:
+				proj.set_damage(75)
+			else:
+				proj.set_damage(50)
 		elif i == 1:
 			proj._set_sprite(sprite2)
-			proj.set_damage(75)
-		proj.set_speed(1500)
+			if phase == 3:
+				proj.set_damage(100)
+			else:
+				proj.set_damage(75)
+		if phase == 3:
+			proj.set_speed(1500)
+		else:
+			proj.set_speed(1000)
 		proj.set_scale(Vector2(0.5, 0.5))
 		proj.is_enemy()
 		spawn_note.emit(proj)
@@ -239,6 +256,26 @@ func transition_to_phase_3():
 	choose_next_attack()
 
 func die():
+	$AnimationPlayer.play("death")
+	dir = 0
+	await get_tree().create_timer(4).timeout
 	target.mirror_defeated()
 	queue_free()
 	#mirror_defeated.emit()
+
+func flash_red():
+	var original = mirror_sprite.modulate
+	var original2 = glass_sprite.modulate
+	var flash_color = Color(1, 0.3, 0.3)  # soft red
+	flash_twice(mirror_sprite, original, flash_color)
+	flash_twice(glass_sprite, original2, flash_color)
+
+func flash_twice(sprite: CanvasItem, original_color: Color, flash_color: Color) -> void:
+	await get_tree().create_timer(0.01).timeout
+	sprite.modulate = flash_color
+	await get_tree().create_timer(0.05).timeout
+	sprite.modulate = original_color
+	await get_tree().create_timer(0.05).timeout
+	sprite.modulate = flash_color
+	await get_tree().create_timer(0.05).timeout
+	sprite.modulate = original_color
