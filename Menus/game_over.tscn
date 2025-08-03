@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://3bid6nk8ypta"]
+[gd_scene load_steps=6 format=3 uid="uid://3bid6nk8ypta"]
 
 [ext_resource type="Texture2D" uid="uid://dshf70ys5sic" path="res://Assets/WheelChairOnly2.png" id="1_ntcrg"]
 [ext_resource type="Script" uid="uid://caq2icyb23y4l" path="res://Menus/game_over.gd" id="1_tcx34"]
-[ext_resource type="Texture2D" uid="uid://dqgu73p0lb6s0" path="res://Character/SkillTree/Button3.png" id="2_i0iaq"]
+[ext_resource type="Texture2D" uid="uid://dtwy80fkuevae" path="res://Assets/Button0.png" id="3_pjwjc"]
+[ext_resource type="Script" uid="uid://c5a88mm8cnti7" path="res://Scripts/UITextureButton.gd" id="4_kf51k"]
+[ext_resource type="Texture2D" uid="uid://brni6grtwj0nm" path="res://Assets/Button2.png" id="5_kuryv"]
 
 [node name="GameOver" type="Node2D"]
 script = ExtResource("1_tcx34")
@@ -13,21 +15,23 @@ offset_bottom = 40.0
 texture = ExtResource("1_ntcrg")
 
 [node name="Label" type="Label" parent="."]
-offset_left = 24.0
-offset_top = 631.0
-offset_right = 1034.0
-offset_bottom = 1082.0
+offset_left = 33.0
+offset_top = 970.0
+offset_right = 1869.0
+offset_bottom = 1093.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 100
-text = "YOU SUCKumbed to the pressure.  GG get a life haha"
+theme_override_font_sizes/font_size = 80
+text = "The spotlight fades. The echoes remain...."
 autowrap_mode = 2
 
 [node name="Home" type="TextureButton" parent="."]
-offset_left = -4.0
-offset_top = 401.0
-offset_right = 475.0
-offset_bottom = 619.0
-texture_normal = ExtResource("2_i0iaq")
+offset_left = 15.0
+offset_top = 720.0
+offset_right = 455.0
+offset_bottom = 940.0
+pivot_offset = Vector2(220, 110)
+texture_normal = ExtResource("3_pjwjc")
+script = ExtResource("4_kf51k")
 
 [node name="Label" type="Label" parent="Home"]
 layout_mode = 1
@@ -42,17 +46,24 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Retry" type="TextureButton" parent="."]
-offset_left = 501.0
-offset_top = 397.0
-offset_right = 980.0
-offset_bottom = 615.0
-texture_normal = ExtResource("2_i0iaq")
+offset_left = 520.0
+offset_top = 716.0
+offset_right = 960.0
+offset_bottom = 936.0
+pivot_offset = Vector2(220, 110)
+texture_normal = ExtResource("5_kuryv")
 
 [node name="Label" type="Label" parent="Retry"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -129.0
+offset_top = -98.0
+offset_right = 129.0
+offset_bottom = 39.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 100
@@ -64,12 +75,24 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -30.0
+offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 40
 text = "(From Last Loop)"
 horizontal_alignment = 1
 vertical_alignment = 2
+
+[node name="Title" type="Label" parent="."]
+offset_left = 37.0
+offset_top = 11.0
+offset_right = 1047.0
+offset_bottom = 462.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 100
+text = "Bad Ending"
+autowrap_mode = 2
 
 [connection signal="pressed" from="Home" to="." method="_on_home_pressed"]
 [connection signal="pressed" from="Retry" to="." method="_on_retry_pressed"]
