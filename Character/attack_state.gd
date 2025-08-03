@@ -40,13 +40,13 @@ func attack():
 		note.set_direction(dir, point_spawn.global_position)
 		note.toggle_wave()
 		if dir.x < 0:
-			note.scale = Vector2(-2, -2)
+			note.scale = Vector2(-0.5, -0.5)
 			if CharacterNerfs.has_nerf("attack2"):
-				note.scale = Vector2(-1, -1)
+				note.scale = Vector2(-0.25, -0.25)
 		else:
-			note.scale = Vector2(2, 2)
+			note.scale = Vector2(0.5, 0.5)
 			if CharacterNerfs.has_nerf("attack2"):
-				note.scale = Vector2(1, 1)
+				note.scale = Vector2(0.25, 0.25)
 		
 		# Set sprite based on combo: double note on 3rd hit
 		if combo_count == 3:

@@ -1,5 +1,7 @@
 extends Node2D
 
+signal mirror_defeated
+
 var target: Character
 
 var phase = 1
@@ -21,6 +23,10 @@ func take_damage(damage):
 		health = clamp(health - damage, 500, 750)
 		if health == 500:
 			phase = 2
+	elif phase == 3:
+		health = clamp(health - damage, 0, 250)
+		if health == 0:
+			die()
 
 func _ready() -> void:
 	_setup()
@@ -45,8 +51,8 @@ func _process(delta):
 
 	if do_infinity_move:
 		t += delta
-		var x = sin(t * 2.0) * 40
-		var y = sin(t * 4.0) * 20
+		var x = sin(t * 2.0) * 80
+		var y = sin(t * 4.0) * 40
 		position = anchor_pos + Vector2(x, y)
 
 ##################################################
@@ -61,6 +67,11 @@ func choose_next_attack():
 	elif phase == 2 and !spawning_phase2:
 		spawning_phase2 = true
 		spawn_phase2_enemies()
+	elif phase == 3:
+		if randi() % 2 == 0:
+			perform_phase1_attack1()
+		else:
+			perform_phase1_attack2()
 
 var orbit_mode = true
 
@@ -74,7 +85,10 @@ func perform_phase1_attack1():
 	orbit_mode = true
 	shots_fired = 0
 	_shoot_from_orbit()
-	
+
+var sprite1 = preload("res://Character/SkillTree/Icons/MusicNote_SemiRedv1.png")
+var sprite2 = preload("res://Character/SkillTree/Icons/MusicNote_SemiRedv2.png")
+
 func _shoot_from_orbit():
 	if shots_fired >= 3:
 		do_infinity_move = false
@@ -84,20 +98,22 @@ func _shoot_from_orbit():
 
 	dir = randi() % 6  # Choose a direction from 0–5
 
-	# Face player
-	#look_at(target.global_position)
-
 	for i in range(2):
 		var proj = proj_scene.instantiate()
 		proj.global_position = $PointSpawn.global_position
 		var proj_dir = (target.global_position - proj.global_position).normalized()
 		proj.set_direction(proj_dir, proj.global_position)
-		proj.toggle_spin()
+		if i == 0:
+			proj._set_sprite(sprite1)
+			proj.set_damage(50)
+		elif i == 1:
+			proj._set_sprite(sprite2)
+			proj.set_damage(75)
 		proj.set_speed(1500)
 		proj.set_scale(Vector2(0.5, 0.5))
-		proj.set_damage(50)
 		proj.is_enemy()
 		spawn_note.emit(proj)
+		await get_tree().create_timer(1).timeout
 
 	shots_fired += 1
 	await get_tree().create_timer(1).timeout
@@ -116,11 +132,11 @@ func _dash_at_player():
 	do_infinity_move = false
 	
 	var dir_vec = (target.global_position - global_position).normalized()
-	global_position -= dir_vec * 200
+	global_position -= dir_vec * 400
 	
 	await get_tree().create_timer(0.3).timeout
 	
-	var dash_distance = 600
+	var dash_distance = 1200
 	var dash_time = 0.4
 	var dash_speed = dash_distance / dash_time
 	
@@ -180,11 +196,15 @@ const DIRECTION_ENEMIES = {
 }
 
 func spawn_phase2_enemies():
+	target.movement_disabled = true
+	target.set_invincible(true)
 	phase2_spawns = 0
 	_spawn_enemy_at_next_orbit()
 
 func _spawn_enemy_at_next_orbit():
 	if phase2_spawns >= 6:
+		target.movement_disabled = false
+		target.set_invincible(false)
 		await _wait_for_enemies_cleared()
 		transition_to_phase_3()
 		return
@@ -195,7 +215,7 @@ func _spawn_enemy_at_next_orbit():
 	var offset = Vector2(cos(angle), sin(angle)) * radius
 	var spawn_pos = target.global_position + offset
 	
-	var enemy_type = DIRECTION_ENEMIES.get(dir, "watcher")
+	var enemy_type = DIRECTION_ENEMIES.get(dir)
 	get_tree().current_scene.spawn_specific_enemy_at(spawn_pos, enemy_type)
 	
 	phase2_spawns += 1
@@ -204,9 +224,9 @@ func _spawn_enemy_at_next_orbit():
 
 func _wait_for_enemies_cleared() -> void:
 	while true:
-		var enemies = get_tree().get_nodes_in_group("enemy")
+		var enemies = get_tree().get_nodes_in_group("boss_enemy")
 		# Ignore the mirror itself
-		if enemies.size() <= 1:
+		if enemies.size() <= 0:
 			break
 		await get_tree().create_timer(0.5).timeout
 
@@ -215,3 +235,8 @@ func transition_to_phase_3():
 	health = 250  # Set remaining health
 	spawning_phase2 = false
 	choose_next_attack()
+
+func die():
+	target.mirror_defeated()
+	queue_free()
+	#mirror_defeated.emit()

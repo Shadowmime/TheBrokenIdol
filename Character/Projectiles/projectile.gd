@@ -21,6 +21,8 @@ var spin_enabled = false
 @export var homing_strength = 5.0
 @export var homing_radius = 1000.0
 
+@export var sprite : Sprite2D
+
 var enemies
 
 func _ready():
@@ -115,3 +117,6 @@ func set_homing(strength):
 var attack_mod = 1
 func set_attack_mod(mod):
 	attack_mod = mod
+
+func _set_sprite(texture: Texture):
+	sprite.texture = texture

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://g4pjwp4jvyf3"]
+[gd_scene load_steps=27 format=3 uid="uid://g4pjwp4jvyf3"]
 
 [ext_resource type="Script" uid="uid://ct8qkty76kdmf" path="res://Scripts/state_machine.gd" id="1_je477"]
 [ext_resource type="Script" uid="uid://su35u4n0ftx8" path="res://Enemies/rival.gd" id="1_xmuc0"]
@@ -153,7 +153,11 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_ghdg8"]
 radius = 86.56
 
-[node name="Rival" type="CharacterBody2D" node_paths=PackedStringArray("nav", "animation_player", "health_bar", "sprite", "attack", "state_machine")]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_lhi4e"]
+radius = 100.0
+height = 270.0
+
+[node name="Rival" type="CharacterBody2D" node_paths=PackedStringArray("nav", "animation_player", "health_bar", "sprite", "attack", "state_machine", "boss_shading")]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_xmuc0")
@@ -164,6 +168,7 @@ max_health = 300
 sprite = NodePath("AnimatedSprite2D")
 attack = NodePath("attack")
 state_machine = NodePath("StateMachine")
+boss_shading = NodePath("BossShading")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, 45)
@@ -224,6 +229,11 @@ scale = Vector2(1.38005, 1.36898)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack/Area2D"]
 position = Vector2(29, 17)
 shape = SubResource("CircleShape2D_ghdg8")
+
+[node name="BossShading" type="MeshInstance2D" parent="."]
+visible = false
+modulate = Color(1, 0, 0, 0.0784314)
+mesh = SubResource("CapsuleMesh_lhi4e")
 
 [connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
 [connection signal="body_entered" from="attack/Area2D" to="." method="_on_area_2d_body_entered"]

@@ -98,7 +98,8 @@ func spawn_specific_enemy_at(pos: Vector2, type: String):
 		enemy.spawn_note.connect(_on_watcher_spawn_note)
 	enemy.global_position = spawn_pos
 	enemy.target = player
-	enemy.add_to_group("enemy")
+	enemy.toggle_boss_shading()
+	enemy.add_to_group("boss_enemy")
 	enemy_node.add_child(enemy)
 
 var spawn_timer := 0.0

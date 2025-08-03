@@ -141,6 +141,7 @@ func _physics_process(delta):
 func freeze():
 	velocity = Vector2.ZERO
 
+var movement_disabled = false
 func _move():
 	var input_vector := Vector2.ZERO
 	if not CharacterNerfs.has_nerf("left") and Input.is_action_pressed("move_left"):
@@ -163,7 +164,10 @@ func set_speed_multiplier(multiplier: float = 1):
 	dash_multiplier = multiplier
 
 func is_running():
-	_current_speed = NORMAL_SPEED * speed_multiplier * dash_multiplier
+	if movement_disabled: 
+		_current_speed = 0
+	else:
+		_current_speed = NORMAL_SPEED * speed_multiplier * dash_multiplier
 
 func _flip_sprite_to_mouse():
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -219,7 +223,13 @@ signal player_died
 func on_death():
 	player_died.emit()
 
+var invincible = false
+func set_invincible(state = true):
+	invincible = state
+
 func take_damage(damage, _damage_type = null):
+	if invincible:
+		return
 	# multipliers go in here
 	health = health - damage * shield_scale * damage_taken_mult
 
