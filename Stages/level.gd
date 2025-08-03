@@ -128,6 +128,8 @@ func _on_player_spawn_bomb(bomb: Bomb) -> void:
 
 
 func _on_player_boss_defeated() -> void:
+	for enemy in $Enemies.get_children():
+		enemy.queue_free()
 	# check loop
 	if CharacterNerfs.is_finished():
 		get_tree().change_scene_to_file("res://Menus/good_ending.tscn")
