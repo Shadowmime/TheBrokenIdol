@@ -1,6 +1,8 @@
 # The Broken Idol  
 *Submission to GMTK Game Jam 2025*
 
+https://shadowpopgd.itch.io/the-broken-idol
+
 Meet Aria — once a rising idol, now bound to a wheelchair after a tragic fall.  
 In her fractured mind, she relives a looping performance, haunted by the dreams she left behind and the fans who lost faith. Can you fight through memories, shed your skills, and uncover the one truth that breaks the cycle?
 
